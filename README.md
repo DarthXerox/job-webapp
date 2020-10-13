@@ -3,4 +3,4 @@
 Participants  
 - Jan Pokorny  
 - Martin Buco  
-- Kristina ???  
+- Kristyna Janku
