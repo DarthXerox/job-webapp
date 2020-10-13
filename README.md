@@ -4,10 +4,13 @@ bröther, can i hav jöb?
 
 ![lögo](https://media.discordapp.net/attachments/763083691924652122/765604353906049114/moth.png?width=230&height=200)
 
-# Participants  
-- Jan Pokorny  
-- Martin Buco  
-- Kristyna Janku
+# Participants
+
+Seminar **01**, group **#3**
+
+- Jan Pokorný
+- Martin Bučo
+- Kristýna Janků
 
 # User stories
 
