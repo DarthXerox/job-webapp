@@ -21,7 +21,7 @@ namespace DAL.Models
         [MaxLength(1024)]
         public string Description { get; set; }
 
-        public virtual ICollection<Skill> RelevantSkills { get; set; }
+        public virtual ICollection<JobOfferSkill> RelevantSkills { get; set; }
 
         public virtual ICollection<JobOfferQuestion> Questions { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
@@ -15,5 +16,7 @@ namespace DAL.Models
         [Required]
         [MaxLength(64)]
         public string Email { get; set; }
+
+        public virtual ICollection<JobSeekerSkill> Abilities { get; set; }
     }
 }

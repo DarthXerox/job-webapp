@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
@@ -12,12 +14,14 @@ namespace DAL.Models
 
         public int JobOfferId { get; set; }
 
-        [ForeignKey(nameof(JobOffer))]
+        [ForeignKey(nameof(JobOfferId))]
         public virtual JobOffer JobOffer { get; set; }
 
         public Status Status { get; set; }
 
         [MaxLength(1024)]
         public string Text { get; set; }
+
+        public ICollection<JobApplicationAnswer> Answers { get; set; }
     }
 }

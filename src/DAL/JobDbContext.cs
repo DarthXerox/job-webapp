@@ -7,7 +7,6 @@ namespace DAL
     public class JobDbContext : DbContext
     {
         private const string ConnectionString = "";
-
         public DbSet<Company> Companies { get; set; }
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<JobOffer> JobOffers { get; set; }
