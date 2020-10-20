@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DAL.Models
 {
@@ -12,10 +10,8 @@ namespace DAL.Models
         [MaxLength(64)]
         public string Name { get; set; }
 
-        public int AddressId { get; set; }
-
-        [ForeignKey(nameof(AddressId))]
-        public virtual Address Address { get; set; }
+        [MaxLength(64)]
+        public string City { get; set; }
 
         public int CompanyId { get; set; }
 
@@ -25,6 +21,8 @@ namespace DAL.Models
         [MaxLength(1024)]
         public string Description { get; set; }
 
-        public virtual ICollection<Skill> Skills { get; set; }
+        public virtual ICollection<Skill> RelevantSkills { get; set; }
+
+        public virtual ICollection<JobOfferQuestion> Questions { get; set; }
     }
 }
