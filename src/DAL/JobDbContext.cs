@@ -6,12 +6,14 @@ namespace DAL
 {
     public class JobDbContext : DbContext
     {
-        private const string ConnectionString = "";
+        private const string ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=JobDatabase";
         public DbSet<Company> Companies { get; set; }
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<JobOffer> JobOffers { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
+
+        public JobDbContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

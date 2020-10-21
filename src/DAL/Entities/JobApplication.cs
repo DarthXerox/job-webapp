@@ -22,6 +22,6 @@ namespace DAL.Models
         [MaxLength(1024)]
         public string Text { get; set; }
 
-        public ICollection<JobApplicationAnswer> Answers { get; set; }
+        public virtual ICollection<JobApplicationAnswer> Answers { get; set; }
     }
 }
