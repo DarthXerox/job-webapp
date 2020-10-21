@@ -32,10 +32,6 @@ namespace DAL
                 .HasOne(a => a.JobOffer)
                 .WithOne().HasForeignKey<JobApplication>(a => a.JobOfferId);
 
-            modelBuilder.Entity<JobOffer>()
-                .HasOne(a => a.Company)
-                .WithOne().HasForeignKey<JobOffer>(a => a.CompanyId);
-
             modelBuilder.Entity<JobApplicationAnswer>()
                 .HasOne(a => a.Question)
                 .WithOne().HasForeignKey<JobApplicationAnswer>(a => a.QuestionId);
