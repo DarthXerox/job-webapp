@@ -1,4 +1,4 @@
-﻿namespace DAL.Models
+﻿namespace DAL.Enums
 {
     public enum Status
     {

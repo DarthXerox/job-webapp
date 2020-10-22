@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Enums;
 
-namespace DAL.Models
+namespace DAL.Entities
 {
     public class JobApplication : BaseEntity
     {

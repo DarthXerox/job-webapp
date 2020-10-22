@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DAL.Models;
+﻿using System.Collections.Generic;
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
@@ -9,10 +8,10 @@ namespace DAL
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            var CSharp = new Skill() { Id = 1, Tag = "C#" };
-            var Python = new Skill() { Id = 2, Tag = "Python" };
+            var cSharp = new Skill { Id = 1, Tag = "C#" };
+            var python = new Skill { Id = 2, Tag = "Python" };
 
-            var JohnWick = new JobSeeker()
+            var johnWick = new JobSeeker
             {
                 Id = 1,
                 Email = "uco@mail.muni.cz",
@@ -20,16 +19,16 @@ namespace DAL
                 Surname = "Wick"
             };
 
-            var JohnWickSkill = new JobSeekerSkill() 
+            var johnWickSkill = new JobSeekerSkill
             { 
                 Id = 1, 
-                JobSeeker = JohnWick, 
-                Skill = CSharp,
-                JobSeekerId = JohnWick.Id, 
-                SkillId = CSharp.Id
+                JobSeeker = johnWick, 
+                Skill = cSharp,
+                JobSeekerId = johnWick.Id, 
+                SkillId = cSharp.Id
             };
 
-            JohnWick.Abilities = new List<JobSeekerSkill>() { JohnWickSkill };
+            johnWick.Abilities = new List<JobSeekerSkill> { johnWickSkill };
 
             modelBuilder.Entity<Company>().HasData(
                new Company { Id = 1, Name = "Apple" });

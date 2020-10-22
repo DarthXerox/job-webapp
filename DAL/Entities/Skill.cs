@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DAL.Models
+namespace DAL.Entities
 {
     public class Skill : BaseEntity
     {

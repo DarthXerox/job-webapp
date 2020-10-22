@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using DAL.Models;
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
@@ -12,8 +12,6 @@ namespace DAL
         public DbSet<JobOffer> JobOffers { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
-
-        public JobDbContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,7 +34,7 @@ namespace DAL
                 .HasOne(a => a.Question)
                 .WithOne().HasForeignKey<JobApplicationAnswer>(a => a.QuestionId);
 
-            foreach (Microsoft.EntityFrameworkCore.Metadata.IMutableForeignKey relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }

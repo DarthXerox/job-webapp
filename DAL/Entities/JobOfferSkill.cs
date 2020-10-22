@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DAL.Models
+namespace DAL.Entities
 {
     public class JobOfferSkill : BaseEntity
     {
