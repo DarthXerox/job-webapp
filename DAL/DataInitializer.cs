@@ -20,18 +20,19 @@ namespace DAL
             };
 
             var johnWickSkill = new JobSeekerSkill
-            { 
-                Id = 1, 
-                JobSeeker = johnWick, 
+            {
+                Id = 1,
+                JobSeeker = johnWick,
                 Skill = cSharp,
-                JobSeekerId = johnWick.Id, 
+                JobSeekerId = johnWick.Id,
                 SkillId = cSharp.Id
             };
 
-            johnWick.Abilities = new List<JobSeekerSkill> { johnWickSkill };
+            johnWick.Skills = new List<JobSeekerSkill> { johnWickSkill };
 
             modelBuilder.Entity<Company>().HasData(
-               new Company { Id = 1, Name = "Apple" });
+                new Company { Id = 1, Name = "Apple" }
+            );
         }
     }
 }

@@ -11,6 +11,5 @@ namespace DAL.Entities
         public virtual ICollection<JobSeekerSkill> JobSeekerSkills { get; set; }
 
         public virtual ICollection<JobOfferSkill> JobOfferSkills { get; set; }
-
     }
 }
