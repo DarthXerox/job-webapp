@@ -19,15 +19,9 @@ namespace DAL
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IQueryable<TEntity> GetAll()
-        {
-            return context.Set<TEntity>();
-        }
+        public virtual IQueryable<TEntity> GetAll() => context.Set<TEntity>();
 
-        public virtual TEntity GetById(int id)
-        {
-            return dbSet.Find(id);
-        }
+        public virtual TEntity GetById(int id) => dbSet.Find(id);
 
         public virtual void Add([NotNull] TEntity entity)
         {
