@@ -37,6 +37,7 @@ dotnet_style_require_accessibility_modifiers=for_non_interface_members:suggestio
 
 # ReSharper properties
 resharper_autodetect_indent_settings=true
+resharper_braces_for_ifelse=required_for_multiline_statement
 resharper_csharp_insert_final_newline=true
 resharper_enforce_line_ending_style=true
 resharper_max_attribute_length_for_same_line=38
