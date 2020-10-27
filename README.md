@@ -17,13 +17,13 @@ Seminar **01**, group **#3**
 ## Unregistered job-seeker
 
 - See job offers
-- Apply to job offer
+- Apply to a job offer
 - Get job offers from public API
 
 ## Registered job-seeker
 
 - Same as unregistered
-- Enter their abilities, view job offers according to abilities
+- Enter their abilities, view/filter job offers according to abilities
 - Job applications automatically get populated with registered data
 - See their job applications and application status (undecided/accepted/rejected)
 
@@ -31,4 +31,6 @@ Seminar **01**, group **#3**
 
 - Create job offers with basic info (job description, location, abilities...) and questions for applicants
 - Manage their job offers
+    - Remove a job offer
+    - Edit a job offer
 - See applicants, accept or reject them
