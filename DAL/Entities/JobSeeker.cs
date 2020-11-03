@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
@@ -18,5 +18,16 @@ namespace DAL.Entities
         public string Email { get; set; }
 
         public virtual ICollection<JobSeekerSkill> Skills { get; set; }
+
+        public static JobSeeker Create(int id, string name, string surname, string email)
+        {
+            return new JobSeeker()
+            {
+                Id = id,
+                Name = name,
+                Surname = surname,
+                Email = email
+            };
+        }
     }
 }
