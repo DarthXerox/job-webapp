@@ -1,11 +1,24 @@
 using System;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
     public sealed class UnitOfWork : IDisposable
     {
-        private readonly JobDbContext context = new JobDbContext();
+        private readonly JobDbContext context;
+
+        public UnitOfWork()
+        {
+            context = new JobDbContext();
+        }
+
+
+        public UnitOfWork(DbContextOptions<JobDbContext> contextOptions)
+        {
+            context = new JobDbContext(contextOptions);
+        }
+
 
         private Repository<Company> companyRepository;
         private Repository<JobApplication> jobApplicationRepository;

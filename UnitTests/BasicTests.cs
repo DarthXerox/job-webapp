@@ -2,102 +2,112 @@ using Xunit;
 using DAL;
 using DAL.Entities;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace UnitTests
 {
     public class BasicTests
     {
-        /**
-         * Just checks if the current user can login to database
-         */
-        [Fact]
+        /// <summary>
+        /// Context changes are saved in memory(ram) instead of in database
+        /// </summary>
+        protected DbContextOptions<JobDbContext> InMemoryOptions = new DbContextOptionsBuilder<JobDbContext>()
+                                                             .UseInMemoryDatabase(databaseName: "Test")
+                                                             .Options;
+
+        private void Seed(UnitOfWork unit)
+        {
+            JobSeeker person = new JobSeeker { Name = "Neo", Surname = "Anderson", Email = "neo@matrix.com" };
+            var cSharp = new Skill { Tag = "C#" };
+            var seekerSkill = new JobSeekerSkill
+            {
+                JobSeeker = person,
+                Skill = cSharp,
+                JobSeekerId = person.Id,
+                SkillId = cSharp.Id
+            };
+            person.Skills = new List<JobSeekerSkill> { seekerSkill };
+
+            unit.SkillRepository.Add(cSharp);
+            unit.JobSeekerRepository.Add(person);
+            unit.JobSeekerSkillRepository.Add(seekerSkill);
+
+            unit.SaveChanges();
+        }
+
+       /**
+        * Just checks if the current user can login to database
+        */
+       [Fact]
         public void DatabaseAccess()
         {
             new UnitOfWork();
         }
 
+
         [Fact]
         public void Insert()
         {
-            using (UnitOfWork unit = new UnitOfWork())
+            using (UnitOfWork unit = new UnitOfWork(InMemoryOptions))
             {
                 // Seed
-                JobSeeker person = new JobSeeker { Name = "Neo", Surname = "Anderson", Email = "neo@matrix.com"};
-                var cSharp = new Skill { Tag = "C#" };
-                var seekerSkill = new JobSeekerSkill
-                {
-                    JobSeeker = person,
-                    Skill = cSharp,
-                    JobSeekerId = person.Id,
-                    SkillId = cSharp.Id
-                };
-                person.Skills = new List<JobSeekerSkill> { seekerSkill };
+                Seed(unit);
 
-                unit.SkillRepository.Add(cSharp);
-                unit.JobSeekerRepository.Add(person);
-                unit.JobSeekerSkillRepository.Add(seekerSkill);
-                
-                unit.SaveChanges();
+                var seekers = unit.JobSeekerRepository.GetAll().ToListAsync().Result;
+                Assert.Single(seekers);
+                Assert.NotNull(seekers[0]); // verify reference
+                Assert.Equal("Neo", seekers[0].Name);
+                Assert.Equal("Anderson", seekers[0].Surname);
+                Assert.Equal("neo@matrix.com", seekers[0].Email);
 
-                // Testing
-                JobSeeker seeker = unit.JobSeekerRepository.GetById(person.Id);
-                Assert.NotNull(seeker); // verify reference
-                Assert.Equal("Neo", seeker.Name);
-                Assert.Equal("Anderson", seeker.Surname);
-                Assert.Equal("neo@matrix.com", seeker.Email);
+                var skills = unit.SkillRepository.GetAll().ToListAsync().Result;
+                Assert.Single(skills);
+                Assert.NotNull(skills[0]);
+                Assert.Equal("C#", skills[0].Tag);
 
-                Skill skill = unit.SkillRepository.GetById(cSharp.Id);
-                Assert.NotNull(skill);
-                Assert.Equal("C#", skill.Tag);
-
-                JobSeekerSkill jskill = unit.JobSeekerSkillRepository.GetById(seekerSkill.Id);
-                Assert.NotNull(jskill);
-                Assert.Equal(seeker, jskill.JobSeeker);
-                Assert.Equal(seeker.Id, jskill.JobSeekerId);
-                Assert.Equal(skill, jskill.Skill);
-                Assert.Equal(skill.Id, jskill.SkillId);
+                var jskills = unit.JobSeekerSkillRepository.GetAll().ToListAsync().Result;
+                Assert.Single(skills);
+                Assert.NotNull(jskills[0]);
+                Assert.Equal(seekers[0], jskills[0].JobSeeker);
+                Assert.Equal(seekers[0].Id, jskills[0].JobSeekerId);
+                Assert.Equal(skills[0], jskills[0].Skill);
+                Assert.Equal(skills[0].Id, jskills[0].SkillId);
             }
         }
 
         [Fact]
-        public void InsertAsync()
+        public void DeleteTests()
         {
-            using (UnitOfWork unit = new UnitOfWork())
+            using (UnitOfWork unit = new UnitOfWork(InMemoryOptions))
             {
                 // Seed
-                JobSeeker person = new JobSeeker { Name = "Neo", Surname = "Anderson", Email = "neo@matrix.com" };
-                var cSharp = new Skill { Tag = "C#" };
-                var seekerSkill = new JobSeekerSkill
-                {
-                    JobSeeker = person,
-                    Skill = cSharp,
-                    JobSeekerId = person.Id,
-                    SkillId = cSharp.Id
-                };
-                person.Skills = new List<JobSeekerSkill> { seekerSkill };
+                Seed(unit);
 
-                unit.SkillRepository.AddAsync(cSharp);
-                unit.JobSeekerRepository.AddAsync(person);
-                unit.JobSeekerSkillRepository.AddAsync(seekerSkill);
+                var seekers = unit.JobSeekerRepository.GetAll().ToListAsync().Result;
+                var skills = unit.SkillRepository.GetAll().ToListAsync().Result;
+                var jskills = unit.JobSeekerSkillRepository.GetAll().ToListAsync().Result;
+
+                // Check for repo size
+                Assert.Single(jskills);
+                Assert.NotNull(jskills[0]);
+                Assert.Single(skills);
+                Assert.NotNull(skills[0]);
+                Assert.Single(seekers);
+                Assert.NotNull(seekers[0]);
+
+                // Delete
+                unit.JobSeekerSkillRepository.Delete(jskills[0].Id);
+                unit.SkillRepository.Delete(skills[0].Id);
+                unit.JobSeekerRepository.Delete(seekers[0].Id);
                 unit.SaveChanges();
 
-                // Testing
-                JobSeeker seeker = unit.JobSeekerRepository.GetById(person.Id);
-                Assert.NotNull(seeker); // verify reference
-                Assert.Equal("Neo", seeker.Name);
-                Assert.Equal("Anderson", seeker.Surname);
-                Assert.Equal("neo@matrix.com", seeker.Email);
-
-                Skill skill = unit.SkillRepository.GetById(cSharp.Id);
-                Assert.NotNull(skill);
-                Assert.Equal("C#", skill.Tag);
-
-                JobSeekerSkill jskill = unit.JobSeekerSkillRepository.GetById(seekerSkill.Id);
-                Assert.NotNull(jskill);
-                Assert.Equal(seeker, jskill.JobSeeker);
-                Assert.Equal(seeker.Id, jskill.JobSeekerId);
-                Assert.Equal(skill, jskill.Skill);
-                Assert.Equal(skill.Id, jskill.SkillId);
+                // Updated database
+                jskills = unit.JobSeekerSkillRepository.GetAll().ToListAsync().Result;
+                Assert.Empty(jskills);
+                skills = unit.SkillRepository.GetAll().ToListAsync().Result;
+                Assert.Empty(skills);
+                seekers = unit.JobSeekerRepository.GetAll().ToListAsync().Result;
+                Assert.Empty(seekers);
             }
         }
     }

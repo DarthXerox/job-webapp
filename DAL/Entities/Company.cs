@@ -10,14 +10,5 @@ namespace DAL.Entities
         public string Name { get; set; }
 
         public virtual ICollection<JobOffer> Offers { get; set; }
-
-        public static Company Create(int id, string name)
-        {
-            return new Company()
-            {
-               Id = id,
-               Name = name
-            };
-        }
     }
 }
