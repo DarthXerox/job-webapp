@@ -10,6 +10,16 @@ namespace DAL.Queries
     {
         public JobOfferQuery(JobDbContext dbContext) : base(dbContext) { }
 
+        public void FilterByName(string name)
+        {
+            query = query.Where(jobOffer => jobOffer.Name == name);
+        }
+
+        public void FilterByNameContains(string name)
+        {
+            query = query.Where(jobOffer => jobOffer.Name.Contains(name));
+        }
+
         public void FilterByCompanyName(string companyName)
         {
             query = query.Where(jobOffer => jobOffer.Company.Name == companyName);
