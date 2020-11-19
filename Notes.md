@@ -2,9 +2,14 @@
 
 ## Filters:
 
-- JobOffers by tag  
-- JobOffers by user (jobseeker)
-- JobO
+- JobOffers by tag/skill
+- JobOffers by Company name
+- JobOffers by City (?)
+- Companies by name
+
+Each of the above should also provide OrderBy
+JobSeekers by skills? (probably not)
+How about companies by skill?
 
 add at least 2-3 query classes, more when implementing BL
 
