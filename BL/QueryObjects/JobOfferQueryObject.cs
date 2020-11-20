@@ -1,26 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using DAL;
-using DAL.Entities;
 using AutoMapper;
 using System.Threading.Tasks;
-using DAL.Entities.Dto;
-using DAL.Queries;
+using BL.Entities.Dto;
 
 namespace BL
 {
-    public class JobOfferQueryObject : IDisposable
+    public class JobOfferQueryObject : QueryObject
     {
-        private readonly IMapper mapper;
-
-        public UnitOfWork UnitOfWork { get; private set; }
-
-        public JobOfferQueryObject(UnitOfWork unit, IMapper mapper)
-        {
-            UnitOfWork = unit;
-            this.mapper = mapper;
-        }
+        public JobOfferQueryObject(UnitOfWork unit, IMapper mapper) : base(unit, mapper) { }
 
         public async Task<IEnumerable<JobOfferDto>> GetByNameAsync(string name, bool ascendingOrder = true)
         {
@@ -70,12 +58,6 @@ namespace BL
                             .OrderBy(jobOffer => jobOffer.Name, ascendingOrder)
                             .ExecuteAsync()
                  );
-        }
-
-
-        public void Dispose()
-        {
-            UnitOfWork.Dispose();
         }
     }
 }

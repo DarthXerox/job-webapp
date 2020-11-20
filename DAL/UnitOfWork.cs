@@ -43,6 +43,7 @@ namespace DAL
         public Repository<Skill> SkillRepository => skillRepository ??= new Repository<Skill>(context);
 
         public JobOfferQuery JobOfferQuery { get; }
+        public CompanyQuery CompanyQuery { get; }
 
         public void SaveChanges()
         {
