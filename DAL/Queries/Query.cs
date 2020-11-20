@@ -22,11 +22,13 @@ namespace DAL.Queries
             return await query?.ToListAsync() ?? new List<TEntity>();
         }
 
-        public void OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ascendingOrder = true)
+        public Query<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ascendingOrder = true)
         {
             query = ascendingOrder
                 ? query.OrderBy(keySelector)
                 : query.OrderByDescending(keySelector);
+
+            return this;
         }
     }
 }

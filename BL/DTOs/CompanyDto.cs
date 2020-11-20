@@ -9,6 +9,6 @@ namespace BL.Entities.Dto
     {
         public string Name { get; set; }
 
-        public ICollection<JobOffer> Offers { get; set; }
+        public ICollection<JobOfferDto> Offers { get; set; }
     }
 }

@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +17,10 @@ namespace DAL
             this.dbSet = context.Set<TEntity>();
         }
 
+        /// <summary>
+        /// Not a CRUD operation
+        /// This will be removed, once the unit tests are rewritten
+        /// </summary>
         public virtual IQueryable<TEntity> GetAll() => context.Set<TEntity>();
 
         public virtual TEntity GetById(int id) => dbSet.Find(id);

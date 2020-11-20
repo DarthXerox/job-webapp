@@ -13,6 +13,6 @@ namespace BL.Entities.Dto
 
         public string Email { get; set; }
 
-        public ICollection<JobSeekerSkill> Skills { get; set; }
+        public ICollection<JobSeekerSkillDto> Skills { get; set; }
     }
 }

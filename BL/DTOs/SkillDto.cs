@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using DAL.Entities;
 
 namespace BL.Entities.Dto
 {
@@ -9,8 +6,8 @@ namespace BL.Entities.Dto
     {
         public string Tag { get; set; }
 
-        public ICollection<JobSeekerSkill> JobSeekerSkills { get; set; }
+        public ICollection<JobSeekerSkillDto> JobSeekerSkills { get; set; }
 
-        public ICollection<JobOfferSkill> JobOfferSkills { get; set; }
+        public ICollection<JobOfferSkillDto> JobOfferSkills { get; set; }
     }
 }

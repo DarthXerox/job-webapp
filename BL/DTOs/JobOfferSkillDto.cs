@@ -1,6 +1,5 @@
 using System;
 using DAL.Entities;
-using DAL.Entities.Dto;
 
 namespace BL.Entities.Dto
 {

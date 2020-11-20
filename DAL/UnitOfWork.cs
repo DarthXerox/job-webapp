@@ -1,5 +1,6 @@
 using System;
 using DAL.Entities;
+using DAL.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
@@ -11,6 +12,7 @@ namespace DAL
         public UnitOfWork()
         {
             context = new JobDbContext();
+            JobOfferQuery = new JobOfferQuery(context);
         }
 
 
@@ -39,6 +41,8 @@ namespace DAL
         public Repository<JobSeeker> JobSeekerRepository => jobSeekerRepository ??= new Repository<JobSeeker>(context);
         public Repository<JobSeekerSkill> JobSeekerSkillRepository => jobSeekerSkillRepository ??= new Repository<JobSeekerSkill>(context);
         public Repository<Skill> SkillRepository => skillRepository ??= new Repository<Skill>(context);
+
+        public JobOfferQuery JobOfferQuery { get; }
 
         public void SaveChanges()
         {

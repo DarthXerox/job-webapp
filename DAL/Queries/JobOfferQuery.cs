@@ -10,31 +10,36 @@ namespace DAL.Queries
     {
         public JobOfferQuery(JobDbContext dbContext) : base(dbContext) { }
 
-        public void FilterByName(string name)
+        public JobOfferQuery FilterByName(string name)
         {
             query = query.Where(jobOffer => jobOffer.Name == name);
+            return this;
         }
 
-        public void FilterByNameContains(string name)
+        public JobOfferQuery FilterByNameContains(string name)
         {
             query = query.Where(jobOffer => jobOffer.Name.Contains(name));
+            return this;
         }
 
-        public void FilterByCompanyName(string companyName)
+        public JobOfferQuery FilterByCompanyName(string companyName)
         {
             query = query.Where(jobOffer => jobOffer.Company.Name == companyName);
+            return this;
         }
 
-        public void FilterBySkillTag(string tag)
+        public JobOfferQuery FilterBySkillTag(string tag)
         {
             query = query.Where(jobOffer => jobOffer.RelevantSkills
                                                     .Select(jobOfferSkill => jobOfferSkill.Skill.Tag)
                                                     .Contains(tag));
+            return this;
         }
 
-        public void FilterByCity(string city)
+        public JobOfferQuery FilterByCity(string city)
         {
             query = query.Where(jobOffer => jobOffer.City == city);
+            return this;
         }
     }
 }

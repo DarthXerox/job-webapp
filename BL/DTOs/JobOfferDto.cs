@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BL.Entities.Dto;
 
-namespace DAL.Entities.Dto
+namespace BL.Entities.Dto
 {
     public class JobOfferDto
     {
@@ -17,8 +16,8 @@ namespace DAL.Entities.Dto
 
         public string Description { get; set; }
 
-        public ICollection<JobOfferSkill> RelevantSkills { get; set; }
+        public ICollection<JobOfferSkillDto> RelevantSkills { get; set; }
 
-        public ICollection<JobOfferQuestion> Questions { get; set; }
+        public ICollection<JobOfferQuestionDto> Questions { get; set; }
     }
 }
