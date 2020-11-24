@@ -3,11 +3,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class Repository<TEntity> where TEntity : class, new()
+    public class Repository<TEntity> where TEntity : BaseEntity
     {
         private readonly JobDbContext context;
         private readonly DbSet<TEntity> dbSet;

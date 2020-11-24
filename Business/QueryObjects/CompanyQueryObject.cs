@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using DAL.Entities;
 using Infrastructure;
 
@@ -8,7 +7,7 @@ namespace Business.QueryObjects
 {
     public class CompanyQueryObject : QueryObject
     {
-        public CompanyQueryObject(UnitOfWork unit, IMapper mapper) : base(unit) { }
+        public CompanyQueryObject(UnitOfWork unit) : base(unit) { }
 
         public async Task<IEnumerable<Company>> GetByNameAsync(string name, bool ascendingOrder = true)
         {

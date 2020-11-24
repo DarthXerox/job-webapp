@@ -25,12 +25,16 @@ namespace Infrastructure
         {
             context = new JobDbContext();
             JobOfferQuery = new JobOfferQuery(context);
+            CompanyQuery = new CompanyQuery(context);
+            JobApplicationQuery = new JobApplicationQuery(context);
         }
-
 
         public UnitOfWork(DbContextOptions<JobDbContext> contextOptions)
         {
             context = new JobDbContext(contextOptions);
+            JobOfferQuery = new JobOfferQuery(context);
+            CompanyQuery = new CompanyQuery(context);
+            JobApplicationQuery = new JobApplicationQuery(context);
         }
 
         public Repository<Company> CompanyRepository => companyRepository ??= new Repository<Company>(context);
@@ -58,6 +62,7 @@ namespace Infrastructure
 
         public JobOfferQuery JobOfferQuery { get; }
         public CompanyQuery CompanyQuery { get; }
+        public JobApplicationQuery JobApplicationQuery { get; }
 
         public void Dispose()
         {
