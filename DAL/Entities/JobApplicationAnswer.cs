@@ -6,11 +6,11 @@ namespace DAL.Entities
     public class JobApplicationAnswer : BaseEntity
     {
         [MaxLength(1024)]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         public int QuestionId { get; set; }
 
         [ForeignKey(nameof(QuestionId))]
-        public virtual JobOfferQuestion Question { get; set; }
+        public virtual JobOfferQuestion? Question { get; set; }
     }
 }

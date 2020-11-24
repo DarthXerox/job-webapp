@@ -7,11 +7,11 @@ namespace DAL.Entities
         public int JobSeekerId { get; set; }
 
         [ForeignKey(nameof(JobSeekerId))]
-        public virtual JobSeeker JobSeeker { get; set; }
+        public virtual JobSeeker? JobSeeker { get; set; }
 
         public int SkillId { get; set; }
 
         [ForeignKey(nameof(SkillId))]
-        public virtual Skill Skill { get; set; }
+        public virtual Skill? Skill { get; set; }
     }
 }

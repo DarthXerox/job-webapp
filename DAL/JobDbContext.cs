@@ -19,11 +19,11 @@ namespace DAL
         {
         }
 
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<JobSeeker> JobSeekers { get; set; }
-        public DbSet<JobOffer> JobOffers { get; set; }
-        public DbSet<Skill> Skills { get; set; }
-        public DbSet<JobApplication> JobApplications { get; set; }
+        public DbSet<Company>? Companies { get; set; }
+        public DbSet<JobSeeker>? JobSeekers { get; set; }
+        public DbSet<JobOffer>? JobOffers { get; set; }
+        public DbSet<Skill>? Skills { get; set; }
+        public DbSet<JobApplication>? JobApplications { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

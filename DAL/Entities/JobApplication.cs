@@ -10,18 +10,18 @@ namespace DAL.Entities
         public int ApplicantId { get; set; }
 
         [ForeignKey(nameof(ApplicantId))]
-        public virtual JobSeeker Applicant { get; set; }
+        public virtual JobSeeker? Applicant { get; set; }
 
         public int JobOfferId { get; set; }
 
         [ForeignKey(nameof(JobOfferId))]
-        public virtual JobOffer JobOffer { get; set; }
+        public virtual JobOffer? JobOffer { get; set; }
 
         public Status Status { get; set; }
 
         [MaxLength(1024)]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
-        public virtual ICollection<JobApplicationAnswer> Answers { get; set; }
+        public virtual ICollection<JobApplicationAnswer>? Answers { get; set; }
     }
 }

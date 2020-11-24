@@ -5,6 +5,6 @@ namespace DAL.Entities
     public class JobOfferQuestion : BaseEntity
     {
         [MaxLength(1024)]
-        public string Text { get; set; }
+        public string? Text { get; set; }
     }
 }
