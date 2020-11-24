@@ -1,7 +1,4 @@
-using System;
-using DAL.Entities;
-
-namespace BL.Entities.Dto
+namespace Business.DTOs
 {
     public class JobSeekerSkillDto
     {

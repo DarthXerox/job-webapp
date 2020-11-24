@@ -2,9 +2,10 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace Infrastructure
 {
     public class Repository<TEntity> where TEntity : class, new()
     {
@@ -14,12 +15,12 @@ namespace DAL
         public Repository(JobDbContext context)
         {
             this.context = context;
-            this.dbSet = context.Set<TEntity>();
+            dbSet = context.Set<TEntity>();
         }
 
         /// <summary>
-        /// Not a CRUD operation
-        /// This will be removed, once the unit tests are rewritten
+        ///     Not a CRUD operation
+        ///     This will be removed, once the unit tests are rewritten
         /// </summary>
         public virtual IQueryable<TEntity> GetAll() => context.Set<TEntity>();
 

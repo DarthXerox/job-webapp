@@ -1,5 +1,5 @@
 using AutoMapper;
-using BL.Entities.Dto;
+using Business.DTOs;
 using DAL.Entities;
 
 namespace Bussiness

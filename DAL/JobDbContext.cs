@@ -6,33 +6,33 @@ namespace DAL
 {
     public class JobDbContext : DbContext
     {
-        private const string ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=JobDatabase;Trusted_Connection=True;";
+        private const string ConnectionString =
+            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=JobDatabase;Trusted_Connection=True;";
+
+        /// <summary>
+        ///     Yes, this is not necessary, but when creating migrations DbContext MUST have a deafult no-paramter constructor
+        /// </summary>
+        public JobDbContext() { }
+
+        public JobDbContext(DbContextOptions<JobDbContext> contextOptions)
+            : base(contextOptions)
+        {
+        }
+
         public DbSet<Company> Companies { get; set; }
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<JobOffer> JobOffers { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
 
-        /// <summary>
-        /// Yes, this is not necessary, but when creating migrations DbContext MUST have a deafult no-paramter constructor
-        /// </summary>
-        public JobDbContext() { }
-
-        public JobDbContext(DbContextOptions<JobDbContext> contextOptions)
-           : base(contextOptions)
-        { }
-
-
-        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                .UseSqlServer(ConnectionString)
-                .UseLazyLoadingProxies();
+                    .UseSqlServer(ConnectionString)
+                    .UseLazyLoadingProxies();
             }
-            //base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

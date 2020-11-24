@@ -1,29 +1,30 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using BL;
 using DAL.Entities;
-using DAL;
+using Infrastructure;
 
-namespace BL.QueryObejcts
+namespace Business.QueryObjects
 {
     public class CompanyQueryObject : QueryObject
     {
-        public CompanyQueryObject(UnitOfWork unit) : base(unit) { }
+        public CompanyQueryObject(UnitOfWork unit, IMapper mapper) : base(unit) { }
 
         public async Task<IEnumerable<Company>> GetByNameAsync(string name, bool ascendingOrder = true)
         {
             return await UnitOfWork.CompanyQuery
-                            .FilterByName(name)
-                            .OrderBy(company => company.Name, ascendingOrder)
-                            .ExecuteAsync();
+                .FilterByName(name)
+                .OrderBy(company => company.Name, ascendingOrder)
+                .ExecuteAsync();
         }
 
         public async Task<IEnumerable<Company>> GetByNameContainsAsync(string name, bool ascendingOrder = true)
         {
             return await UnitOfWork.CompanyQuery
-                            .FilterByNameContains(name)
-                            .OrderBy(company => company.Name, ascendingOrder)
-                            .ExecuteAsync();
+                .FilterByNameContains(name)
+                .OrderBy(company => company.Name, ascendingOrder)
+                .ExecuteAsync();
         }
-
     }
 }

@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using DAL.Entities;
-using DAL.Entities.Dto;
 using DAL.Enums;
 
-namespace BL.Entities.Dto
+namespace Business.DTOs
 {
     public class JobApplicationDto
     {

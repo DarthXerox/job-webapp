@@ -1,15 +1,18 @@
 using System;
-using DAL;
+using AutoMapper;
+using Infrastructure;
 
-namespace BL
+namespace Business.QueryObjects
 {
     public abstract class QueryObject : IDisposable
     {
-        public UnitOfWork UnitOfWork { get; private set; }
         protected QueryObject(UnitOfWork unit)
         {
             UnitOfWork = unit;
         }
+
+        public UnitOfWork UnitOfWork { get; }
+
         public void Dispose()
         {
             UnitOfWork.Dispose();

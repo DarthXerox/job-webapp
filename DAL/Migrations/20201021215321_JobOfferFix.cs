@@ -7,65 +7,65 @@ namespace DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_JobOffers_Companies_CompanyId1",
-                table: "JobOffers");
+                "FK_JobOffers_Companies_CompanyId1",
+                "JobOffers");
 
             migrationBuilder.DropIndex(
-                name: "IX_JobOffers_CompanyId",
-                table: "JobOffers");
+                "IX_JobOffers_CompanyId",
+                "JobOffers");
 
             migrationBuilder.DropIndex(
-                name: "IX_JobOffers_CompanyId1",
-                table: "JobOffers");
+                "IX_JobOffers_CompanyId1",
+                "JobOffers");
 
             migrationBuilder.DropColumn(
-                name: "CompanyId1",
-                table: "JobOffers");
+                "CompanyId1",
+                "JobOffers");
 
             migrationBuilder.InsertData(
-                table: "Companies",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Apple" });
+                "Companies",
+                new[] { "Id", "Name" },
+                new object[] { 1, "Apple" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobOffers_CompanyId",
-                table: "JobOffers",
-                column: "CompanyId");
+                "IX_JobOffers_CompanyId",
+                "JobOffers",
+                "CompanyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
-                name: "IX_JobOffers_CompanyId",
-                table: "JobOffers");
+                "IX_JobOffers_CompanyId",
+                "JobOffers");
 
             migrationBuilder.DeleteData(
-                table: "Companies",
-                keyColumn: "Id",
-                keyValue: 1);
+                "Companies",
+                "Id",
+                1);
 
             migrationBuilder.AddColumn<int>(
-                name: "CompanyId1",
-                table: "JobOffers",
-                type: "int",
+                "CompanyId1",
+                "JobOffers",
+                "int",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobOffers_CompanyId",
-                table: "JobOffers",
-                column: "CompanyId",
+                "IX_JobOffers_CompanyId",
+                "JobOffers",
+                "CompanyId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobOffers_CompanyId1",
-                table: "JobOffers",
-                column: "CompanyId1");
+                "IX_JobOffers_CompanyId1",
+                "JobOffers",
+                "CompanyId1");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_JobOffers_Companies_CompanyId1",
-                table: "JobOffers",
-                column: "CompanyId1",
-                principalTable: "Companies",
+                "FK_JobOffers_Companies_CompanyId1",
+                "JobOffers",
+                "CompanyId1",
+                "Companies",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BL.Entities.Dto
+namespace Business.DTOs
 {
     public class SkillDto
     {

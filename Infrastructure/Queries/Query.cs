@@ -6,27 +6,24 @@ using System.Threading.Tasks;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Queries
+namespace Infrastructure.Queries
 {
     public abstract class Query<TEntity> where TEntity : BaseEntity
     {
-        protected IQueryable<TEntity> query;
+        protected IQueryable<TEntity> Queryable;
 
-        protected Query(JobDbContext dbContext)
+        protected Query(DbContext dbContext)
         {
-            query = dbContext.Set<TEntity>();
+            Queryable = dbContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> ExecuteAsync()
-        {
-            return await query?.ToListAsync() ?? new List<TEntity>();
-        }
+        public async Task<IEnumerable<TEntity>> ExecuteAsync() => await Queryable.ToListAsync() ?? new List<TEntity>();
 
         public Query<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ascendingOrder = true)
         {
-            query = ascendingOrder
-                ? query.OrderBy(keySelector)
-                : query.OrderByDescending(keySelector);
+            Queryable = ascendingOrder
+                ? Queryable.OrderBy(keySelector)
+                : Queryable.OrderByDescending(keySelector);
 
             return this;
         }
