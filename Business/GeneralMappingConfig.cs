@@ -2,7 +2,7 @@ using AutoMapper;
 using Business.DTOs;
 using DAL.Entities;
 
-namespace Bussiness
+namespace Business
 {
     public class GeneralMappingConfig
     {
