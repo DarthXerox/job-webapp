@@ -5,7 +5,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace UnitTests
+namespace UnitTests.Infrastructure
 {
     public class BasicTests
     {

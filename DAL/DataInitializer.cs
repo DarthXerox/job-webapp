@@ -19,15 +19,18 @@ namespace DAL
                 Surname = "Wick"
             };
 
-            johnWick.Skills = new List<JobSeekerSkill>{
-                new JobSeekerSkill {
+            johnWick.Skills = new List<JobSeekerSkill>
+            {
+                new JobSeekerSkill
+                {
                     Id = 1,
                     JobSeeker = johnWick,
                     Skill = cSharp,
                     JobSeekerId = johnWick.Id,
                     SkillId = cSharp.Id
                 },
-                new JobSeekerSkill {
+                new JobSeekerSkill
+                {
                     Id = 2,
                     JobSeeker = johnWick,
                     Skill = python,

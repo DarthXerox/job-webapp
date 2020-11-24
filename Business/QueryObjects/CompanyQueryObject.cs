@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using BL;
 using DAL.Entities;
 using Infrastructure;
 
@@ -15,7 +14,7 @@ namespace Business.QueryObjects
         {
             return await UnitOfWork.CompanyQuery
                 .FilterByName(name)
-                .OrderBy(company => company.Name, ascendingOrder)
+                .OrderBy(keySelector: company => company.Name, ascendingOrder)
                 .ExecuteAsync();
         }
 
@@ -23,7 +22,7 @@ namespace Business.QueryObjects
         {
             return await UnitOfWork.CompanyQuery
                 .FilterByNameContains(name)
-                .OrderBy(company => company.Name, ascendingOrder)
+                .OrderBy(keySelector: company => company.Name, ascendingOrder)
                 .ExecuteAsync();
         }
     }
