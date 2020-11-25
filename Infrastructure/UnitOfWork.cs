@@ -11,15 +11,15 @@ namespace Infrastructure
         private readonly JobDbContext context;
 
 
-        private Repository<Company> companyRepository;
-        private Repository<JobApplicationAnswer> jobApplicationAnswerRepository;
-        private Repository<JobApplication> jobApplicationRepository;
-        private Repository<JobOfferQuestion> jobOfferQuestionRepository;
-        private Repository<JobOffer> jobOfferRepository;
-        private Repository<JobOfferSkill> jobOfferSkillRepository;
-        private Repository<JobSeeker> jobSeekerRepository;
-        private Repository<JobSeekerSkill> jobSeekerSkillRepository;
-        private Repository<Skill> skillRepository;
+        private Repository<Company>? companyRepository;
+        private Repository<JobApplicationAnswer>? jobApplicationAnswerRepository;
+        private Repository<JobApplication>? jobApplicationRepository;
+        private Repository<JobOfferQuestion>? jobOfferQuestionRepository;
+        private Repository<JobOffer>? jobOfferRepository;
+        private Repository<JobOfferSkill>? jobOfferSkillRepository;
+        private Repository<JobSeeker>? jobSeekerRepository;
+        private Repository<JobSeekerSkill>? jobSeekerSkillRepository;
+        private Repository<Skill>? skillRepository;
 
         public UnitOfWork()
         {
