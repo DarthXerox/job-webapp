@@ -7,7 +7,7 @@ namespace DAL.Entities
     {
         [Required]
         [MaxLength(64)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public virtual ICollection<JobOffer>? Offers { get; set; }
     }
