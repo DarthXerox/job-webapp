@@ -3,7 +3,7 @@ using Infrastructure;
 
 namespace Business.QueryObjects
 {
-    public abstract class QueryObject : IDisposable
+    public abstract class QueryObject
     {
         protected QueryObject(UnitOfWork unit)
         {
@@ -11,10 +11,5 @@ namespace Business.QueryObjects
         }
 
         public UnitOfWork UnitOfWork { get; }
-
-        public void Dispose()
-        {
-            UnitOfWork.Dispose();
-        }
     }
 }
