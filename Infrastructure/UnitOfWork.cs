@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using DAL;
 using DAL.Entities;
 using Infrastructure.Queries;
@@ -74,7 +75,7 @@ namespace Infrastructure
             context.SaveChanges();
         }
 
-        public async void SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
             await context.SaveChangesAsync();
         }
