@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.DTOs;
-using Business.QueryObjects;
 using Business.Services;
 using DAL.Entities;
 using DAL.Enums;
@@ -27,26 +25,47 @@ namespace Business.Facades
 
         public async Task ApplyToJobOfferAsync(int jobOfferId, int applicantId, string text, ICollection<JobApplicationAnswer> answers)
         {
-            jobApplicationService.CreateJobApplication(jobOfferId, applicantId, text, answers);
+            jobApplicationService.Create(jobOfferId, applicantId, text, answers);
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetJobApplicationsForJobOfferId(int jobOfferId)
+        public async Task<IEnumerable<JobApplicationDto>> GetByJobOfferIdAsync(int jobOfferId)
         {
             IEnumerable<JobApplication> applications =
-                await jobApplicationService.GetJobApplicationsByJobOfferIdAsync(jobOfferId);
+                await jobApplicationService.GetByJobOfferIdAsync(jobOfferId);
             return mapper.Map<IEnumerable<JobApplicationDto>>(applications);
         }
 
-        public async Task UpdateJobApplicationStatus(int applicationId, Status status)
+        public async Task<IEnumerable<JobApplicationDto>> GetByJobOfferIdAndStatusAsync(int jobOfferId, Status status)
         {
-            jobApplicationService.UpdateJobApplicationStatus(applicationId, status);
+            IEnumerable<JobApplication> applications =
+                await jobApplicationService.GetByJobOfferIdAndStatusAsync(jobOfferId, status);
+            return mapper.Map<IEnumerable<JobApplicationDto>>(applications);
+        }
+
+        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantIdAsync(int applicantId)
+        {
+            IEnumerable<JobApplication> applications =
+                await jobApplicationService.GetByApplicantIdAsync(applicantId);
+            return mapper.Map<IEnumerable<JobApplicationDto>>(applications);
+        }
+
+        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantIdAndStatusAsync(int applicantId, Status status)
+        {
+            IEnumerable<JobApplication> applications =
+                await jobApplicationService.GetByApplicantIdAndStatusAsync(applicantId, status);
+            return mapper.Map<IEnumerable<JobApplicationDto>>(applications);
+        }
+
+        public async Task UpdateStatusAsync(int applicationId, Status status)
+        {
+            jobApplicationService.UpdateStatus(applicationId, status);
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task DeleteJobApplication(int applicationId)
+        public async Task DeleteAsync(int applicationId)
         {
-            jobApplicationService.DeleteJobApplication(applicationId);
+            jobApplicationService.Delete(applicationId);
             await unitOfWork.SaveChangesAsync();
         }
 

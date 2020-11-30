@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Business.QueryObjects;
 using DAL.Entities;
@@ -20,26 +18,41 @@ namespace Business.Services
             jobApplicationQueryObject = new JobApplicationQueryObject(unitOfWork);
         }
 
-        public async Task<IEnumerable<JobApplication>> GetJobApplicationsByJobOfferIdAsync(int jobOfferId)
+        public async Task<IEnumerable<JobApplication>> GetByJobOfferIdAsync(int jobOfferId)
         {
             return await jobApplicationQueryObject.GetByJobOfferIdAsync(jobOfferId);
         }
 
-        public void CreateJobApplication(int jobOfferId, int applicantId, string text, ICollection<JobApplicationAnswer> answers)
+        public async Task<IEnumerable<JobApplication>> GetByJobOfferIdAndStatusAsync(int jobOfferId, Status status)
+        {
+            return await jobApplicationQueryObject.GetByJobOfferIdAndStatusAsync(jobOfferId, status);
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByApplicantIdAsync(int applicantId)
+        {
+            return await jobApplicationQueryObject.GetByApplicantIdAsync(applicantId);
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByApplicantIdAndStatusAsync(int applicantId, Status status)
+        {
+            return await jobApplicationQueryObject.GetByApplicantIdAndStatusAsync(applicantId, status);
+        }
+
+        public void Create(int jobOfferId, int applicantId, string text, ICollection<JobApplicationAnswer> answers)
         {
             var application = new JobApplication{ JobOfferId = jobOfferId, ApplicantId = applicantId,
                                                   Status = Status.Unresolved, Text = text, Answers = answers};
             unitOfWork.JobApplicationRepository.Add(application);
         }
 
-        public void UpdateJobApplicationStatus(int applicationId, Status status)
+        public void UpdateStatus(int applicationId, Status status)
         {
             var application = unitOfWork.JobApplicationRepository.GetById(applicationId);
             application.Status = status;
             unitOfWork.JobApplicationRepository.Update(application);
         }
 
-        public void DeleteJobApplication(int applicationId)
+        public void Delete(int applicationId)
         {
             unitOfWork.JobApplicationRepository.Delete(applicationId);
         }

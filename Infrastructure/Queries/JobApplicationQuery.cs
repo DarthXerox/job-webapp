@@ -18,6 +18,12 @@ namespace Infrastructure.Queries
             return this;
         }
 
+        public JobApplicationQuery FilterByApplicantId(int applicantId)
+        {
+            Queryable = Queryable.Where(application => application.ApplicantId == applicantId);
+            return this;
+        }
+
         public JobApplicationQuery FilterByStatus(Status status)
         {
             Queryable = Queryable.Where(application => application.Status == status);

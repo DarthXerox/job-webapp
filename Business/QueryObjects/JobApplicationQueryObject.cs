@@ -18,11 +18,27 @@ namespace Business.QueryObjects
                 .ExecuteAsync();
         }
 
-        public async Task<IEnumerable<JobApplication>> GetByStatusAsync(Status status, bool ascendingOrder = true)
+        public async Task<IEnumerable<JobApplication>> GetByJobOfferIdAndStatusAsync(int jobOfferId, Status status)
         {
             return await UnitOfWork.JobApplicationQuery
+                .FilterByJobOfferId(jobOfferId)
                 .FilterByStatus(status)
+                .ExecuteAsync();
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByApplicantIdAsync(int applicantId, bool ascendingOrder = true)
+        {
+            return await UnitOfWork.JobApplicationQuery
+                .FilterByApplicantId(applicantId)
                 .OrderBy(keySelector: application => application.Status, ascendingOrder)
+                .ExecuteAsync();
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByApplicantIdAndStatusAsync(int applicantId, Status status)
+        {
+            return await UnitOfWork.JobApplicationQuery
+                .FilterByApplicantId(applicantId)
+                .FilterByStatus(status)
                 .ExecuteAsync();
         }
     }
