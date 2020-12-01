@@ -42,7 +42,7 @@ namespace UnitTests.Infrastructure
         [Fact]
         public void DatabaseAccess()
         {
-            Assert.NotNull(new UnitOfWork());
+            Assert.NotNull(new UnitOfWork(inMemoryOptions));
         }
 
 
