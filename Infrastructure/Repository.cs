@@ -27,6 +27,8 @@ namespace Infrastructure
 
         public virtual TEntity GetById(int id) => dbSet.Find(id);
 
+        public virtual async Task<TEntity> GetByIdAsync(int id) => await dbSet.FindAsync(id);
+
         public virtual void Add([NotNull] TEntity entity)
         {
             if (entity == null) throw new ArgumentNullException($"{nameof(Add)} entity must not be null");
