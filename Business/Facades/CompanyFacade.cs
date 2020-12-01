@@ -37,7 +37,7 @@ namespace Business.Facades
 
         public async Task<IEnumerable<CompanyDto>> ListByNameAsync(string name)
         {
-            return mapper.Map< IEnumerable<Company>, IEnumerable<CompanyDto>>(
+            return mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(
                 await companyService.ListCompaniesByNameAsync(name));
         }
 
