@@ -16,11 +16,11 @@ namespace Business.Facades
         private readonly IMapper mapper;
         private readonly JobApplicationService jobApplicationService;
 
-        public JobApplicationFacade()
+        public JobApplicationFacade(UnitOfWork unitOfWork, IMapper mapper, JobApplicationService jobApplicationService)
         {
-            unitOfWork = new UnitOfWork();
-            mapper = new Mapper(new MapperConfiguration(GeneralMappingConfig.ConfigureMapping));
-            jobApplicationService = new JobApplicationService(unitOfWork);
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            this.jobApplicationService = jobApplicationService;
         }
 
         public async Task ApplyToJobOfferAsync(int jobOfferId, int applicantId, string text, ICollection<JobApplicationAnswer> answers)

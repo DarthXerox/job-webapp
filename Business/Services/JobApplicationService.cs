@@ -7,15 +7,15 @@ using Infrastructure;
 
 namespace Business.Services
 {
-    class JobApplicationService
+    public class JobApplicationService
     {
         private readonly UnitOfWork unitOfWork;
         private readonly JobApplicationQueryObject jobApplicationQueryObject;
 
-        public JobApplicationService(UnitOfWork unitOfWork)
+        public JobApplicationService(UnitOfWork unitOfWork, JobApplicationQueryObject jobApplicationQueryObject)
         {
             this.unitOfWork = unitOfWork;
-            jobApplicationQueryObject = new JobApplicationQueryObject(unitOfWork);
+            this.jobApplicationQueryObject = jobApplicationQueryObject;
         }
 
         public async Task<IEnumerable<JobApplication>> GetByJobOfferIdAsync(int jobOfferId)
