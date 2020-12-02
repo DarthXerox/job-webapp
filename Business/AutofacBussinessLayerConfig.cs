@@ -8,7 +8,7 @@ using Infrastructure;
 
 namespace Business
 {
-    public class AutofacBussinessLayerConfig : Autofac.Module
+    public class AutofacBusinessLayerConfig : Autofac.Module
     {
         public static IContainer Configure()
         {
@@ -16,17 +16,17 @@ namespace Business
             builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.QueryObjects")
+                .Where(t => t.Namespace == nameof(QueryObjects))
                 .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.Services")
+                .Where(t => t.Namespace == nameof(Services))
                 .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Bussiness.Facades")
+                .Where(t => t.Namespace == nameof(Facades))
                 .AsSelf()
                 .InstancePerDependency();
 
