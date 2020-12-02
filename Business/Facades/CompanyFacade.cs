@@ -47,7 +47,7 @@ namespace Business.Facades
                 await companyService.ListCompaniesByNameAsync(name, false));
         }
 
-        public async Task<IEnumerable<CompanyDto>> ListByNameContainsContainsAsync(string name)
+        public async Task<IEnumerable<CompanyDto>> ListByNameContainsAsync(string name)
         {
             return mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(
                 await companyService.ListCompaniesByNameContainsAsync(name));
