@@ -17,6 +17,6 @@ namespace DAL.Entities
         [MaxLength(64)]
         public string? Email { get; set; }
 
-        public virtual ICollection<JobSeekerSkill>? Skills { get; set; }
+        public virtual ICollection<string>? Skills { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Infrastructure.Queries
 
         public CompanyQuery FilterByNameContains(string name)
         {
-            Queryable = Queryable.Where(company => company.Name.Contains(name));
+            Queryable = Queryable.Where(company => company.Name != null && company.Name.Contains(name));
             return this;
         }
     }

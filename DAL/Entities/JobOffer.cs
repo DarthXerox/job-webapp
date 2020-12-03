@@ -21,7 +21,7 @@ namespace DAL.Entities
         [MaxLength(1024)]
         public string? Description { get; set; }
 
-        public virtual ICollection<JobOfferSkill>? RelevantSkills { get; set; }
+        public virtual ICollection<string>? RelevantSkills { get; set; }
 
         public virtual ICollection<JobOfferQuestion>? Questions { get; set; }
     }

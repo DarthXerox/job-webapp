@@ -16,21 +16,19 @@ namespace Infrastructure.Queries
 
         public JobOfferQuery FilterByNameContains(string name)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.Name.Contains(name));
+            Queryable = Queryable.Where(jobOffer => jobOffer.Name != null && jobOffer.Name.Contains(name));
             return this;
         }
 
         public JobOfferQuery FilterByCompanyName(string companyName)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.Company.Name == companyName);
+            Queryable = Queryable.Where(jobOffer => jobOffer.Company != null && jobOffer.Company.Name == companyName);
             return this;
         }
 
         public JobOfferQuery FilterBySkillTag(string tag)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.RelevantSkills
-                .Select(jobOfferSkill => jobOfferSkill.Skill.Tag)
-                .Contains(tag));
+            Queryable = Queryable.Where(jobOffer => jobOffer.RelevantSkills != null && jobOffer.RelevantSkills.Contains(tag));
             return this;
         }
 

@@ -4,12 +4,12 @@ namespace Business.DTOs
 {
     public class JobSeekerDto
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public string Surname { get; set; }
+        public string? Surname { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
-        public ICollection<JobSeekerSkillDto> Skills { get; set; }
+        public ICollection<string>? Skills { get; set; }
     }
 }

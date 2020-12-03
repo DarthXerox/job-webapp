@@ -20,10 +20,7 @@ namespace Infrastructure
             JobApplicationRepository = new Repository<JobApplication>(context);
             JobOfferQuestionRepository = new Repository<JobOfferQuestion>(context);
             JobOfferRepository = new Repository<JobOffer>(context);
-            JobOfferSkillRepository = new Repository<JobOfferSkill>(context);
             JobSeekerRepository = new Repository<JobSeeker>(context);
-            JobSeekerSkillRepository = new Repository<JobSeekerSkill>(context);
-            SkillRepository = new Repository<Skill>(context);
             JobOfferQuery = new JobOfferQuery(context);
             CompanyQuery = new CompanyQuery(context);
             JobApplicationQuery = new JobApplicationQuery(context);
@@ -35,11 +32,10 @@ namespace Infrastructure
             Repository<JobApplication> jobApplicationRepository,
             Repository<JobOfferQuestion> jobOfferQuestionRepository,
             Repository<JobOffer> jobOfferRepository,
-            Repository<JobOfferSkill> jobOfferSkillRepository,
             Repository<JobSeeker> jobSeekerRepository,
-            Repository<JobSeekerSkill> jobSeekerSkillRepository,
-            Repository<Skill> skillRepository,
-            JobOfferQuery jobOfferQuery, CompanyQuery companyQuery, JobApplicationQuery joApplicationQuery)
+            JobOfferQuery jobOfferQuery,
+            CompanyQuery companyQuery,
+            JobApplicationQuery jobApplicationQuery)
         {
             this.context = context;
             CompanyRepository = companyRepository;
@@ -47,13 +43,10 @@ namespace Infrastructure
             JobApplicationRepository = jobApplicationRepository;
             JobOfferQuestionRepository = jobOfferQuestionRepository;
             JobOfferRepository = jobOfferRepository;
-            JobOfferSkillRepository = jobOfferSkillRepository;
             JobSeekerRepository = jobSeekerRepository;
-            JobSeekerSkillRepository = jobSeekerSkillRepository;
-            SkillRepository = skillRepository;
             JobOfferQuery = jobOfferQuery;
             CompanyQuery = companyQuery;
-            JobApplicationQuery = joApplicationQuery;
+            JobApplicationQuery = jobApplicationQuery;
         }
 
         public Repository<Company> CompanyRepository { get; }
@@ -61,10 +54,7 @@ namespace Infrastructure
         public Repository<JobApplicationAnswer> JobApplicationAnswerRepository { get; }
         public Repository<JobOffer> JobOfferRepository { get; }
         public Repository<JobOfferQuestion> JobOfferQuestionRepository { get; }
-        public Repository<JobOfferSkill> JobOfferSkillRepository { get; }
         public Repository<JobSeeker> JobSeekerRepository { get; }
-        public Repository<JobSeekerSkill> JobSeekerSkillRepository { get; }
-        public Repository<Skill> SkillRepository { get; }
 
         public JobOfferQuery JobOfferQuery { get; }
         public CompanyQuery CompanyQuery { get; }

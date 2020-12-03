@@ -13,10 +13,7 @@ namespace Business
             config.CreateMap<JobApplicationAnswer, JobApplicationAnswerDto>().ReverseMap();
             config.CreateMap<JobOffer, JobOfferDto>().ReverseMap();
             config.CreateMap<JobOfferQuestion, JobOfferQuestionDto>().ReverseMap();
-            config.CreateMap<JobOfferSkill, JobOfferSkillDto>().ReverseMap();
             config.CreateMap<JobSeeker, JobSeekerDto>().ReverseMap();
-            config.CreateMap<JobSeekerSkill, JobSeekerSkillDto>().ReverseMap();
-            config.CreateMap<Skill, SkillDto>().ReverseMap();
         }
     }
 }

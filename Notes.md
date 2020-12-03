@@ -1,4 +1,4 @@
-# Notes  
+# Notes
 
 ## Filters:
 
@@ -15,7 +15,6 @@ How about companies by skill?
 ## Facades
 
 ### JobOffers (Puf)
-- Apply
 - List
 - Search (by skill)
 - Add (only companies)
