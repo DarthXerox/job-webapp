@@ -21,7 +21,7 @@ namespace Infrastructure
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == "Infrastructure.Queries")
+                .Where(t => t.Namespace == nameof(Queries))
                 .AsSelf()
                 .InstancePerDependency();
 
