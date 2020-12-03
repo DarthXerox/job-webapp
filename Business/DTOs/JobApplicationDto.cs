@@ -18,6 +18,6 @@ namespace Business.DTOs
 
         public string? Text { get; set; }
 
-        public ICollection<JobApplicationAnswer>? Answers { get; set; }
+        public ICollection<JobApplicationAnswerDto>? Answers { get; set; }
     }
 }
