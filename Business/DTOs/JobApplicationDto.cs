@@ -4,7 +4,7 @@ using DAL.Enums;
 
 namespace Business.DTOs
 {
-    public class JobApplicationDto
+    public class JobApplicationDto : BaseDTO
     {
         public int? ApplicantId { get; set; }
 
