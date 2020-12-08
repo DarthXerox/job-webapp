@@ -23,40 +23,40 @@ namespace Business.Facades
             this.companyService = companyService;
         }
 
-        public async void AddAsync(int id, string name)
+        public async void AddAsync(CompanyDto companyDto)
         {
-            companyService.AddCompany(id, name);
+            companyService.AddCompany(mapper.Map<CompanyDto, Company>(companyDto));
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async void EditInfoAsync(int id, string newName)
+        public async void EditInfoAsync(CompanyDto companyDto)
         {
-            companyService.UpdateCompany(id, newName);
+            companyService.UpdateCompany(mapper.Map<CompanyDto, Company>(companyDto));
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<CompanyDto>> ListByNameAsync(string name)
+        public async Task<IEnumerable<CompanyDto>> ListByNameAsync(CompanyDto companyDto)
         {
             return mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(
-                await companyService.ListCompaniesByNameAsync(name));
+                await companyService.ListCompaniesByNameAsync(companyDto.Name));
         }
 
-        public async Task<IEnumerable<CompanyDto>> ListByNameDescendingAsync(string name)
+        public async Task<IEnumerable<CompanyDto>> ListByNameDescendingAsync(CompanyDto companyDto)
         {
             return mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(
-                await companyService.ListCompaniesByNameAsync(name, false));
+                await companyService.ListCompaniesByNameAsync(companyDto.Name, false));
         }
 
-        public async Task<IEnumerable<CompanyDto>> ListByNameContainsAsync(string name)
+        public async Task<IEnumerable<CompanyDto>> ListByNameContainsAsync(CompanyDto companyDto)
         {
             return mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(
-                await companyService.ListCompaniesByNameContainsAsync(name));
+                await companyService.ListCompaniesByNameContainsAsync(companyDto.Name));
         }
 
-        public async Task<IEnumerable<CompanyDto>> ListByNameContainsDescendingAsync(string name)
+        public async Task<IEnumerable<CompanyDto>> ListByNameContainsDescendingAsync(CompanyDto companyDto)
         {
             return mapper.Map<IEnumerable<Company>, IEnumerable<CompanyDto>>(
-                await companyService.ListCompaniesByNameContainsAsync(name, false));
+                await companyService.ListCompaniesByNameContainsAsync(companyDto.Name, false));
         }
     }
 }

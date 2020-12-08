@@ -23,20 +23,21 @@ namespace Business.Facades
             this.jobSeekerService = jobSeekerService;
         }
 
-        public async void RegisterAsync(int id, string name, string surname, string email)
+        public async void RegisterAsync(JobSeekerDto jobSeekerDto)
         {
-            jobSeekerService.RegisterJobSeeker(id, name, surname, email);
+            jobSeekerService.RegisterJobSeeker(mapper.Map<JobSeeker>(jobSeekerDto));
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<JobSeekerDto> GetInfoAsync(int id)
+        public async Task<JobSeekerDto> GetInfoAsync(JobSeekerDto jobSeekerDto)
         {
-            return mapper.Map<JobSeeker, JobSeekerDto>(await jobSeekerService.GetJobSeeker(id));
+            return mapper.Map<JobSeeker, JobSeekerDto>(await jobSeekerService.GetJobSeeker(
+                jobSeekerDto.Id ?? throw new NullReferenceException("JobSeekerDto.Id can't be null!")));
         } 
 
-        public async void EditInfoAsync(int id, string name, string surname, string email)
+        public async void EditInfoAsync(JobSeekerDto jobSeekerDto)
         {
-            jobSeekerService.UpdateJobSeeker(id, name, surname, email);
+            jobSeekerService.UpdateJobSeeker(mapper.Map<JobSeeker>(jobSeekerDto));
             await unitOfWork.SaveChangesAsync();
         }
     }

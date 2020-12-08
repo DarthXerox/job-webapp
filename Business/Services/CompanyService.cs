@@ -19,22 +19,14 @@ namespace Business.Services
             this.companyQueryObject = companyQueryObject;
         }
 
-        public void AddCompany(int id, string name)
+        public void AddCompany(Company company)
         {
-            unitOfWork.CompanyRepository.Add(new Company()
-            {
-                Id = id,
-                Name = name
-            });
+            unitOfWork.CompanyRepository.Add(company);
         }
 
-        public void UpdateCompany(int id, string name)
+        public void UpdateCompany(Company company)
         {
-            unitOfWork.CompanyRepository.Update(new Company()
-            {
-                Id = id,
-                Name = name
-            });
+            unitOfWork.CompanyRepository.Update(company);
         }
 
         public async Task<IEnumerable<Company>> ListCompaniesByNameAsync(string name, bool ascending = true)

@@ -7,12 +7,12 @@ namespace DAL.Entities
 {
     public class JobApplication : BaseEntity
     {
-        public int ApplicantId { get; set; }
+        public int? ApplicantId { get; set; }
 
         [ForeignKey(nameof(ApplicantId))]
         public virtual JobSeeker? Applicant { get; set; }
 
-        public int JobOfferId { get; set; }
+        public int? JobOfferId { get; set; }
 
         [ForeignKey(nameof(JobOfferId))]
         public virtual JobOffer? JobOffer { get; set; }

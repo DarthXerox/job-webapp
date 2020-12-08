@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -20,19 +21,19 @@ namespace Business.Facades
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetByNameAsync(string name, bool ascendingOrder = true)
+        public async Task<IEnumerable<JobOfferDto>> GetByNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameAsync(name, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameAsync(jobOfferDto.Name, ascendingOrder));
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetByNameContainsAsync(string name, bool ascendingOrder = true)
+        public async Task<IEnumerable<JobOfferDto>> GetByNameContainsAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(name, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(jobOfferDto.Name, ascendingOrder));
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetByCompanyNameAsync(string companyName, bool ascendingOrder = true)
+        public async Task<IEnumerable<JobOfferDto>> GetByCompanyNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(companyName, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(jobOfferDto.Company.Name, ascendingOrder));
         }
 
         public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
@@ -45,9 +46,9 @@ namespace Business.Facades
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCityAsync(city, ascendingOrder));
         }
 
-        public async Task CreateAsync(string name, string city, Company company, string description, ICollection<string> relevantSkills, ICollection<string> questions)
+        public async Task CreateAsync(JobOfferDto jobOfferDto)
         {
-            await jobOfferService.CreateAsync(name, city, company, description, relevantSkills, questions);
+            await jobOfferService.CreateAsync(mapper.Map<JobOffer>(jobOfferDto));
         }
 
         public async Task Update(JobOfferDto jobOffer)
@@ -55,9 +56,9 @@ namespace Business.Facades
             await jobOfferService.UpdateAsync(mapper.Map<JobOfferDto, JobOffer>(jobOffer));
         }
 
-        public async Task Delete(int jobOfferId)
+        public async Task Delete(JobOfferDto jobOfferDto)
         {
-            await jobOfferService.DeleteAsync(jobOfferId);
+            await jobOfferService.DeleteAsync(jobOfferDto.Id ?? throw new NullReferenceException("JobOfferDto.Id can't be null!"));
         }
     }
 }

@@ -42,16 +42,9 @@ namespace Business.Services
             return await jobOfferQueryObject.GetByCityAsync(city, ascendingOrder);
         }
 
-        public async Task CreateAsync(string name, string city, Company company, string description, ICollection<string> relevantSkills, ICollection<string> questions)
+        public async Task CreateAsync(JobOffer jobOffer)
         {
-            unitOfWork.JobOfferRepository.Add(new JobOffer
-            {
-                Name = name,
-                City = city,
-                Company = company,
-                Description = description,
-                RelevantSkills = relevantSkills
-            });
+            unitOfWork.JobOfferRepository.Add(jobOffer);
             await unitOfWork.SaveChangesAsync();
         }
 

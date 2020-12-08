@@ -13,7 +13,7 @@ namespace DAL.Entities
         [MaxLength(64)]
         public string? City { get; set; }
 
-        public int CompanyId { get; set; }
+        public int? CompanyId { get; set; }
 
         [ForeignKey(nameof(CompanyId))]
         public virtual Company? Company { get; set; }

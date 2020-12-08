@@ -38,11 +38,9 @@ namespace Business.Services
             return await jobApplicationQueryObject.GetByApplicantIdAndStatusAsync(applicantId, status);
         }
 
-        public void Create(int jobOfferId, int applicantId, string text, ICollection<JobApplicationAnswer> answers)
+        public void Create(JobApplication jobApplication)
         {
-            var application = new JobApplication{ JobOfferId = jobOfferId, ApplicantId = applicantId,
-                                                  Status = Status.Unresolved, Text = text, Answers = answers};
-            unitOfWork.JobApplicationRepository.Add(application);
+            unitOfWork.JobApplicationRepository.Add(jobApplication);
         }
 
         public void UpdateStatus(int applicationId, Status status)

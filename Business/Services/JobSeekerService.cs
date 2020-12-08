@@ -16,15 +16,9 @@ namespace Business.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public void RegisterJobSeeker(int id, string name, string surname, string email)
+        public void RegisterJobSeeker(JobSeeker jobSeeker)
         {
-            unitOfWork.JobSeekerRepository.Add(new JobSeeker()
-            { 
-                Id = id,
-                Name = name,
-                Surname = surname,
-                Email = email
-            });
+            unitOfWork.JobSeekerRepository.Add(jobSeeker);
         }
 
         public async Task<JobSeeker> GetJobSeeker(int id)
@@ -32,15 +26,9 @@ namespace Business.Services
             return await unitOfWork.JobSeekerRepository.GetByIdAsync(id);
         }
 
-        public void UpdateJobSeeker(int id, string name, string surname, string email)
+        public void UpdateJobSeeker(JobSeeker jobSeeker)
         {
-            unitOfWork.JobSeekerRepository.Update(new JobSeeker()
-            {
-                Id = id,
-                Name = name,
-                Surname = surname,
-                Email = email
-            });
+            unitOfWork.JobSeekerRepository.Update(jobSeeker);
         }
 
 

@@ -23,43 +23,46 @@ namespace Business.Facades
             this.jobApplicationService = jobApplicationService;
         }
 
-        public async Task ApplyToJobOfferAsync(int jobOfferId, int applicantId, string text, ICollection<JobApplicationAnswerDto> answers)
+        public async Task ApplyToJobOfferAsync(JobApplicationDto jobApplicationDto)
         {
-            jobApplicationService.Create(jobOfferId, applicantId, text, mapper.Map<ICollection<JobApplicationAnswer>>(answers));
+            jobApplicationService.Create(mapper.Map<JobApplication>(jobApplicationDto));
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByJobOfferIdAsync(int jobOfferId)
+        public async Task<IEnumerable<JobApplicationDto>> GetByJobOfferIdAsync(JobApplicationDto jobApplicationDto)
         {
-            return mapper.Map<IEnumerable<JobApplicationDto>>(await jobApplicationService.GetByJobOfferIdAsync(jobOfferId));
+            return mapper.Map<IEnumerable<JobApplicationDto>>(await jobApplicationService.GetByJobOfferIdAsync(
+                jobApplicationDto.JobOfferId ?? throw new NullReferenceException("JobOfferId can't be null!")));
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByJobOfferIdAndStatusAsync(int jobOfferId, Status status)
+        public async Task<IEnumerable<JobApplicationDto>> GetByJobOfferIdAndStatusAsync(JobApplicationDto jobApplicationDto, Status status)
         {
             return mapper.Map<IEnumerable<JobApplicationDto>>(
-                await jobApplicationService.GetByJobOfferIdAndStatusAsync(jobOfferId, status));
+                await jobApplicationService.GetByJobOfferIdAndStatusAsync(
+                    jobApplicationDto.JobOfferId ?? throw new NullReferenceException("JobOfferId can't be null!"), status));
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantIdAsync(int applicantId)
+        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantIdAsync(JobApplicationDto jobApplicationDto)
         {
-            return mapper.Map<IEnumerable<JobApplicationDto>>(await jobApplicationService.GetByApplicantIdAsync(applicantId));
+            return mapper.Map<IEnumerable<JobApplicationDto>>(await jobApplicationService.GetByApplicantIdAsync(
+                jobApplicationDto.ApplicantId ?? throw new NullReferenceException("ApplicantId can't be null!")));
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantIdAndStatusAsync(int applicantId, Status status)
+        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantIdAndStatusAsync(JobApplicationDto jobApplicationDto, Status status)
         {
             return mapper.Map<IEnumerable<JobApplicationDto>>(
-                await jobApplicationService.GetByApplicantIdAndStatusAsync(applicantId, status));
+                await jobApplicationService.GetByApplicantIdAndStatusAsync(jobApplicationDto.ApplicantId ?? throw new NullReferenceException("ApplicantId can't be null!"), status));
         }
 
-        public async Task UpdateStatusAsync(int applicationId, Status status)
+        public async Task UpdateStatusAsync(JobApplicationDto jobApplicationDto, Status status)
         {
-            jobApplicationService.UpdateStatus(applicationId, status);
+            jobApplicationService.UpdateStatus(jobApplicationDto.Id ?? throw new NullReferenceException("JobApplicationId can't be null!"), status);
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int applicationId)
+        public async Task DeleteAsync(JobApplicationDto jobApplicationDto)
         {
-            jobApplicationService.Delete(applicationId);
+            jobApplicationService.Delete(jobApplicationDto.Id ?? throw new NullReferenceException("JobApplicationId can't be null!"));
             await unitOfWork.SaveChangesAsync();
         }
     }
