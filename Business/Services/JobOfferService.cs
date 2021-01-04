@@ -17,6 +17,11 @@ namespace Business.Services
             this.jobOfferQueryObject = jobOfferQueryObject;
         }
 
+        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber)
+        {
+            return await jobOfferQueryObject.GetAllAsync(pageSize, pageNumber);
+        }
+
         public async Task<IEnumerable<JobOffer>> GetByNameAsync(string name, bool ascendingOrder = true)
         {
             return await jobOfferQueryObject.GetByNameAsync(name, ascendingOrder);

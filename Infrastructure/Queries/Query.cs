@@ -27,5 +27,13 @@ namespace Infrastructure.Queries
 
             return this;
         }
+
+        public Query<TEntity> Page(int pageSize, int pageNumber)
+        {
+            // pages numbered from 1
+            queryable = queryable.Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize);
+            return this;
+        }
     }
 }

@@ -9,6 +9,14 @@ namespace Business.QueryObjects
     {
         public JobOfferQueryObject(UnitOfWork unit) : base(unit) { }
 
+        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber)
+        {
+            return await UnitOfWork.JobOfferQuery
+                .OrderBy(keySelector: jobOffer => jobOffer.Name)
+                .Page(pageSize, pageNumber)
+                .ExecuteAsync();
+        }
+
         public async Task<IEnumerable<JobOffer>> GetByNameAsync(string name, bool ascendingOrder = true)
         {
             return await UnitOfWork.JobOfferQuery

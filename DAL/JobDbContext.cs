@@ -12,7 +12,7 @@ namespace DAL
             @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=JobDatabase;Trusted_Connection=True;";
 
         /// <summary>
-        ///     Yes, this is not necessary, but when creating migrations DbContext MUST have a deafult no-paramter constructor
+        ///     Yes, this is not necessary, but when creating migrations DbContext MUST have a default no-parameter constructor
         /// </summary>
         public JobDbContext() { }
 
@@ -39,7 +39,7 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var stringConverter = new ValueConverter<ICollection<string>, string>(
-                s => string.Join(";", s),
+                s => string.Join(';', s),
                 s => s.Split(new[] { ';' }));
             modelBuilder.Entity<JobOffer>().Property(nameof(JobOffer.RelevantSkills)).HasConversion(stringConverter);
             modelBuilder.Entity<JobSeeker>().Property(nameof(JobSeeker.Skills)).HasConversion(stringConverter);
