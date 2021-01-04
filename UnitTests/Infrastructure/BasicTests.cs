@@ -68,7 +68,7 @@ namespace UnitTests.Infrastructure
             Assert.NotNull(seekers[0]);
 
             // Delete
-            unit.JobSeekerRepository.Delete(seekers[0].Id);
+            unit.JobSeekerRepository.Delete(seekers[0]);
             unit.SaveChanges();
 
             // Updated database

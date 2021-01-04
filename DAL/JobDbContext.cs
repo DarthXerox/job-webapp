@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL
 {
@@ -36,6 +38,12 @@ namespace DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var stringConverter = new ValueConverter<ICollection<string>, string>(
+                s => string.Join(";", s),
+                s => s.Split(new[] { ';' }));
+            modelBuilder.Entity<JobOffer>().Property(nameof(JobOffer.RelevantSkills)).HasConversion(stringConverter);
+            modelBuilder.Entity<JobSeeker>().Property(nameof(JobSeeker.Skills)).HasConversion(stringConverter);
+
             modelBuilder.Entity<JobApplication>()
                 .HasOne(a => a.Applicant)
                 .WithOne().HasForeignKey<JobApplication>(a => a.ApplicantId);

@@ -10,20 +10,20 @@ namespace Infrastructure.Queries
 {
     public abstract class Query<TEntity> where TEntity : BaseEntity
     {
-        protected IQueryable<TEntity> Queryable;
+        protected IQueryable<TEntity> queryable;
 
         protected Query(DbContext dbContext)
         {
-            Queryable = dbContext.Set<TEntity>();
+            queryable = dbContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> ExecuteAsync() => await Queryable.ToListAsync() ?? new List<TEntity>();
+        public async Task<IEnumerable<TEntity>> ExecuteAsync() => await queryable.ToListAsync() ?? new List<TEntity>();
 
         public Query<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ascendingOrder = true)
         {
-            Queryable = ascendingOrder
-                ? Queryable.OrderBy(keySelector)
-                : Queryable.OrderByDescending(keySelector);
+            queryable = ascendingOrder
+                ? queryable.OrderBy(keySelector)
+                : queryable.OrderByDescending(keySelector);
 
             return this;
         }

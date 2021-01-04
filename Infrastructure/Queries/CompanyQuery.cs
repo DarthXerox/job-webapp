@@ -10,13 +10,13 @@ namespace Infrastructure.Queries
 
         public CompanyQuery FilterByName(string name)
         {
-            Queryable = Queryable.Where(company => company.Name == name);
+            queryable = queryable.Where(company => company.Name == name);
             return this;
         }
 
         public CompanyQuery FilterByNameContains(string name)
         {
-            Queryable = Queryable.Where(company => company.Name != null && company.Name.Contains(name));
+            queryable = queryable.Where(company => company.Name != null && company.Name.Contains(name));
             return this;
         }
     }

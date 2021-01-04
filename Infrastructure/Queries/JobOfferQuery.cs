@@ -10,31 +10,31 @@ namespace Infrastructure.Queries
 
         public JobOfferQuery FilterByName(string name)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.Name == name);
+            queryable = queryable.Where(jobOffer => jobOffer.Name == name);
             return this;
         }
 
         public JobOfferQuery FilterByNameContains(string name)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.Name != null && jobOffer.Name.Contains(name));
+            queryable = queryable.Where(jobOffer => jobOffer.Name != null && jobOffer.Name.Contains(name));
             return this;
         }
 
         public JobOfferQuery FilterByCompanyName(string companyName)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.Company != null && jobOffer.Company.Name == companyName);
+            queryable = queryable.Where(jobOffer => jobOffer.Company != null && jobOffer.Company.Name == companyName);
             return this;
         }
 
         public JobOfferQuery FilterBySkillTag(string tag)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.RelevantSkills != null && jobOffer.RelevantSkills.Contains(tag));
+            queryable = queryable.Where(jobOffer => jobOffer.RelevantSkills != null && jobOffer.RelevantSkills.Contains(tag));
             return this;
         }
 
         public JobOfferQuery FilterByCity(string city)
         {
-            Queryable = Queryable.Where(jobOffer => jobOffer.City == city);
+            queryable = queryable.Where(jobOffer => jobOffer.City == city);
             return this;
         }
     }
