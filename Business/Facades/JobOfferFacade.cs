@@ -21,9 +21,11 @@ namespace Business.Facades
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetAllAsync(int pageSize, int pageNumber)
+        public async Task<(int totalCount, IEnumerable<JobOfferDto>)> GetAllAsync(int pageSize, int pageNumber)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber));
+            var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber));
+            int totalCount = await jobOfferService.GetTotalCountAsync();
+            return (totalCount, jobOffers);
         }
 
         public async Task<IEnumerable<JobOfferDto>> GetByNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)

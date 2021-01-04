@@ -22,6 +22,11 @@ namespace Business.Services
             return await jobOfferQueryObject.GetAllAsync(pageSize, pageNumber);
         }
 
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await unitOfWork.JobOfferRepository.GetTotalCountAsync();
+        }
+
         public async Task<IEnumerable<JobOffer>> GetByNameAsync(string name, bool ascendingOrder = true)
         {
             return await jobOfferQueryObject.GetByNameAsync(name, ascendingOrder);

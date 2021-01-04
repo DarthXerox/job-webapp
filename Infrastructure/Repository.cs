@@ -60,5 +60,10 @@ namespace Infrastructure
             if (context.Entry(entity).State == EntityState.Detached) dbSet.Attach(entity);
             dbSet.Remove(entity);
         }
+
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await context.Set<TEntity>().CountAsync();
+        }
     }
 }
