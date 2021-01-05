@@ -46,3 +46,14 @@ add at least 2-3 query classes, more when implementing BL
 ## Query
 https://www.rahulpnath.com/blog/query-object-pattern-and-entity-framework-making-readable-queries/
 for each possible "dotaz" exists specific Query class
+
+## To Do:
+### Do prezentacie
+- BL tests
+- JobOffer view + frontend
+- slajdy??
+
+### Potom
+- webapi
+- ostatne views
+- zvysok frontendu
