@@ -52,6 +52,11 @@ namespace Business.Services
             return await jobOfferQueryObject.GetByCityAsync(city, ascendingOrder);
         }
 
+        public async Task<JobOffer> GetByIdAsync(int id)
+        {
+            return await unitOfWork.JobOfferRepository.GetByIdAsync(id);
+        }
+
         public async Task CreateAsync(JobOffer jobOffer)
         {
             unitOfWork.JobOfferRepository.Add(jobOffer);

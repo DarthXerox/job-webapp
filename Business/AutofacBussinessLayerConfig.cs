@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Autofac;
 using AutoMapper;
-using Business.Facades;
-using Business.QueryObjects;
-using Business.Services;
 using Infrastructure;
 
 namespace Business

@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Autofac;
-using DAL;
-using Infrastructure.Queries;
 using Module = Autofac.Module;
 
 namespace Infrastructure

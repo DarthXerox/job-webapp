@@ -1,0 +1,9 @@
+@model Business.DTOs.JobOfferDto
+@{ ViewData["Title"] = "Delete Job Offer"; }
+
+<form asp-action="DeleteJobOffer">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <input type="submit" value="Confirm delete" class="btn btn-primary" />
+    </div>
+</form>

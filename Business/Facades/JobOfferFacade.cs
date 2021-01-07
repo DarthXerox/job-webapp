@@ -53,6 +53,11 @@ namespace Business.Facades
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCityAsync(city, ascendingOrder));
         }
 
+        public async Task<JobOfferDto> GetByIdAsync(int id)
+        {
+            return mapper.Map<JobOfferDto>(await jobOfferService.GetByIdAsync(id));
+        }
+
         public async Task CreateAsync(JobOfferDto jobOfferDto)
         {
             await jobOfferService.CreateAsync(mapper.Map<JobOffer>(jobOfferDto));

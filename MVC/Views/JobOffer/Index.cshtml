@@ -1,17 +1,22 @@
 @using Business.DTOs;
 @model MVC.Models.PagedListViewModel<JobOfferDto>
-
+@{
+    ViewData["Title"] = "Job Offers";
+}
 <p>
-    <a href="https://www.youtube.com/watch?v=9FXSN6Y2pgY" target="_blank" class="btn btn-success">Add offer</a>
+    @Html.ActionLink("Add job offer", "AddJobOffer", "JobOffer", 0, new { @class = "btn btn-primary" })
 </p>
+<h4>All offers</h4>
 <table class="table">
     <thead>
-    <tr>
-        <th>All offers</th>
-    </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.List) {
+    @foreach (var item in Model.List)
+    {
         <tr>
             <td>
                 @item.Id
@@ -19,8 +24,8 @@
             <td>
                 @item.Name
             </td>
-            <td>
-                @item.Company.Name
+            <td style="float: right;">
+                @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id=item.Id }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }
