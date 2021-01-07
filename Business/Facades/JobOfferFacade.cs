@@ -21,7 +21,7 @@ namespace Business.Facades
             this.mapper = mapper;
         }
 
-        public async Task<(int totalCount, IEnumerable<JobOfferDto>)> GetAllAsync(int pageSize, int pageNumber)
+        public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllAsync(int pageSize, int pageNumber)
         {
             var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber));
             int totalCount = await jobOfferService.GetTotalCountAsync();

@@ -1,0 +1,33 @@
+@using Business.DTOs;
+@model MVC.Models.PagedListViewModel<JobOfferDto>
+
+<p>
+    <a href="https://www.youtube.com/watch?v=9FXSN6Y2pgY" target="_blank" class="btn btn-success">Add offer</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>All offers</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.List) {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Company.Name
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial", Model.Pagination);
+    }
+</div>
