@@ -4,6 +4,9 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using AutoMapper;
+using Business.Facades;
+using Business.QueryObjects;
+using Business.Services;
 using Infrastructure;
 
 namespace Business
@@ -15,17 +18,17 @@ namespace Business
             builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(QueryObjects))
+                .Where(t => t.Namespace == "Business.QueryObjects")
                 .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(Services))
+                .Where(t => t.Namespace == "Business.Services")
                 .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(Facades))
+                .Where(t => t.Namespace == "Business.Facades")
                 .AsSelf()
                 .InstancePerDependency();
 
@@ -40,17 +43,17 @@ namespace Business
             builder.RegisterModule(new AutofacInfrastructureConfig());
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(QueryObjects))
+                .Where(t => t.Namespace == "Business.QueryObjects")
                 .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(Services))
+                .Where(t => t.Namespace == "Business.Services")
                 .AsSelf()
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(Facades))
+                .Where(t => t.Namespace == "Business.Facades")
                 .AsSelf()
                 .InstancePerDependency();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DAL;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ namespace Infrastructure.Queries
     {
         protected IQueryable<TEntity> queryable;
 
-        protected Query(DbContext dbContext)
+        protected Query(JobDbContext dbContext)
         {
             queryable = dbContext.Set<TEntity>();
         }

@@ -28,11 +28,11 @@ namespace MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /**services.AddSession(options =>
+            services.AddSession(options =>
             {
                 //sessions hold for 20 minutes
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
-            });**/
+            });
 
             services.AddControllersWithViews();
 
@@ -68,9 +68,9 @@ namespace MVC
 
             app.UseRouting();
 
-            /**app.UseCookiePolicy();
+            app.UseCookiePolicy();
             app.UseSession();
-            app.UseAuthentication();
+            /**app.UseAuthentication();
             app.UseAuthorization();**/
 
             app.UseEndpoints(endpoints =>

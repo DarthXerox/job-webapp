@@ -1,4 +1,5 @@
 using System.Linq;
+using DAL;
 using DAL.Entities;
 using DAL.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace Infrastructure.Queries
 {
     public class JobApplicationQuery : Query<JobApplication>
     {
-        public JobApplicationQuery(DbContext dbContext) : base(dbContext)
+        public JobApplicationQuery(JobDbContext dbContext) : base(dbContext)
         {
             queryable = queryable.Include(application => application.Applicant);
         }

@@ -1,4 +1,5 @@
 using System.Linq;
+using DAL;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ namespace Infrastructure.Queries
 {
     public class CompanyQuery : Query<Company>
     {
-        public CompanyQuery(DbContext dbContext) : base(dbContext) { }
+        public CompanyQuery(JobDbContext dbContext) : base(dbContext) { }
 
         public CompanyQuery FilterByName(string name)
         {

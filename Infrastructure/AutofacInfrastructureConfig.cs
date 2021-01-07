@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using DAL;
+using Infrastructure.Queries;
 using Module = Autofac.Module;
 
 namespace Infrastructure
@@ -21,11 +22,11 @@ namespace Infrastructure
                 .InstancePerDependency();
 
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(t => t.Namespace == nameof(Queries))
+                .Where(t => t.Namespace == "Infrastructure.Queries")
                 .AsSelf()
                 .InstancePerDependency();
 
-            builder.RegisterType<JobDbContext>()
+            builder.RegisterType<DAL.JobDbContext>()
                 .AsSelf()
                 .InstancePerLifetimeScope();
         }
