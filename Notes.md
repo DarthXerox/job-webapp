@@ -55,5 +55,6 @@ for each possible "dotaz" exists specific Query class
 
 ### Potom
 - webapi
+- autentifikacia a prihlasovanie sa do systemu
 - ostatne views
 - zvysok frontendu
