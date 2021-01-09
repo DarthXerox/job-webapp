@@ -16,7 +16,7 @@ namespace UnitTests.Business
     /// <summary>
     /// These tests are working with 20210109172253_RelationshipFix.cs migration
     /// </summary>
-    public class BusinessTests
+    public class QueryObjectTests
     {
         private readonly DbContextOptions<JobDbContext> inMemoryOptions = new DbContextOptionsBuilder<JobDbContext>()
             .UseInMemoryDatabase(databaseName: "Test")
