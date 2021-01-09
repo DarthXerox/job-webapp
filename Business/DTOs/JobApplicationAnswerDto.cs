@@ -7,5 +7,9 @@ namespace Business.DTOs
         public int? QuestionId { get; set; }
 
         public JobOfferQuestionDto? Question { get; set; }
+
+        public int? JobApplicationId { get; set; }
+
+        public virtual JobApplicationDto? JobApplication { get; set; }
     }
 }
