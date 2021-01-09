@@ -14,12 +14,7 @@ using Xunit;
 namespace UnitTests.Business
 {
     /// <summary>
-    /// These tests are working with 20210107002834_SkillChangedToString.cs migration
-    ///
-    /// !!! It is necessary to make sure infrastructure is tested !!!
-    ///
-    /// Check if queries work right - filter correctly and in correct order
-    /// look for null id?
+    /// These tests are working with 20210109172253_RelationshipFix.cs migration
     /// </summary>
     public class BusinessTests
     {
