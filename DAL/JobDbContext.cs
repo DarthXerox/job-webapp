@@ -46,15 +46,26 @@ namespace DAL
 
             modelBuilder.Entity<JobApplication>()
                 .HasOne(a => a.Applicant)
-                .WithOne().HasForeignKey<JobApplication>(a => a.ApplicantId);
+                .WithMany()
+                .HasForeignKey(a => a.ApplicantId);
 
             modelBuilder.Entity<JobApplication>()
                 .HasOne(a => a.JobOffer)
-                .WithOne().HasForeignKey<JobApplication>(a => a.JobOfferId);
+                .WithMany()
+                .HasForeignKey(a => a.JobOfferId);
 
             modelBuilder.Entity<JobApplicationAnswer>()
                 .HasOne(a => a.Question)
-                .WithOne().HasForeignKey<JobApplicationAnswer>(a => a.QuestionId);
+                .WithMany()
+                .HasForeignKey(ans => ans.QuestionId);
+
+            modelBuilder.Entity<JobApplicationAnswer>()
+                .HasOne<JobApplication>()
+                .WithMany();
+
+            modelBuilder.Entity<JobOfferQuestion>()
+                .HasOne<JobOffer>()
+                .WithMany();
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

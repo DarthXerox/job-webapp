@@ -12,13 +12,20 @@ namespace Infrastructure.Queries
     public abstract class Query<TEntity> where TEntity : BaseEntity
     {
         protected IQueryable<TEntity> queryable;
+        protected JobDbContext dbContext;
 
         protected Query(JobDbContext dbContext)
         {
+            this.dbContext = dbContext;
             queryable = dbContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> ExecuteAsync() => await queryable.ToListAsync() ?? new List<TEntity>();
+        public async Task<IEnumerable<TEntity>> ExecuteAsync()
+        {
+            var ret = await queryable.ToListAsync() ?? new List<TEntity>();
+            queryable = dbContext.Set<TEntity>();
+            return ret;
+        }
 
         public Query<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ascendingOrder = true)
         {

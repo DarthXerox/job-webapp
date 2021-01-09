@@ -5,10 +5,11 @@ using DAL.Enums;
 namespace Infrastructure
 {
 
-    public class Seeder
+    public static class Seeder
     {
         public static void Seed(UnitOfWork unit)
         {
+            int id = 1;
             // JobSeekers
             JobSeeker neo = new JobSeeker { Name = "Neo", Surname = "Anderson", Email = "neo@matrix.com",
                 Skills = new List<string>{"C#", "Algorithms"}};
@@ -27,20 +28,29 @@ namespace Infrastructure
             unit.JobSeekerRepository.Add(bigshaq);
 
             // Questions
-            var questionYears = new JobOfferQuestion() { Text = "Where do you see yourself in 5 years?" };
+            // Each question should be tied to one specific joboffer
+            var questionYearsTesla = new JobOfferQuestion() { Text = "Where do you see yourself in 5 years?" };
+            var questionYearsMicrosoft = new JobOfferQuestion() { Text = "Where do you see yourself in 10 years?" };
             var questionWtf = new JobOfferQuestion() { Text = "How gut ar youre englisch skillz?"};
-            var questionRly = new JobOfferQuestion() { Text = "Do you really want this job?" };
+            var questionRlyApple = new JobOfferQuestion() { Text = "Do you really want this job?" };
+            var questionRlyTesla = new JobOfferQuestion() { Text = "Are you sure you want this job?" };
             var questionDont = new JobOfferQuestion() { Text = "Don't bother, you're not getting this job anyway..." };
-            var questionGoal = new JobOfferQuestion() { Text = "What is your life goal?" };
-            unit.JobOfferQuestionRepository.Add(questionYears);
+            var questionGoalTesla = new JobOfferQuestion() { Text = "What is your life goal?" };
+            var questionGoalMicrosoft = new JobOfferQuestion() { Text = "What is your career goal?" };
+
+            unit.JobOfferQuestionRepository.Add(questionYearsTesla);
+            unit.JobOfferQuestionRepository.Add(questionYearsMicrosoft);
             unit.JobOfferQuestionRepository.Add(questionWtf);
-            unit.JobOfferQuestionRepository.Add(questionRly);
+            unit.JobOfferQuestionRepository.Add(questionRlyApple);
+            unit.JobOfferQuestionRepository.Add(questionRlyTesla);
             unit.JobOfferQuestionRepository.Add(questionDont);
-            unit.JobOfferQuestionRepository.Add(questionGoal);
+            unit.JobOfferQuestionRepository.Add(questionGoalTesla);
+            unit.JobOfferQuestionRepository.Add(questionGoalMicrosoft);
+            unit.SaveChanges();
 
             // Companies
             var apple = new Company { Name = "Apple", Offers = new List<JobOffer>() };
-            var mcsoft = new Company { Name = "Microsoft", Offers = new List<JobOffer>() };
+            var microsoft = new Company { Name = "Microsoft", Offers = new List<JobOffer>() };
             var tesla = new Company { Name = "Tesla", Offers = new List<JobOffer>() };
             var starbucks = new Company { Name = "Starbucks", Offers = new List<JobOffer>() };
             // These will be added after JobOffers
@@ -50,7 +60,7 @@ namespace Infrastructure
             {
                 City = "Los Angeles", Company = apple, Description = "Well-paid",
                 Name = "Well-paid position at Apple",
-                Questions = new List<JobOfferQuestion>() { questionRly, questionDont },
+                Questions = new List<JobOfferQuestion>() { questionRlyApple, questionDont },
                 RelevantSkills = new List<string>() {"C#", "English", "C++"}
             };
 
@@ -58,7 +68,7 @@ namespace Infrastructure
             {
                 City = "San Carlos", Company = tesla, Description = "Cybertruck driving software development",
                 Name = "Cybertruck driving software development at Tesla",
-                Questions = new List<JobOfferQuestion>() { questionYears, questionGoal, questionRly },
+                Questions = new List<JobOfferQuestion>() { questionYearsTesla, questionGoalTesla, questionRlyTesla },
                 RelevantSkills = new List<string>() {"Algorithms", "NoSQLDatabases"}
             };
 
@@ -72,58 +82,96 @@ namespace Infrastructure
 
             var offerMicrosoft = new JobOffer()
             {
-                City = "Seattle", Company = mcsoft, Description = "Be a part of .NET Core SDK development!",
+                City = "Seattle", Company = microsoft, Description = "Be a part of .NET Core SDK development!",
                 Name = "Developing new .NET Core SDK",
-                Questions = new List<JobOfferQuestion>() { questionYears, questionGoal },
+                Questions = new List<JobOfferQuestion>() { questionYearsMicrosoft, questionGoalMicrosoft },
                 RelevantSkills = new List<string>() {"C#", "Algorithms"}
             };
+            apple.Offers.Add(offerApple);
+            tesla.Offers.Add(offerTesla);
+            microsoft.Offers.Add(offerMicrosoft);
+            starbucks.Offers.Add(offerStarbucks);
             unit.JobOfferRepository.Add(offerApple);
             unit.JobOfferRepository.Add(offerMicrosoft);
             unit.JobOfferRepository.Add(offerStarbucks);
             unit.JobOfferRepository.Add(offerTesla);
 
-            apple.Offers.Add(offerApple);
-            tesla.Offers.Add(offerTesla);
-            mcsoft.Offers.Add(offerMicrosoft);
-            starbucks.Offers.Add(offerStarbucks);
+
             unit.CompanyRepository.Add(apple);
-            unit.CompanyRepository.Add(mcsoft);
+            unit.CompanyRepository.Add(microsoft);
             unit.CompanyRepository.Add(tesla);
             unit.CompanyRepository.Add(starbucks);
+            unit.SaveChanges();
 
             // Answers to the questions
-            var answerYears = new JobApplicationAnswer()
+            // Answers MUST be specific for each application
+            var answerYearsNeo = new JobApplicationAnswer()
             {
-                Question = questionYears,
+                Question = questionYearsMicrosoft,
                 Text = "In Apple working for 100k a month"
             };
 
-            var answerWtf = new JobApplicationAnswer()
+            var answerYearsSusan = new JobApplicationAnswer()
+            {
+                Question = questionYearsTesla,
+                Text = "In Tesla, working for Elon"
+            };
+
+            var answerWtfShaq = new JobApplicationAnswer()
             {
                 Question = questionWtf,
                 Text = "Yes"
             };
-            var answerDont = new JobApplicationAnswer()
+            var answerDontNeo = new JobApplicationAnswer()
+            {
+                Question = questionDont,
+                Text = "No, I AM getting this job!"
+            };
+            var answerDontJason = new JobApplicationAnswer()
             {
                 Question = questionDont,
                 Text = ""
             };
-            var answerRly = new JobApplicationAnswer()
+            var answerRlyNeo = new JobApplicationAnswer()
             {
-                Question = questionRly,
+                Question = questionRlyApple,
                 Text = "I guess..."
             };
 
-            var answerGoal = new JobApplicationAnswer()
+            var answerRlyJason = new JobApplicationAnswer()
             {
-                Question = questionGoal,
+                Question = questionRlyApple,
+                Text = "I surely do"
+            };
+
+            var answerRlySusan = new JobApplicationAnswer()
+            {
+                Question = questionRlyTesla,
+                Text = "Of course"
+            };
+
+            var answerGoalSusan = new JobApplicationAnswer()
+            {
+                Question = questionGoalTesla,
                 Text = "Be happy"
             };
-            unit.JobApplicationAnswerRepository.Add(answerDont);
-            unit.JobApplicationAnswerRepository.Add(answerGoal);
-            unit.JobApplicationAnswerRepository.Add(answerRly);
-            unit.JobApplicationAnswerRepository.Add(answerWtf);
-            unit.JobApplicationAnswerRepository.Add(answerYears);
+
+            var answerGoalNeo = new JobApplicationAnswer()
+            {
+                Question = questionGoalMicrosoft,
+                Text = "Be rich"
+            };
+            unit.JobApplicationAnswerRepository.Add(answerDontNeo);
+            unit.JobApplicationAnswerRepository.Add(answerDontJason);
+            unit.JobApplicationAnswerRepository.Add(answerGoalNeo);
+            unit.JobApplicationAnswerRepository.Add(answerGoalSusan);
+            unit.JobApplicationAnswerRepository.Add(answerRlyNeo);
+            unit.JobApplicationAnswerRepository.Add(answerRlySusan);
+            unit.JobApplicationAnswerRepository.Add(answerRlyJason);
+            unit.JobApplicationAnswerRepository.Add(answerWtfShaq);
+            unit.JobApplicationAnswerRepository.Add(answerYearsNeo);
+            unit.JobApplicationAnswerRepository.Add(answerYearsSusan);
+            unit.SaveChanges();
 
             // Applications
             var applFromNeo = new JobApplication()
@@ -132,16 +180,16 @@ namespace Infrastructure
                 JobOffer = offerMicrosoft,
                 Status = Status.Accepted,
                 Text = "Microsoft > Apple",
-                Answers = new List<JobApplicationAnswer>() { answerYears, answerGoal }
+                Answers = new List<JobApplicationAnswer>() { answerYearsNeo, answerGoalNeo }
             };
 
             var applFromNeo2 = new JobApplication()
             {
                 Applicant = neo,
                 JobOffer = offerApple,
-                Status = Status.Unresolved,
+                Status = Status.Rejected,
                 Text = "Blue pill, red pill, I'll eat both",
-                Answers = new List<JobApplicationAnswer>() { answerRly, answerDont }
+                Answers = new List<JobApplicationAnswer>() { answerRlyNeo, answerDontNeo }
             };
 
             var applFromJason = new JobApplication()
@@ -150,7 +198,7 @@ namespace Infrastructure
                 JobOffer = offerApple,
                 Status = Status.Unresolved,
                 Text = "I know how to fight",
-                Answers = new List<JobApplicationAnswer>() { answerRly, answerDont }
+                Answers = new List<JobApplicationAnswer>() { answerRlyJason, answerDontJason }
             };
 
             var applFromSusan = new JobApplication()
@@ -158,17 +206,17 @@ namespace Infrastructure
                 Applicant = susan,
                 JobOffer = offerTesla,
                 Status = Status.Accepted,
-                Text = "I know how to fight",
-                Answers = new List<JobApplicationAnswer>() { answerYears, answerGoal, answerRly }
+                Text = "I know things...",
+                Answers = new List<JobApplicationAnswer>() { answerYearsSusan, answerGoalSusan, answerRlySusan }
             };
 
             var applFromShaq = new JobApplication()
             {
                 Applicant = bigshaq,
                 JobOffer = offerStarbucks,
-                Status = Status.Rejected,
+                Status = Status.Unresolved,
                 Text = "Man's not hot",
-                Answers = new List<JobApplicationAnswer>() { answerWtf }
+                Answers = new List<JobApplicationAnswer>() { answerWtfShaq }
             };
             unit.JobApplicationRepository.Add(applFromJason);
             unit.JobApplicationRepository.Add(applFromNeo);
