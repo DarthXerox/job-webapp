@@ -45,7 +45,7 @@ namespace Infrastructure
             unit.JobOfferQuestionRepository.Add(questionDont);
             unit.JobOfferQuestionRepository.Add(questionGoalTesla);
             unit.JobOfferQuestionRepository.Add(questionGoalMicrosoft);
-            unit.SaveChanges();
+            //unit.SaveChanges();
 
             // Companies
             var apple = new Company { Name = "Apple", Offers = new List<JobOffer>() };
@@ -104,12 +104,11 @@ namespace Infrastructure
             unit.JobOfferRepository.Add(offerStarbucks);
             unit.JobOfferRepository.Add(offerTesla);
 
-
             unit.CompanyRepository.Add(apple);
             unit.CompanyRepository.Add(microsoft);
             unit.CompanyRepository.Add(tesla);
             unit.CompanyRepository.Add(starbucks);
-            unit.SaveChanges();
+            //unit.SaveChanges();
 
             // Answers to the questions
             // Answers MUST be specific for each application
@@ -179,7 +178,7 @@ namespace Infrastructure
             unit.JobApplicationAnswerRepository.Add(answerWtfShaq);
             unit.JobApplicationAnswerRepository.Add(answerYearsNeo);
             unit.JobApplicationAnswerRepository.Add(answerYearsSusan);
-            unit.SaveChanges();
+            //unit.SaveChanges();
 
             // Applications
             var applFromNeo = new JobApplication()
