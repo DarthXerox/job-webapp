@@ -63,6 +63,14 @@ namespace Infrastructure
                 RelevantSkills = new List<string>() {"C#", "English", "C++"}
             };
 
+            var offerApple2 = new JobOffer()
+            {
+                City = "San Francisco", Company = apple, Description = "Development of back doors to our iOS software",
+                Name = "Software development at Apple",
+                Questions = new List<JobOfferQuestion>() {},
+                RelevantSkills = new List<string>() { "Swift", "Security" }
+            };
+
             var offerTesla = new JobOffer()
             {
                 City = "San Carlos", Company = tesla, Description = "Cybertruck driving software development",
@@ -87,6 +95,7 @@ namespace Infrastructure
                 RelevantSkills = new List<string>() {"C#", "Algorithms"}
             };
             apple.Offers.Add(offerApple);
+            apple.Offers.Add(offerApple2);
             tesla.Offers.Add(offerTesla);
             microsoft.Offers.Add(offerMicrosoft);
             starbucks.Offers.Add(offerStarbucks);
