@@ -9,7 +9,6 @@ namespace Infrastructure
     {
         public static void Seed(UnitOfWork unit)
         {
-            int id = 1;
             // JobSeekers
             JobSeeker neo = new JobSeeker { Name = "Neo", Surname = "Anderson", Email = "neo@matrix.com",
                 Skills = new List<string>{"C#", "Algorithms"}};
