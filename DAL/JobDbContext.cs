@@ -44,29 +44,6 @@ namespace DAL
             modelBuilder.Entity<JobOffer>().Property(nameof(JobOffer.RelevantSkills)).HasConversion(stringConverter);
             modelBuilder.Entity<JobSeeker>().Property(nameof(JobSeeker.Skills)).HasConversion(stringConverter);
 
-            modelBuilder.Entity<JobApplication>()
-                .HasOne(a => a.Applicant)
-                .WithMany()
-                .HasForeignKey(a => a.ApplicantId);
-
-            modelBuilder.Entity<JobApplication>()
-                .HasOne(a => a.JobOffer)
-                .WithMany()
-                .HasForeignKey(a => a.JobOfferId);
-
-            modelBuilder.Entity<JobApplicationAnswer>()
-                .HasOne(a => a.Question)
-                .WithMany()
-                .HasForeignKey(ans => ans.QuestionId);
-
-            modelBuilder.Entity<JobApplicationAnswer>()
-                .HasOne<JobApplication>()
-                .WithMany();
-
-            modelBuilder.Entity<JobOfferQuestion>()
-                .HasOne<JobOffer>()
-                .WithMany();
-
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;

@@ -7,6 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210109162202_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109162202_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109162913_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109162913_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109163919_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109163919_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109164428_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109164428_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109164548_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109164548_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109164910_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109164910_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109171345_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109171345_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109171730_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109171730_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109171807_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109171807_RelationshipFix.Designer.cs" />
+    <Compile Remove="Migrations\20210109172117_RelationshipFix.cs" />
+    <Compile Remove="Migrations\20210109172117_RelationshipFix.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />

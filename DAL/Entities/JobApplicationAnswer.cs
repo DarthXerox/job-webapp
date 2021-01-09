@@ -12,5 +12,10 @@ namespace DAL.Entities
 
         [ForeignKey(nameof(QuestionId))]
         public virtual JobOfferQuestion? Question { get; set; }
+
+        public int? JobApplicationId { get; set; }
+
+        [ForeignKey(nameof(JobApplicationId))]
+        public virtual JobApplication? JobApplication { get; set; }
     }
 }
