@@ -22,9 +22,6 @@ namespace UnitTests.Business
                 .UseInMemoryDatabase(databaseName: $"ServiceTest{++counter}")
                 .Options;
 
-
-
-
         [Fact]
         public void CompanyServiceTests()
         {
@@ -259,6 +256,7 @@ namespace UnitTests.Business
             // Delete
             int size = unit.JobApplicationRepository.GetAll().Count();
             jobApplicationService.Delete(c1.Id ?? -1);
+            unit.SaveChanges();
             Assert.Equal(size - 1, unit.JobApplicationRepository.GetAll().Count());
         }
     }
