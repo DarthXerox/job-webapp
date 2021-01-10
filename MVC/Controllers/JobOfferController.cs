@@ -33,7 +33,7 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult AddJobOffer()
         {
-            return View(new JobOfferDto());
+            return View(new JobOfferDto { RelevantSkills = new List<string>{ "" } });
         }
 
         [HttpPost]
@@ -47,6 +47,12 @@ namespace MVC.Controllers
             }
 
             throw new ArgumentException();
+        }
+
+        public ActionResult AddNewSkill(JobOfferDto jobOffer)
+        {
+            jobOffer.RelevantSkills.Add("");
+            return View("AddJobOffer", jobOffer);
         }
 
         [HttpGet]
@@ -74,6 +80,21 @@ namespace MVC.Controllers
             }
             await jobOfferFacade.Delete(offer);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> JobOfferDetail(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            JobOfferDto offer = await jobOfferFacade.GetByIdAsync(id.Value);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+            return View(offer);
         }
     }
 }

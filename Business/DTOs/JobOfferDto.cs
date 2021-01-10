@@ -14,8 +14,8 @@ namespace Business.DTOs
 
         public string? Description { get; set; }
 
-        public ICollection<string>? RelevantSkills { get; set; }
+        public IList<string>? RelevantSkills { get; set; }
 
-        public ICollection<JobOfferQuestionDto>? Questions { get; set; }
+        public IList<JobOfferQuestionDto>? Questions { get; set; }
     }
 }
