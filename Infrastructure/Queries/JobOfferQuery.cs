@@ -1,12 +1,16 @@
 using System.Linq;
 using DAL;
 using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Queries
 {
     public class JobOfferQuery : Query<JobOffer>
     {
-        public JobOfferQuery(JobDbContext dbContext) : base(dbContext) { }
+        public JobOfferQuery(JobDbContext dbContext) : base(dbContext)
+        {
+            queryable = queryable.Include(jobOffer => jobOffer.Company);
+        }
 
         public JobOfferQuery FilterByName(string name)
         {

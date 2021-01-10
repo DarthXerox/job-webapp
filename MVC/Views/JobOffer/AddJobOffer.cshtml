@@ -1,18 +1,36 @@
+@using System.ComponentModel.DataAnnotations
 @model Business.DTOs.JobOfferDto
 @{ ViewData["Title"] = "Add Job Offer"; }
 
 <h4>Add job offer</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div>
         <form asp-action="AddJobOffer">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <h5>Name</h5>
+                @Html.TextBoxFor(model => model.Name, new { placeholder = "Name", required = true, maxlength = 64 })
             </div>
+            <div class="form-group">
+                <h5>City</h5>
+                @Html.TextBoxFor(model => model.City, new { placeholder = "City", required = true, maxlength = 64 })
+            </div>
+            <div class="form-group">
+                <h5>Description</h5>
+                @Html.TextAreaFor(model => model.Description, new { placeholder = "Description", required = true, rows = 10 })
+            </div>
+
+            <h5>Relevant skills</h5>
+            <div id="skillsEditor">
+                @for (int i = 0; i < Model.RelevantSkills.Count; i++)
+                {
+                    @Html.TextBoxFor(model => model.RelevantSkills[i], new { placeholder = "Skill", required = true, maxlength = 64 })
+                }
+                <input type="submit" formaction="AddNewSkill" value="Add new skill" class="btn btn-primary" />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

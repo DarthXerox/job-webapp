@@ -1,0 +1,26 @@
+@model Business.DTOs.JobOfferDto
+@{ ViewData["Title"] = Model.Name; }
+
+<h4>
+    @Html.DisplayFor(model => model.Name)
+</h4>
+<hr />
+<div>
+    <h5>City</h5>
+    <p>@Html.DisplayFor(model => model.City)</p>
+</div>
+<div>
+    <h5>Description</h5>
+    <pre>@Html.DisplayFor(model => model.Description) </pre>
+</div>
+<div>
+    <h5>Relevant skills</h5>
+    @foreach (var skill in Model.RelevantSkills)
+    {
+        <text>@skill </text>
+    }
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
