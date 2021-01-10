@@ -23,13 +23,13 @@ namespace Business.Facades
             this.companyService = companyService;
         }
 
-        public async void AddAsync(CompanyDto companyDto)
+        public async Task AddAsync(CompanyDto companyDto)
         {
             companyService.AddCompany(mapper.Map<CompanyDto, Company>(companyDto));
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async void EditInfoAsync(CompanyDto companyDto)
+        public async Task EditInfoAsync(CompanyDto companyDto)
         {
             companyService.UpdateCompany(mapper.Map<CompanyDto, Company>(companyDto));
             await unitOfWork.SaveChangesAsync();
