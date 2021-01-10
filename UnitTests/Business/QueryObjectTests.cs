@@ -25,7 +25,7 @@ namespace UnitTests.Business
         private static int counter = 0;
         private DbContextOptions<JobDbContext> GetInMemoryOptions() =>
             new DbContextOptionsBuilder<JobDbContext>()
-                .UseInMemoryDatabase(databaseName: $"Test{++counter}")
+                .UseInMemoryDatabase(databaseName: $"QueryObjectTest{++counter}")
                 .Options;
 
         [Fact]
