@@ -14,7 +14,6 @@
             <th>Name</th>
             <th>City</th>
             <th></th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -31,10 +30,8 @@
                 @item.City
             </td>
             <td style="float: right;">
-                @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
-            </td>
-            <td style="float: right;">
                 @Html.ActionLink("Detail", "JobOfferDetail", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }
