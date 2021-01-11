@@ -49,6 +49,18 @@ namespace DAL
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
+            modelBuilder.Entity<JobOfferQuestion>()
+                .HasOne(q => q.JobOffer)
+                .WithMany(o => o.Questions)
+                .HasForeignKey(q => q.JobOfferId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<JobOffer>()
+                .HasOne(o => o.Company)
+                .WithMany(c => c.Offers)
+                .HasForeignKey(o => o.CompanyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Seed();
 
             base.OnModelCreating(modelBuilder);

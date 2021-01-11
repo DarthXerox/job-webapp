@@ -9,6 +9,21 @@ namespace Business.QueryObjects
     {
         public CompanyQueryObject(UnitOfWork unit) : base(unit) { }
 
+        public async Task<IEnumerable<Company>> GetAllAsyncPaged(int pageSize, int pageNumber)
+        {
+            return await UnitOfWork.CompanyQuery
+                .OrderBy(keySelector: company => company.Name)
+                .Page(pageSize, pageNumber)
+                .ExecuteAsync();
+        }
+
+        public async Task<IEnumerable<Company>> GetAllAsync()
+        {
+            return await UnitOfWork.CompanyQuery
+                .OrderBy(keySelector: company => company.Name)
+                .ExecuteAsync();
+        }
+
         public async Task<IEnumerable<Company>> GetByNameAsync(string name, bool ascendingOrder = true)
         {
             return await UnitOfWork.CompanyQuery

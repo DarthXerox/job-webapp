@@ -1,49 +1,53 @@
 @using System.ComponentModel.DataAnnotations
-@model Business.DTOs.JobOfferDto
+@model MVC.Models.AddJobOfferModel
 @{ ViewData["Title"] = "Add Job Offer"; }
 
 <h4>Add job offer</h4>
 <hr />
 <div class="row">
     <div>
-        <form asp-action="AddJobOffer">
+        <form asp-action="AddJobOffer" method="post">
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <h5>Name</h5>
-                @Html.TextBoxFor(model => model.Name, new { placeholder = "Name", required = true, maxlength = 64 })
+                @Html.TextBoxFor(model => model.JobOffer.Name, new { placeholder = "Name", required = true, maxlength = 64 })
+            </div>
+            <div class="form-group">
+                <h5>Company</h5>
+                @Html.DropDownListFor(model => model.JobOffer.CompanyId, new SelectList(Model.Companies, "Id", "Name"), "Company", new { required = true })
             </div>
             <div class="form-group">
                 <h5>City</h5>
-                @Html.TextBoxFor(model => model.City, new { placeholder = "City", required = true, maxlength = 64 })
+                @Html.TextBoxFor(model => model.JobOffer.City, new { placeholder = "City", required = true, maxlength = 64 })
             </div>
             <div class="form-group">
                 <h5>Description</h5>
-                @Html.TextAreaFor(model => model.Description, new { placeholder = "Description", required = true, maxlength = 1024, rows = 10, cols = 100 })
+                @Html.TextAreaFor(model => model.JobOffer.Description, new { placeholder = "Description", required = true, maxlength = 1024, rows = 10, cols = 100 })
             </div>
             <h5>Relevant skills</h5>
             <div id="skillsEditor" class="form-group">
-                @for (int i = 0; i < Model.RelevantSkills.Count; i++)
+                @for (int i = 0; i < Model.JobOffer.RelevantSkills.Count; i++)
                 {
                     <div class="form-group">
-                        @Html.TextBoxFor(model => model.RelevantSkills[i], new { placeholder = "Skill", required = true, maxlength = 64 })
+                        @Html.TextBoxFor(model => model.JobOffer.RelevantSkills[i], new { placeholder = "Skill", required = true, maxlength = 64 })
                     </div>
                 }
-                <input type="submit" formaction="AddNewSkill" value="Add new skill" class="btn btn-secondary"/>
+                <input type="submit" name="skill" formaction="AddNewSkill" formmethod="post" value="Add new skill" class="btn btn-secondary"/>
             </div>
-            <h5>Relevant skills</h5>
+            <h5>Questions</h5>
             <div id="questionsEditor" class="form-group">
-                @for (int i = 0; i < Model.Questions.Count; i++)
+                @for (int i = 0; i < Model.JobOffer.Questions.Count; i++)
                 {
                     <div class="form-group">
-                        @Html.TextBoxFor(model => model.Questions[i].Text, new { placeholder = "Question", required = true, maxlength = 1024 })
+                        @Html.TextBoxFor(model => model.JobOffer.Questions[i].Text, new { placeholder = "Question", required = true, maxlength = 1024 })
                     </div>
                 }
-                <input type="submit" formaction="AddNewQuestion" value="Add new question" class="btn btn-secondary"/>
+                <input type="submit" name="question" formaction="AddNewQuestion" formmethod="post" value="Add new question" class="btn btn-secondary"/>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create job offer" class="btn btn-primary" />
+                <input type="submit" name="AddJobOffer" method="post" value="Create job offer" class="btn btn-primary" />
             </div>
         </form>
     </div>

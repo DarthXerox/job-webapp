@@ -19,6 +19,21 @@ namespace Business.Services
             this.companyQueryObject = companyQueryObject;
         }
 
+        public async Task<IEnumerable<Company>> GetAllAsyncPaged(int pageSize, int pageNumber)
+        {
+            return await companyQueryObject.GetAllAsyncPaged(pageSize, pageNumber);
+        }
+
+        public async Task<IEnumerable<Company>> GetAllAsync()
+        {
+            return await companyQueryObject.GetAllAsync();
+        }
+
+        public async Task<int> GetTotalCountAsync()
+        {
+            return await unitOfWork.CompanyRepository.GetTotalCountAsync();
+        }
+
         public void AddCompany(Company company)
         {
             unitOfWork.CompanyRepository.Add(company);

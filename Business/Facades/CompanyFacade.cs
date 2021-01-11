@@ -23,6 +23,19 @@ namespace Business.Facades
             this.companyService = companyService;
         }
 
+        public async Task<(int totalCount, IEnumerable<CompanyDto> companies)> GetAllAsyncPaged(int pageSize, int pageNumber)
+        {
+            var companies = mapper.Map<IEnumerable<CompanyDto>>(await companyService.GetAllAsyncPaged(pageSize, pageNumber));
+            int totalCount = await companyService.GetTotalCountAsync();
+            return (totalCount, companies);
+        }
+
+        public async Task<IEnumerable<CompanyDto>> GetAllAsync()
+        {
+            var companies = mapper.Map<IEnumerable<CompanyDto>>(await companyService.GetAllAsync());
+            return companies;
+        }
+
         public async Task AddAsync(CompanyDto companyDto)
         {
             companyService.AddCompany(mapper.Map<CompanyDto, Company>(companyDto));
