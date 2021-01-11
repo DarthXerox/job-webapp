@@ -1,12 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Castle.DynamicProxy.Generators;
+using DAL;
 using DAL.Entities;
 using DAL.Enums;
+using Infrastructure.Queries;
 
 namespace Infrastructure
 {
 
     public static class Seeder
     {
+        public static void SeedLocalDatabase()
+        {
+            var context = new JobDbContext();
+            var unit = new UnitOfWork(context,
+                new Repository<Company>(context),
+                new Repository<JobApplicationAnswer>(context),
+                new Repository<JobApplication>(context),
+                new Repository<JobOfferQuestion>(context),
+                new Repository<JobOffer>(context),
+                new Repository<JobSeeker>(context),
+                new JobOfferQuery(context),
+                new CompanyQuery(context),
+                new JobApplicationQuery(context)
+            );
+            Seeder.Seed(unit);
+        }
+
         public static void Seed(UnitOfWork unit)
         {
             // JobSeekers

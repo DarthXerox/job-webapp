@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
+using Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +16,8 @@ namespace MVC
     {
         public static void Main(string[] args)
         {
+            // to seed your local database uncomment (do this only once!)
+            // Seeder.SeedLocalDatabase();
             CreateHostBuilder(args).Build().Run();
         }
 
