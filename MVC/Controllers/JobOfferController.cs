@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Business.DTOs;
 using Business.Facades;
@@ -33,7 +34,8 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult AddJobOffer()
         {
-            return View(new JobOfferDto { RelevantSkills = new List<string>{ "" } });
+            return View(new JobOfferDto { RelevantSkills = new List<string>{ "" },
+                Questions = new List<JobOfferQuestionDto>{ new JobOfferQuestionDto{ Text = "" } } });
         }
 
         [HttpPost]
@@ -52,6 +54,12 @@ namespace MVC.Controllers
         public ActionResult AddNewSkill(JobOfferDto jobOffer)
         {
             jobOffer.RelevantSkills.Add("");
+            return View("AddJobOffer", jobOffer);
+        }
+
+        public ActionResult AddNewQuestion(JobOfferDto jobOffer)
+        {
+            jobOffer.Questions.Add(new JobOfferQuestionDto{ Text = "" });
             return View("AddJobOffer", jobOffer);
         }
 

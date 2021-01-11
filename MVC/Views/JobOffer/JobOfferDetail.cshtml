@@ -17,7 +17,14 @@
     <h5>Relevant skills</h5>
     @foreach (var skill in Model.RelevantSkills)
     {
-        <div class="btn btn-secondary">@skill </div>
+        <p class="btn btn-secondary">@skill </p>
+    }
+</div>
+<div>
+    <h5>Questions</h5>
+    @for (int i = 0; i < Model.Questions.Count(); i++)
+    {
+        <p>@(i + 1). @Model.Questions[i].Text</p>
     }
 </div>
 
