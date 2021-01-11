@@ -19,18 +19,18 @@
             </div>
             <div class="form-group">
                 <h5>Description</h5>
-                @Html.TextAreaFor(model => model.Description, new { placeholder = "Description", required = true, rows = 10 })
+                @Html.TextAreaFor(model => model.Description, new { placeholder = "Description", required = true, maxlength = 1024, rows = 10, cols = 100 })
             </div>
 
             <h5>Relevant skills</h5>
-            <div id="skillsEditor" class="form-group">
+            <div id="skillsEditor" class="form-group col-10">
                 @for (int i = 0; i < Model.RelevantSkills.Count; i++)
                 {
                     <div class="form-group">
                         @Html.TextBoxFor(model => model.RelevantSkills[i], new { placeholder = "Skill", required = true, maxlength = 64 })
                     </div>
                 }
-                <input type="submit" formaction="AddNewSkill" value="Add new skill" class="btn btn-primary" />
+                <input type="submit" formaction="AddNewSkill" value="Add new skill" class="btn btn-secondary" />
             </div>
 
             <div class="form-group">
