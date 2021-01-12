@@ -8,6 +8,7 @@ namespace DAL
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            /*
             modelBuilder.Entity<JobSeeker>().HasData(new JobSeeker
             {
                 Id = 1,
@@ -20,6 +21,7 @@ namespace DAL
             modelBuilder.Entity<Company>().HasData(
                 new Company { Id = 1, Name = "Apple" }
             );
+            */
         }
     }
 }
