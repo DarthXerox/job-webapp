@@ -1,6 +1,6 @@
 ﻿using DAL.Enums;
 
-namespace Bussiness.Dto
+namespace Business.DTOs
 {
     public class UserShowDto
     {

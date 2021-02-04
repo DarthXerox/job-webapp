@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DAL.Enums;
 
-namespace Bussiness.Dto
+namespace Business.DTOs
 {
     public class UserRegisterDto
     {
