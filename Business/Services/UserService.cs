@@ -1,77 +1,69 @@
-﻿using AutoMapper;
-using Bussiness.Dto;
-using Bussiness.QueryObjects;
-using Infrastructure;
+﻿using Infrastructure;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using ZooDAL.Models;
+using Business.QueryObjects;
+using DAL.Entities;
+using DAL.Enums;
 
-namespace Bussiness.Services
+namespace Business.Services
 {
-    public class UserService : IUserService
+    public class UserService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly UserQueryObject _UserByNameQueryObject;
+        private readonly UnitOfWork unitOfWork;
+        private readonly UserQueryObject userQueryObject;
 
         private const int PBKDF2IterCount = 100000;
         private const int PBKDF2SubkeyLength = 160 / 8;
         private const int saltSize = 128 / 8;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, UserQueryObject uquery)
+
+        public UserService(UnitOfWork unitOfWork, UserQueryObject uquery)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _UserByNameQueryObject = uquery;
+            this.unitOfWork = unitOfWork;
+            userQueryObject = uquery;
         }
 
 
-        public void Create(UserCreateDto user)
+        public async Task<User> AuthorizeUserAsync(string userName, string password)
         {
-            _unitOfWork.UserRepository.Create(_mapper.Map<User>(user));
-        }
-        public async Task<UserShowDto> GetUserAccordingToNameAsync(string name)
-        {
-            var result = await _UserByNameQueryObject.ExecuteAsync(name);
-            return result;
-        }
-        public async Task<UserShowDto> AuthorizeUserAsync(UserLoginDto login)
-        {
-            var userDto = await GetUserAccordingToNameAsync(login.UserName);
-            if (userDto == null)
+            var loggedUser = await GetUserByName(userName);
+            if (loggedUser == null)
             {
                 return null;
             }
 
-            //get user entity
-            var user = _unitOfWork.UserRepository.Get(userDto.Id);
-
-            var (hash, salt) = user != null ? GetPassAndSalt(user.PasswordHash) : (string.Empty, string.Empty);
-
-            var succ = user != null && VerifyHashedPassword(hash, salt, login.Password);
-            return succ ? userDto : null;
+            var (hash, salt) = GetPassAndSalt(loggedUser.PasswordHash);
+            return VerifyHashedPassword(hash, salt, password)
+                ? loggedUser
+                : null;
         }
 
-        public void RegisterUser(UserCreateDto user)
+
+        public void RegisterUser(string userName, string password, Roles role)
         {
-            var (hash, salt) = CreateHash(user.Password);
-            user.PasswordHash = string.Join(',', hash, salt);
-
-            Create(user);
-
+            var (hash, salt) = CreateHash(password);
+            unitOfWork.UserRepository.Add(new User()
+            {
+                Name = userName,
+                PasswordHash = string.Join(',', hash, salt),
+                Role = role
+            });
         }
+
 
         private (string, string) GetPassAndSalt(string passwordHash)
         {
             var result = passwordHash.Split(',');
-            if (result.Count() != 2)
-            {
-                return (string.Empty, string.Empty);
-            }
-            return (result[0], result[1]);
+            return result.Count() != 2
+                ? (string.Empty, string.Empty)
+                : (result[0], result[1]);
         }
+
+
+        private async Task<User> GetUserByName(string name) => (await userQueryObject.GetByNameAsync(name)).First();
+
 
         private bool VerifyHashedPassword(string hashedPassword, string salt, string password)
         {
@@ -84,6 +76,7 @@ namespace Bussiness.Services
                 return hashedPasswordBytes.SequenceEqual(generatedSubkey);
             }
         }
+
 
         private Tuple<string, string> CreateHash(string password)
         {
