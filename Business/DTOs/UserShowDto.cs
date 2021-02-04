@@ -1,10 +1,13 @@
-﻿namespace Bussiness.Dto
+﻿using DAL.Enums;
+
+namespace Bussiness.Dto
 {
     public class UserShowDto
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
 
-        public string[] Roles { get; set; }
+        public string Name { get; set; }
+
+        public Roles Role { get; set; }
     }
 }

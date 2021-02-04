@@ -1,5 +1,6 @@
 using AutoMapper;
 using Business.DTOs;
+using Bussiness.Dto;
 using DAL.Entities;
 
 namespace Business
@@ -14,6 +15,8 @@ namespace Business
             config.CreateMap<JobOffer, JobOfferDto>().ReverseMap();
             config.CreateMap<JobOfferQuestion, JobOfferQuestionDto>().ReverseMap();
             config.CreateMap<JobSeeker, JobSeekerDto>().ReverseMap();
+            config.CreateMap<User, UserRegisterDto>().ReverseMap();
+            config.CreateMap<User, UserShowDto>().ReverseMap();
         }
     }
 }

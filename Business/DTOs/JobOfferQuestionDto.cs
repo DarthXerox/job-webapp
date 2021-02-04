@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
-    public class JobOfferQuestionDto : BaseDTO
+    public class JobOfferQuestionDto : BaseDto
     {
         public string? Text { get; set; }
 

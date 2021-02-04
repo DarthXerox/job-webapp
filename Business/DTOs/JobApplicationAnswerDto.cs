@@ -1,6 +1,6 @@
 namespace Business.DTOs
 {
-    public class JobApplicationAnswerDto : BaseDTO
+    public class JobApplicationAnswerDto : BaseDto
     {
         public string? Text { get; set; }
 

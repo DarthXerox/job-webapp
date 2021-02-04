@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Business.DTOs
 {
-    public class JobSeekerDto : BaseDTO
+    public class JobSeekerDto : BaseDto
     {
         public string? Name { get; set; }
 

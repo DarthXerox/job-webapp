@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DAL.Enums;
 
 namespace Bussiness.Dto
 {
-    public class UserCreateDto
+    public class UserRegisterDto
     {
-        public int Id { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public string Password { get; set; }
 
-        public string PasswordHash { get; set; }
-
-
+        [Required]
+        public Roles Role { get; set; }
     }
 }
