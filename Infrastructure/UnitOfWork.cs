@@ -21,6 +21,7 @@ namespace Infrastructure
             JobOfferQuestionRepository = new Repository<JobOfferQuestion>(context);
             JobOfferRepository = new Repository<JobOffer>(context);
             JobSeekerRepository = new Repository<JobSeeker>(context);
+            UserRepository = new Repository<User>(context);
             JobOfferQuery = new JobOfferQuery(context);
             CompanyQuery = new CompanyQuery(context);
             JobApplicationQuery = new JobApplicationQuery(context);
@@ -33,6 +34,8 @@ namespace Infrastructure
             Repository<JobOfferQuestion> jobOfferQuestionRepository,
             Repository<JobOffer> jobOfferRepository,
             Repository<JobSeeker> jobSeekerRepository,
+            Repository<User> userRepository,
+            UserQuery userQuery,
             JobOfferQuery jobOfferQuery,
             CompanyQuery companyQuery,
             JobApplicationQuery jobApplicationQuery)
@@ -44,6 +47,8 @@ namespace Infrastructure
             JobOfferQuestionRepository = jobOfferQuestionRepository;
             JobOfferRepository = jobOfferRepository;
             JobSeekerRepository = jobSeekerRepository;
+            UserRepository = userRepository;
+            UserQuery = userQuery;
             JobOfferQuery = jobOfferQuery;
             CompanyQuery = companyQuery;
             JobApplicationQuery = jobApplicationQuery;
@@ -55,7 +60,9 @@ namespace Infrastructure
         public Repository<JobOffer> JobOfferRepository { get; }
         public Repository<JobOfferQuestion> JobOfferQuestionRepository { get; }
         public Repository<JobSeeker> JobSeekerRepository { get; }
+        public Repository<User> UserRepository { get; }
 
+        public UserQuery UserQuery { get; }
         public JobOfferQuery JobOfferQuery { get; }
         public CompanyQuery CompanyQuery { get; }
         public JobApplicationQuery JobApplicationQuery { get; }
