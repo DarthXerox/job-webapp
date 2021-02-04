@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
@@ -6,6 +7,7 @@ namespace Business.DTOs
     {
         public string? Name { get; set; }
 
+        //[JsonIgnore]
         public ICollection<JobOfferDto>? Offers { get; set; }
     }
 }

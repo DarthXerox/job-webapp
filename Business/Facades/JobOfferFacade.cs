@@ -28,6 +28,14 @@ namespace Business.Facades
             return (totalCount, jobOffers);
         }
 
+        public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllWithoutPagingAsync()
+        {
+            int totalCount = await jobOfferService.GetTotalCountAsync();
+            var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService
+                .GetAllAsync(totalCount, 1));
+            return (totalCount, jobOffers);
+        }
+
         public async Task<IEnumerable<JobOfferDto>> GetByNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameAsync(jobOfferDto.Name, ascendingOrder));
@@ -40,7 +48,7 @@ namespace Business.Facades
 
         public async Task<IEnumerable<JobOfferDto>> GetByCompanyNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(jobOfferDto.Company.Name, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(jobOfferDto.Company?.Name, ascendingOrder));
         }
 
         public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
