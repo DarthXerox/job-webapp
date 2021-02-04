@@ -15,7 +15,7 @@ namespace DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.10")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -34,13 +34,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Apple"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.JobApplication", b =>
@@ -180,16 +173,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("JobSeekers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "uco@mail.muni.cz",
-                            Name = "John",
-                            Skills = "C#;Python",
-                            Surname = "Wick"
-                        });
                 });
 
             modelBuilder.Entity("DAL.Entities.JobApplication", b =>
