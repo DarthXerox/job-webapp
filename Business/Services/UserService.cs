@@ -28,7 +28,13 @@ namespace Business.Services
 
         public async Task<User> AuthorizeUserAsync(string userName, string password)
         {
-            var loggedUser = await GetUserByName(userName);
+            var lol = unitOfWork.CompanyQuery.FilterByName("Apple").ExecuteAsync().Result;
+            //var loggedUser = await GetUserByName(userName);
+            Console.WriteLine(userName + " " + password);
+            //var temp = unitOfWork.UserQuery.ExecuteAsync().Result.Where(u => u.Name == userName);
+            var x = unitOfWork.UserQuery.FilterByName(userName).ExecuteAsync().Result;
+            var temp = await unitOfWork.UserQuery.FilterByName(userName).ExecuteAsync();
+            var loggedUser = temp.First();
             if (loggedUser == null)
             {
                 return null;
@@ -50,6 +56,7 @@ namespace Business.Services
                 PasswordHash = string.Join(',', hash, salt),
                 Role = role
             });
+            unitOfWork.SaveChanges();
         }
 
 
@@ -78,7 +85,7 @@ namespace Business.Services
         }
 
 
-        private Tuple<string, string> CreateHash(string password)
+        public static Tuple<string, string> CreateHash(string password)
         {
             using (var deriveBytes = new Rfc2898DeriveBytes(password, saltSize, PBKDF2IterCount))
             {

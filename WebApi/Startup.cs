@@ -1,13 +1,12 @@
+using System.Text.Json;
 using Autofac;
 using Business;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace WebApi
 {
@@ -25,9 +24,9 @@ namespace WebApi
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            /*services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            );*/
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

@@ -17,7 +17,7 @@ namespace MVC
         public static void Main(string[] args)
         {
             // to seed your local database uncomment (do this only once!)
-            // Seeder.SeedLocalDatabase();
+            //Seeder.SeedLocalDatabase();
             CreateHostBuilder(args).Build().Run();
         }
 
