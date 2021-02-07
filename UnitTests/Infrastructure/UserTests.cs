@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Business.QueryObjects;
 using Business.Services;
 using DAL;
@@ -23,17 +23,22 @@ namespace UnitTests.Infrastructure
         public void UserQueryTest()
         {
             var unit = new UnitOfWork(GetInMemoryOptions());
-            var context = new JobDbContext(GetInMemoryOptions());
+            /**var context = new JobDbContext(GetInMemoryOptions());
             var companyQuery = new CompanyQuery(context);
-            var userQuery = new UserQuery(context);
+            var userQuery = new UserQuery(context);**/
             var userService = new UserService(unit, new UserQueryObject(unit));
             Seeder.Seed(unit);
             userService.RegisterUser("custom", "1234", Roles.JobSeeker);
 
-            userQuery.FilterByName("custom");
-//            var y = userQuery.ExecuteAsync().Result;
+            /**var u = unit.UserRepository.GetById(1);
+            Assert.Equal("custom", u.Name);
+            Assert.Equal(Roles.JobSeeker, u.Role);**/
+
+            //unit.UserQuery.FilterByName("custom");
+            //            var y = userQuery.ExecuteAsync().Result;
             //var x = userQuery.FilterByName("custom").ExecuteAsync().Result;
-            var x = userQuery.FilterByName("custom").Execute();
+            //var a = unit.CompanyQuery.FilterByName("Tesla").Execute();
+            var x = unit.UserQuery.FilterByName("custom").Execute();
 
             Assert.Equal(Roles.JobSeeker, x.First().Role);
         }

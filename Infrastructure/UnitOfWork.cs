@@ -22,6 +22,7 @@ namespace Infrastructure
             JobOfferRepository = new Repository<JobOffer>(context);
             JobSeekerRepository = new Repository<JobSeeker>(context);
             UserRepository = new Repository<User>(context);
+            UserQuery = new UserQuery(context);
             JobOfferQuery = new JobOfferQuery(context);
             CompanyQuery = new CompanyQuery(context);
             JobApplicationQuery = new JobApplicationQuery(context);
