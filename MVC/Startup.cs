@@ -37,8 +37,8 @@ namespace MVC
             services.AddControllersWithViews();
 
             //cookie authorization
-            /**services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(o => o.LoginPath = new PathString("/User/Login"));**/
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o => o.LoginPath = new PathString("/User/Login"));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -70,8 +70,8 @@ namespace MVC
 
             app.UseCookiePolicy();
             app.UseSession();
-            /**app.UseAuthentication();
-            app.UseAuthorization();**/
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
