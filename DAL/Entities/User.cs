@@ -7,11 +7,11 @@ namespace DAL.Entities
     {
         [Required]
         [MaxLength(64)]
-        public string Name;
+        public string Name { get; set; }
 
         [Required]
-        public string PasswordHash;
+        public string PasswordHash { get; set; }
 
-        public Roles Role = Roles.None;
+        public Roles Role { get; set; } = Roles.None;
     }
 }
