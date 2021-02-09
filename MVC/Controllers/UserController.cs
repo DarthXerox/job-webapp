@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -77,12 +77,6 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(UserLoginDto userLogin)
         {
-            var user = await userFacade.LoginUserAsync(userLogin);
-
-            await CreateClaimsAndSignInAsync(user);
-
-            return RedirectToAction("Index", "Home");
-            /*
             try
             {
                 var user = await userFacade.LoginUserAsync(userLogin);
@@ -95,7 +89,7 @@ namespace MVC.Controllers
             {
                 ModelState.AddModelError("Username", "Invalid credentials combination!");
                 return View("Login");
-            }*/
+            }
         }
 
         private async Task CreateClaimsAndSignInAsync(UserShowDto user)
