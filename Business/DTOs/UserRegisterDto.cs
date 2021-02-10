@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using DAL.Entities;
 using DAL.Enums;
 
 namespace Business.DTOs
 {
-    public class UserRegisterDto
+    public class UserRegisterDto : BaseDto
     {
         [Required]
         public string Name { get; set; }
@@ -13,5 +14,9 @@ namespace Business.DTOs
 
         [Required]
         public Roles Role { get; set; }
+
+        public int? JobSeekerId { get; set; }
+
+        public int? CompanyId { get; set; }
     }
 }

@@ -25,10 +25,14 @@ namespace Business.Facades
 
         public async Task RegisterAsync(JobSeekerDto jobSeekerDto)
         {
-            var entity = mapper.Map<JobSeeker>(jobSeekerDto);
-            jobSeekerService.RegisterJobSeeker(entity);
+            var jobSeeker = mapper.Map<JobSeeker>(jobSeekerDto);
+            jobSeekerService.RegisterJobSeeker(jobSeeker);
             await unitOfWork.SaveChangesAsync();
-            jobSeekerDto.Id = entity.Id; // this helps with unit tests
+            var user = unitOfWork.UserRepository.GetById(jobSeeker.UserId.Value);
+            user.JobSeekerId = jobSeeker.Id;
+            await unitOfWork.SaveChangesAsync();
+
+            jobSeekerDto.Id = jobSeeker.Id; // this helps with unit tests
         }
 
         public async Task<JobSeekerDto> GetInfoAsync(JobSeekerDto jobSeekerDto)

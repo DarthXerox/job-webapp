@@ -1,4 +1,4 @@
-﻿using Infrastructure;
+using Infrastructure;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
@@ -47,16 +47,18 @@ namespace Business.Services
         }
 
 
-        public void RegisterUser(string userName, string password, Roles role)
+        public int RegisterUser(string userName, string password, Roles role)
         {
             var (hash, salt) = CreateHash(password);
-            unitOfWork.UserRepository.Add(new User()
+            var user = new User
             {
                 Name = userName,
                 PasswordHash = string.Join(',', hash, salt),
                 Role = role
-            });
+            };
+            unitOfWork.UserRepository.Add(user);
             unitOfWork.SaveChanges();
+            return user.Id.Value;
         }
 
 

@@ -1,4 +1,4 @@
-﻿using Infrastructure;
+using Infrastructure;
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,10 +30,17 @@ namespace Business.Facades
             throw new UnauthorizedAccessException();
         }
 
-        public async Task RegisterUserAsync(UserRegisterDto userRegisterDto)
+        public async Task<int> RegisterUserAsync(UserRegisterDto userRegisterDto)
         {
-            userService.RegisterUser(userRegisterDto.Name, userRegisterDto.Password, userRegisterDto.Role);
+            int id = userService.RegisterUser(userRegisterDto.Name, userRegisterDto.Password, userRegisterDto.Role);
             await unitOfWork.SaveChangesAsync();
+            return id;
+        }
+
+        public async Task<UserShowDto> GetByIdAsync(int id)
+        {
+            var user = await unitOfWork.UserRepository.GetByIdAsync(id);
+            return mapper.Map<UserShowDto>(user);
         }
     }
 }

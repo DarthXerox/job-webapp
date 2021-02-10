@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Business.DTOs
 {
@@ -8,9 +9,10 @@ namespace Business.DTOs
 
         public string? Surname { get; set; }
 
+        [EmailAddress]
         public string? Email { get; set; }
 
-        public ICollection<string>? Skills { get; set; }
+        public IList<string>? Skills { get; set; }
 
         public int? UserId { get; set; }
     }
