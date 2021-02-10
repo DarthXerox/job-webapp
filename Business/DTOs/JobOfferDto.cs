@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
@@ -8,6 +9,7 @@ namespace Business.DTOs
 
         public string? City { get; set; }
 
+        [JsonIgnore]
         public int? CompanyId { get; set; }
 
         public CompanyDto? Company { get; set; }

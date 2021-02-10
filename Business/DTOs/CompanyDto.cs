@@ -7,7 +7,10 @@ namespace Business.DTOs
     {
         public string? Name { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore]
         public ICollection<JobOfferDto>? Offers { get; set; }
+
+        [JsonIgnore]
+        public int? UserId { get; set; }
     }
 }

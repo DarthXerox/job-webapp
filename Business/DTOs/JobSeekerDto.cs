@@ -11,5 +11,7 @@ namespace Business.DTOs
         public string? Email { get; set; }
 
         public ICollection<string>? Skills { get; set; }
+
+        public int? UserId { get; set; }
     }
 }

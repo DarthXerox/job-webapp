@@ -6,9 +6,10 @@ namespace Business.DTOs
     {
         public string? Text { get; set; }
 
+        [JsonIgnore]
         public int? JobOfferId { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual JobOfferDto? JobOffer { get; set; }
     }
 }
