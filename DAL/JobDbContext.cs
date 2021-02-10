@@ -25,6 +25,8 @@ namespace DAL
         public DbSet<JobSeeker>? JobSeekers { get; set; }
         public DbSet<JobOffer>? JobOffers { get; set; }
         public DbSet<JobApplication>? JobApplications { get; set; }
+        public DbSet<User>? Users { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -46,7 +48,7 @@ namespace DAL
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+                relationship.DeleteBehavior = DeleteBehavior.SetNull;
             }
 
             modelBuilder.Entity<JobOfferQuestion>()
@@ -60,6 +62,18 @@ namespace DAL
                 .WithMany(c => c.Offers)
                 .HasForeignKey(o => o.CompanyId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<JobSeeker>()
+                .HasOne(j => j.User)
+                .WithOne(u => u.JobSeeker)
+                .HasForeignKey<JobSeeker>(j => j.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Company>()
+                .HasOne(j => j.User)
+                .WithOne(u => u.Company)
+                .HasForeignKey<Company>(j => j.UserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Seed();
 

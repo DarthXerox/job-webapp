@@ -3,11 +3,14 @@ using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
-    public class CompanyDto : BaseDTO
+    public class CompanyDto : BaseDto
     {
         public string? Name { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore]
         public ICollection<JobOfferDto>? Offers { get; set; }
+
+        [JsonIgnore]
+        public int? UserId { get; set; }
     }
 }

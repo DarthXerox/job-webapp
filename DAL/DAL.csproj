@@ -31,6 +31,10 @@
     <Compile Remove="Migrations\20210111172536_cascade.Designer.cs" />
     <Compile Remove="Migrations\20210111174419_cascade.cs" />
     <Compile Remove="Migrations\20210111174419_cascade.Designer.cs" />
+    <Compile Remove="Migrations\20210207192801_userNew.cs" />
+    <Compile Remove="Migrations\20210207192801_userNew.Designer.cs" />
+    <Compile Remove="Migrations\20210207193157_user2.cs" />
+    <Compile Remove="Migrations\20210207193157_user2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

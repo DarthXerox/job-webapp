@@ -2,13 +2,14 @@ using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
-    public class JobOfferQuestionDto : BaseDTO
+    public class JobOfferQuestionDto : BaseDto
     {
         public string? Text { get; set; }
 
+        [JsonIgnore]
         public int? JobOfferId { get; set; }
 
-        //[JsonIgnore]
+        [JsonIgnore]
         public virtual JobOfferDto? JobOffer { get; set; }
     }
 }

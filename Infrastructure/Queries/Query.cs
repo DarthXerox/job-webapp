@@ -27,6 +27,11 @@ namespace Infrastructure.Queries
             return ret;
         }
 
+        public IEnumerable<TEntity> Execute()
+        {
+            return queryable.ToList() ?? new List<TEntity>();
+        }
+
         public Query<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> keySelector, bool ascendingOrder = true)
         {
             queryable = ascendingOrder

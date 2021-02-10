@@ -1,13 +1,15 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
-    public class JobOfferDto : BaseDTO
+    public class JobOfferDto : BaseDto
     {
         public string? Name { get; set; }
 
         public string? City { get; set; }
 
+        [JsonIgnore]
         public int? CompanyId { get; set; }
 
         public CompanyDto? Company { get; set; }

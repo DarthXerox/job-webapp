@@ -1,0 +1,29 @@
+﻿@model Business.DTOs.UserLoginDto
+@{ ViewData["Title"] = "Login";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="row">
+    <div class="col s12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <p class="text-red">@Html.ValidationSummary(false, "")</p>
+            <div class="row valign-wrapper">
+                <div class="col s12 l4">Username:</div>
+                <div class="input-field col s12 l8">
+                    @Html.TextBoxFor(model => model.Name, new { placeholder = "Username", required = true })
+                </div>
+            </div>
+            <div class="row valign-wrapper">
+                <div class="col s12 l4">Password:</div>
+                <div class="input-field col s12 l8">
+                    @Html.PasswordFor(model => model.Password, new { placeholder = "Password", required = true })
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" name="Login" method="post" value="Log In" class="btn btn-primary col s12" />
+            </div>
+        }
+    </div>
+</div>
+

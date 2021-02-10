@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.DTOs;
 using Business.Facades;
 using DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -33,6 +34,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [Route("byCompany")]
+        //[Authorize(Roles = "User")]
         public async Task<IEnumerable<JobOfferDto>> GetAppleOffers(string name)
             => await jobOfferFacade.GetByCompanyNameAsync(new JobOfferDto() { Company = new CompanyDto() {Name = name}});
     }

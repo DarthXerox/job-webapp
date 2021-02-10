@@ -38,7 +38,11 @@ namespace Business.Facades
 
         public async Task AddAsync(CompanyDto companyDto)
         {
-            companyService.AddCompany(mapper.Map<CompanyDto, Company>(companyDto));
+            var company = mapper.Map<CompanyDto, Company>(companyDto);
+            companyService.AddCompany(company);
+            await unitOfWork.SaveChangesAsync();
+            var user = unitOfWork.UserRepository.GetById(company.UserId.Value);
+            user.CompanyId = company.Id;
             await unitOfWork.SaveChangesAsync();
         }
 

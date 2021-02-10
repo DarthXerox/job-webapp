@@ -21,6 +21,8 @@ namespace Infrastructure
                 new Repository<JobOfferQuestion>(context),
                 new Repository<JobOffer>(context),
                 new Repository<JobSeeker>(context),
+                new Repository<User>(context),
+                new UserQuery(context),
                 new JobOfferQuery(context),
                 new CompanyQuery(context),
                 new JobApplicationQuery(context)
