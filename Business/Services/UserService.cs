@@ -26,7 +26,7 @@ namespace Business.Services
         }
 
 
-        public async Task<User> AuthorizeUserAsync(string userName, string password)
+        public async Task<User?> AuthorizeUserAsync(string userName, string password)
         {
             var lol = unitOfWork.CompanyQuery.FilterByName("Apple").ExecuteAsync().Result;
             //var loggedUser = await GetUserByName(userName);
