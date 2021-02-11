@@ -37,11 +37,12 @@ namespace MVC.Controllers
         public async Task<IActionResult> RegisterAsync(UserRegisterDto user)
         {
             var userId = await userFacade.RegisterUserAsync(user);
+
             if (user.Role == Roles.JobSeeker)
             {
                 return RedirectToAction("AddJobSeeker", "JobSeeker", new { userId });
             }
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("AddCompany", "Company", new { userId });
             /*try
             {
                 //Here should be a check for existing user

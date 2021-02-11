@@ -53,6 +53,11 @@ namespace Business.Services
         {
             return await companyQueryObject.GetByNameContainsAsync(name, ascending);
         }
+
+        public async Task<Company> GetByIdAsync(int id)
+        {
+            return await unitOfWork.CompanyRepository.GetByIdAsync(id);
+        }
     }
 
 }

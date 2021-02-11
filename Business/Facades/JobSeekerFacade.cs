@@ -15,12 +15,14 @@ namespace Business.Facades
         private readonly UnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly JobSeekerService jobSeekerService;
+        private readonly UserService userService;
 
-        public JobSeekerFacade(UnitOfWork unitOfWork, IMapper mapper, JobSeekerService jobSeekerService)
+        public JobSeekerFacade(UnitOfWork unitOfWork, IMapper mapper, JobSeekerService jobSeekerService, UserService userService)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.jobSeekerService = jobSeekerService;
+            this.userService = userService;
         }
 
         public async Task RegisterAsync(JobSeekerDto jobSeekerDto)
@@ -28,7 +30,7 @@ namespace Business.Facades
             var jobSeeker = mapper.Map<JobSeeker>(jobSeekerDto);
             jobSeekerService.RegisterJobSeeker(jobSeeker);
             await unitOfWork.SaveChangesAsync();
-            var user = unitOfWork.UserRepository.GetById(jobSeeker.UserId.Value);
+            var user = await userService.GetByIdAsync(jobSeeker.UserId.Value);
             user.JobSeekerId = jobSeeker.Id;
             await unitOfWork.SaveChangesAsync();
 

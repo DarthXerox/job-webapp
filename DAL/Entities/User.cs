@@ -13,7 +13,7 @@ namespace DAL.Entities
         [Required]
         public string PasswordHash { get; set; }
 
-        public Roles Role { get; set; } = Roles.None;
+        public Roles Role { get; set; }
 
         public int? JobSeekerId { get; set; }
 

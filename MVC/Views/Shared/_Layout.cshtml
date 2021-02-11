@@ -38,6 +38,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="JobSeeker" asp-action="EditJobSeeker">Profile</a>
                             </li>
                         }
+                        @if (User.IsInRole("Company"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="EditCompany">Profile</a>
+                            </li>
+                        }
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">

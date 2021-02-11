@@ -1,0 +1,26 @@
+@using System.ComponentModel.DataAnnotations
+@model Business.DTOs.CompanyDto
+@{ ViewData["Title"] = "Company Information"; }
+
+<h4>Company Information</h4>
+<hr />
+<div class="row">
+    <div>
+        <form asp-action="AddCompany" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <h5>Company name</h5>
+                @Html.TextBoxFor(model => model.Name, new { placeholder = "Name", required = true, maxlength = 64 })
+            </div>
+            <div>@Html.HiddenFor(x => x.UserId)</div>
+            <div class="form-group">
+                <input type="submit" name="AddCompany" method="post" value="Confirm" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

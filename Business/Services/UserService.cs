@@ -97,6 +97,11 @@ namespace Business.Services
                 return Tuple.Create(Convert.ToBase64String(subkey), Convert.ToBase64String(salt));
             }
         }
+
+        public async Task<User> GetByIdAsync(int id)
+        {
+            return await unitOfWork.UserRepository.GetByIdAsync(id);
+        }
     }
 }
 
