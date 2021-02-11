@@ -5,10 +5,10 @@ using System.Net;
 using System.Threading.Tasks;
 using Business.DTOs;
 using Business.Facades;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
-using Autofac;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers
 {
@@ -16,16 +16,36 @@ namespace MVC.Controllers
     {
         private readonly JobOfferFacade jobOfferFacade;
         private readonly CompanyFacade companyFacade;
+        private readonly UserFacade userFacade;
 
-        public JobOfferController(JobOfferFacade jobOfferFacade, CompanyFacade companyFacade)
+        public JobOfferController(JobOfferFacade jobOfferFacade, CompanyFacade companyFacade, UserFacade userFacade)
         {
             this.jobOfferFacade = jobOfferFacade;
             this.companyFacade = companyFacade;
+            this.userFacade = userFacade;
         }
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var model = await jobOfferFacade.GetAllAsync(PageSize, page);
+            (int totalCount, IEnumerable<JobOfferDto> offers) model;
+            if (User.IsInRole("Company"))
+            {
+                var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+                var company = await companyFacade.GetByIdAsync(user.CompanyId.Value);
+                if (company.Offers == null)
+                {
+                    model = (0, new List<JobOfferDto>());
+                }
+                else
+                {
+                    model = (company.Offers.Count, company.Offers);
+                }
+                
+            }
+            else
+            {
+                model = await jobOfferFacade.GetAllAsync(PageSize, page);
+            }
 
             var pagedModel = new PagedListViewModel<JobOfferDto>(
                 new PaginationViewModel(page, model.totalCount, PageSize), model.offers);
@@ -34,27 +54,27 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Company")]
         public async Task<IActionResult> AddJobOffer()
         {
-            var model = new AddJobOfferModel
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+            var model = new JobOfferDto
             {
-                JobOffer = new JobOfferDto
-                {
-                    RelevantSkills = new List<string> { "" },
-                    Questions = new List<JobOfferQuestionDto> { new JobOfferQuestionDto { Text = "" } }
-                },
-                Companies = (List<CompanyDto>) await companyFacade.GetAllAsync()
+                CompanyId = user.CompanyId.Value,
+                RelevantSkills = new List<string> { "" },
+                Questions = new List<JobOfferQuestionDto> { new JobOfferQuestionDto { Text = "" } }
             };
             return View(model);
         }
 
         [HttpPost]
+        [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddJobOffer(AddJobOfferModel addModel)
+        public async Task<IActionResult> AddJobOffer(JobOfferDto jobOffer)
         {
             if (ModelState.IsValid)
             {
-                await jobOfferFacade.CreateAsync(addModel.JobOffer);
+                await jobOfferFacade.CreateAsync(jobOffer);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -62,30 +82,25 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNewSkill(JobOfferDto jobOffer)
         {
             jobOffer.RelevantSkills.Add("");
-            return View("AddJobOffer", new AddJobOfferModel
-            {
-                JobOffer = jobOffer,
-                Companies = (List<CompanyDto>) await companyFacade.GetAllAsync()
-            });
+            return View("AddJobOffer", jobOffer);
         }
 
         [HttpPost]
+        [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddNewQuestion(JobOfferDto jobOffer)
         {
             jobOffer.Questions.Add(new JobOfferQuestionDto{ Text = "" });
-            return View("AddJobOffer", new AddJobOfferModel
-            {
-                JobOffer = jobOffer,
-                Companies = (List<CompanyDto>) await companyFacade.GetAllAsync()
-            });
+            return View("AddJobOffer", jobOffer);
         }
 
         [HttpGet]
+        [Authorize(Roles = "Company")]
         public async Task<IActionResult> DeleteJobOffer(int? id)
         {
             if (id == null)
@@ -97,10 +112,16 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+            if (user.CompanyId != offer.CompanyId)
+            {
+                return Forbid();
+            }
             return View(offer);
         }
 
         [HttpPost]
+        [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteJobOffer(JobOfferDto offer)
         {

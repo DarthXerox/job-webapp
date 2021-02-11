@@ -48,7 +48,7 @@ namespace Business.Facades
 
         public async Task<IEnumerable<JobOfferDto>> GetByCompanyNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(jobOfferDto.Company?.Name, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyNameAsync(jobOfferDto.Company?.Name, ascendingOrder));
         }
 
         public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)

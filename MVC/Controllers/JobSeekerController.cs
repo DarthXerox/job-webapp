@@ -51,7 +51,7 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> EditJobSeeker()
         {
-            var user = await userFacade.GetByIdAsync(Int32.Parse(this.User.Identity.Name));
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
             var jobSeeker = await jobSeekerFacade.GetInfoAsync(new JobSeekerDto {Id = user.JobSeekerId});
             return View(jobSeeker);
         }

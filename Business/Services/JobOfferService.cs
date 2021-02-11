@@ -39,7 +39,7 @@ namespace Business.Services
 
         public async Task<IEnumerable<JobOffer>> GetByCompanyNameAsync(string companyName, bool ascendingOrder = true)
         {
-            return await jobOfferQueryObject.GetByNameContainsAsync(companyName, ascendingOrder);
+            return await jobOfferQueryObject.GetByCompanyNameAsync(companyName, ascendingOrder);
         }
 
         public async Task<IEnumerable<JobOffer>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
