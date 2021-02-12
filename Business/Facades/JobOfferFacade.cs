@@ -12,11 +12,13 @@ namespace Business.Facades
 {
     public class JobOfferFacade
     {
+        private readonly UnitOfWork unitOfWork;
         private readonly JobOfferService jobOfferService;
         private readonly IMapper mapper;
 
-        public JobOfferFacade(JobOfferService jobOfferService, IMapper mapper)
+        public JobOfferFacade(UnitOfWork unitOfWork, JobOfferService jobOfferService, IMapper mapper)
         {
+            this.unitOfWork = unitOfWork;
             this.jobOfferService = jobOfferService;
             this.mapper = mapper;
         }
@@ -51,6 +53,11 @@ namespace Business.Facades
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyNameAsync(jobOfferDto.Company?.Name, ascendingOrder));
         }
 
+        public async Task<IEnumerable<JobOfferDto>> GetByCompanyIdAsync(int companyId, bool ascendingOrder = true)
+        {
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyIdAsync(companyId, ascendingOrder));
+        }
+
         public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
         {
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetBySkillTagAsync(skillTag, ascendingOrder));
@@ -66,19 +73,27 @@ namespace Business.Facades
             return mapper.Map<JobOfferDto>(await jobOfferService.GetByIdAsync(id));
         }
 
+        public async Task<JobOfferDto> GetByIdWithQuestionsAsync(int id)
+        {
+            return mapper.Map<JobOfferDto>(await jobOfferService.GetByIdWithQuestionsAsync(id));
+        }
+
         public async Task CreateAsync(JobOfferDto jobOfferDto)
         {
             await jobOfferService.CreateAsync(mapper.Map<JobOffer>(jobOfferDto));
+            await unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(JobOfferDto jobOffer)
         {
             await jobOfferService.UpdateAsync(mapper.Map<JobOfferDto, JobOffer>(jobOffer));
+            await unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(JobOfferDto jobOfferDto)
         {
             await jobOfferService.DeleteAsync(jobOfferDto.Id ?? throw new NullReferenceException("JobOfferDto.Id can't be null!"));
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

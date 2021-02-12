@@ -31,14 +31,14 @@ namespace MVC.Controllers
             if (User.IsInRole("Company"))
             {
                 var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
-                var company = await companyFacade.GetByIdAsync(user.CompanyId.Value);
-                if (company.Offers == null)
+                var offers = await jobOfferFacade.GetByCompanyIdAsync(user.CompanyId.Value);
+                if (offers == null)
                 {
                     model = (0, new List<JobOfferDto>());
                 }
                 else
                 {
-                    model = (company.Offers.Count, company.Offers);
+                    model = (offers.Count(), offers);
                 }
                 
             }
@@ -149,7 +149,7 @@ namespace MVC.Controllers
             {
                 return BadRequest();
             }
-            JobOfferDto offer = await jobOfferFacade.GetByIdAsync(id.Value);
+            JobOfferDto offer = await jobOfferFacade.GetByIdWithQuestionsAsync(id.Value);
             if (offer == null)
             {
                 return NotFound();
@@ -166,7 +166,7 @@ namespace MVC.Controllers
                 return BadRequest();
             }
             var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
-            var jobOffer = await jobOfferFacade.GetByIdAsync(id.Value);
+            var jobOffer = await jobOfferFacade.GetByIdWithQuestionsAsync(id.Value);
             if (jobOffer == null)
             {
                 return NotFound();
@@ -187,7 +187,7 @@ namespace MVC.Controllers
             if (ModelState.IsValid && jobOffer.CompanyId == user.CompanyId)
             {
                 await jobOfferFacade.UpdateAsync(jobOffer);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Index));
             }
 
             throw new ArgumentException();

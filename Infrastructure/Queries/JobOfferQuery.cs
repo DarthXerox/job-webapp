@@ -12,6 +12,12 @@ namespace Infrastructure.Queries
             queryable = queryable.Include(jobOffer => jobOffer.Company);
         }
 
+        public JobOfferQuery GetByIdWithQuestions(int id)
+        {
+            queryable = queryable.Where(jobOffer => jobOffer.Id == id).Include(jobOffer => jobOffer.Questions);
+            return this;
+        }
+
         public JobOfferQuery FilterByName(string name)
         {
             queryable = queryable.Where(jobOffer => jobOffer.Name == name);
@@ -27,6 +33,12 @@ namespace Infrastructure.Queries
         public JobOfferQuery FilterByCompanyName(string companyName)
         {
             queryable = queryable.Where(jobOffer => jobOffer.Company != null && jobOffer.Company.Name == companyName);
+            return this;
+        }
+
+        public JobOfferQuery FilterByCompanyId(int companyId)
+        {
+            queryable = queryable.Where(jobOffer => jobOffer.Company != null && jobOffer.Company.Id == companyId);
             return this;
         }
 
