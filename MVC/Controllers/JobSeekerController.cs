@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.DTOs;
 using Business.Facades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using MVC.Models;
@@ -49,18 +50,25 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "JobSeeker")]
         public async Task<IActionResult> EditJobSeeker()
         {
             var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
             var jobSeeker = await jobSeekerFacade.GetInfoAsync(new JobSeekerDto {Id = user.JobSeekerId});
+            if (jobSeeker == null)
+            {
+                return NotFound();
+            }
+
             return View(jobSeeker);
         }
 
         [HttpPost]
+        [Authorize(Roles = "JobSeeker")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditJobSeeker(JobSeekerDto jobSeeker)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && jobSeeker.UserId == int.Parse(User.Identity.Name))
             {
                 await jobSeekerFacade.EditInfoAsync(jobSeeker);
                 return RedirectToAction("Index", "Home");

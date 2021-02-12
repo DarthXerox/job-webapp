@@ -1,0 +1,56 @@
+@using System.ComponentModel.DataAnnotations
+@model Business.DTOs.JobOfferDto
+@{ ViewData["Title"] = "Edit Job Offer"; }
+
+<h4>Edit job offer</h4>
+<hr />
+<div class="row">
+    <div>
+        <form asp-action="EditJobOffer" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>@Html.HiddenFor(model => model.Id)</div>
+            <div class="form-group">
+                <h5>Name</h5>
+                @Html.TextBoxFor(model => model.Name, new { placeholder = "Name", required = true, maxlength = 64 })
+            </div>
+            <div>
+                @Html.HiddenFor(model => model.CompanyId)
+            </div>
+            <div class="form-group">
+                <h5>City</h5>
+                @Html.TextBoxFor(model => model.City, new { placeholder = "City", required = true, maxlength = 64 })
+            </div>
+            <div class="form-group">
+                <h5>Description</h5>
+                @Html.TextAreaFor(model => model.Description, new { placeholder = "Description", required = true, maxlength = 1024, rows = 10, cols = 100 })
+            </div>
+            <h5>Relevant skills</h5>
+            <div id="skillsEditor" class="form-group">
+                @for (int i = 0; i < Model.RelevantSkills.Count; i++)
+                {
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.RelevantSkills[i], new { placeholder = "Skill", required = true, maxlength = 64 })
+        </div>}
+                <input type="submit" name="skill" formaction="/JobOffer/AddNewSkill" formmethod="post" value="Add new skill" class="btn btn-secondary" />
+            </div>
+            <h5>Questions</h5>
+            <div id="questionsEditor" class="form-group">
+                @for (int i = 0; i < Model.Questions.Count; i++)
+                {
+        <div class="form-group">
+            @Html.TextBoxFor(model => model.Questions[i].Text, new { placeholder = "Question", required = true, maxlength = 1024 })
+        </div>}
+            <input type="submit" name="question" formaction="/JobOffer/AddNewQuestion" formmethod="post" value="Add new question" class="btn btn-secondary" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" name="EditJobOffer" method="post" value="Confirm changes" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

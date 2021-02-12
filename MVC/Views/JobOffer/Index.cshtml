@@ -37,6 +37,7 @@
                 @Html.ActionLink("Detail", "JobOfferDetail", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
                 @if (User.IsInRole("Company"))
                 {
+                    @Html.ActionLink("Edit", "EditJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
                 }
             </td>

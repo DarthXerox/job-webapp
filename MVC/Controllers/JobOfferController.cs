@@ -72,7 +72,8 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddJobOffer(JobOfferDto jobOffer)
         {
-            if (ModelState.IsValid)
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+            if (ModelState.IsValid && user.CompanyId == jobOffer.CompanyId)
             {
                 await jobOfferFacade.CreateAsync(jobOffer);
                 return RedirectToAction(nameof(Index));
@@ -87,6 +88,10 @@ namespace MVC.Controllers
         public async Task<IActionResult> AddNewSkill(JobOfferDto jobOffer)
         {
             jobOffer.RelevantSkills.Add("");
+            if (jobOffer.Id != null)
+            {
+                return View("EditJobOffer", jobOffer);
+            }
             return View("AddJobOffer", jobOffer);
         }
 
@@ -96,6 +101,10 @@ namespace MVC.Controllers
         public async Task<IActionResult> AddNewQuestion(JobOfferDto jobOffer)
         {
             jobOffer.Questions.Add(new JobOfferQuestionDto{ Text = "" });
+            if (jobOffer.Id != null)
+            {
+                return View("EditJobOffer", jobOffer);
+            }
             return View("AddJobOffer", jobOffer);
         }
 
@@ -129,7 +138,7 @@ namespace MVC.Controllers
             {
                 return BadRequest();
             }
-            await jobOfferFacade.Delete(offer);
+            await jobOfferFacade.DeleteAsync(offer);
             return RedirectToAction(nameof(Index));
         }
 
@@ -146,6 +155,42 @@ namespace MVC.Controllers
                 return NotFound();
             }
             return View(offer);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Company")]
+        public async Task<IActionResult> EditJobOffer(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+            var jobOffer = await jobOfferFacade.GetByIdAsync(id.Value);
+            if (jobOffer == null)
+            {
+                return NotFound();
+            }
+            if (jobOffer.CompanyId != user.CompanyId)
+            {
+                return Forbid();
+            }
+            return View(jobOffer);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Company")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditJobOffer(JobOfferDto jobOffer)
+        {
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+            if (ModelState.IsValid && jobOffer.CompanyId == user.CompanyId)
+            {
+                await jobOfferFacade.UpdateAsync(jobOffer);
+                return RedirectToAction("Index", "Home");
+            }
+
+            throw new ArgumentException();
         }
     }
 }

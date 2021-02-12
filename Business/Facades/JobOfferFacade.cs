@@ -71,12 +71,12 @@ namespace Business.Facades
             await jobOfferService.CreateAsync(mapper.Map<JobOffer>(jobOfferDto));
         }
 
-        public async Task Update(JobOfferDto jobOffer)
+        public async Task UpdateAsync(JobOfferDto jobOffer)
         {
             await jobOfferService.UpdateAsync(mapper.Map<JobOfferDto, JobOffer>(jobOffer));
         }
 
-        public async Task Delete(JobOfferDto jobOfferDto)
+        public async Task DeleteAsync(JobOfferDto jobOfferDto)
         {
             await jobOfferService.DeleteAsync(jobOfferDto.Id ?? throw new NullReferenceException("JobOfferDto.Id can't be null!"));
         }
