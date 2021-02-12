@@ -377,3 +377,8 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
+# Appsettings
+MVC/appsettings.json
+WebApi/appsettings.json
+
