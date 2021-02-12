@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Business.DTOs;
 using Business.QueryObjects;
 using DAL.Entities;
 using DAL.Enums;
@@ -53,6 +54,16 @@ namespace Business.Services
         public void Delete(int applicationId)
         {
             unitOfWork.JobApplicationRepository.Delete(applicationId);
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByCompanyIdAsync(int companyId)
+        {
+            return await jobApplicationQueryObject.GetByCompanyIdAsync(companyId);
+        }
+
+        public async Task<JobApplication> GetByIdAsync(int id)
+        {
+            return await jobApplicationQueryObject.GetByIdAsync(id);
         }
     }
 }

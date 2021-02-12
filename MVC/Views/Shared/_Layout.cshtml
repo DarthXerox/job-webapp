@@ -30,7 +30,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="Index">JobOffers</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="Index">Job offers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="JobApplication" asp-action="Index">Job applications</a>
                         </li>
                         @if (User.IsInRole("JobSeeker"))
                         {

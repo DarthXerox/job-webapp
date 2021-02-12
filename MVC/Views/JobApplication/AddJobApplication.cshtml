@@ -1,0 +1,39 @@
+@using System.ComponentModel.DataAnnotations
+@model MVC.Models.AddJobApplicationModel
+@{ ViewData["Title"] = "Create a Job Application"; }
+
+<h4>
+    Create a Job Application for @Model.JobOffer.Name at @Model.JobOffer.Company.Name
+</h4>
+<hr />
+<div class="row">
+    <div>
+        <form asp-action="AddJobApplication" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <h5>Application text</h5>
+                @Html.TextAreaFor(model => model.JobApplication.Text, new { placeholder = "Why am I, like, the greatest applicant, like, ever?", required = true })
+            </div>
+            <h5>We just need you to answer a few questions</h5>
+            <div class="form-group">
+                @for (int i = 0; i < Model.JobOffer.Questions.Count; i++)
+                {
+                    <div class="form-group">
+                        @Model.JobOffer.Questions[i].Text
+                        <br>
+                        @Html.TextAreaFor(model => model.JobApplication.Answers[i].Text, new { placeholder = "Your answer...", required = true })
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(model => model.JobApplication.JobOfferId)
+                <input type="submit" name="AddJobApplication" method="post" value="Apply!" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

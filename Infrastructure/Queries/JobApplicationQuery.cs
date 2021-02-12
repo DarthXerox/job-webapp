@@ -30,5 +30,11 @@ namespace Infrastructure.Queries
             queryable = queryable.Where(application => application.Status == status);
             return this;
         }
+
+        public JobApplicationQuery FilterByCompanyId(int companyId)
+        {
+            queryable = queryable.Where(application => application.JobOffer.CompanyId == companyId);
+            return this;
+        }
     }
 }

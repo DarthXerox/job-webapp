@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Business.DTOs;
 using DAL.Entities;
 using DAL.Enums;
 using Infrastructure;
@@ -40,6 +41,19 @@ namespace Business.QueryObjects
                 .FilterByApplicantId(applicantId)
                 .FilterByStatus(status)
                 .ExecuteAsync();
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByCompanyIdAsync(int companyId)
+        {
+            return await UnitOfWork.JobApplicationQuery
+                .FilterByCompanyId(companyId)
+                .OrderBy(keySelector: application => application.Status)
+                .ExecuteAsync();
+        }
+
+        public async Task<JobApplication> GetByIdAsync(int id)
+        {
+            return await UnitOfWork.JobApplicationRepository.GetByIdAsync(id);
         }
     }
 }

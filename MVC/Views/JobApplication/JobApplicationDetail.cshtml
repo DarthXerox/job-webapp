@@ -1,0 +1,78 @@
+@using DAL.Enums
+@model Business.DTOs.JobApplicationDto
+@{ ViewData["Title"] = "Job application"; }
+
+<h4>
+    Job Application for
+    @Html.ActionLink(
+        Model.JobOffer.Name + " at " + Model.JobOffer.Company.Name,
+        "JobOfferDetail", "JobOffer",
+        new { id = Model.JobOfferId },
+        new { @class = "btn btn-primary" }
+        )
+</h4>
+
+<hr />
+
+<div>
+    <h5>Applicant info</h5>
+    <div class="form-group">
+        <b>Name:</b> @Model.Applicant.Name
+    </div>
+    <div class="form-group">
+        <b>Surname:</b> @Model.Applicant.Surname
+    </div>
+    <div class="form-group">
+        <b>E-mail:</b> @Model.Applicant.Email
+    </div>
+    <div class="form-group">
+        <b>Skills</b>
+        <ul>
+            @foreach (var skill in Model.Applicant.Skills)
+            {
+                <li>@skill</li>
+            }
+        </ul>
+    </div>
+</div>
+
+<hr>
+
+<div class="form-group">
+    <h5>Application text</h5>
+    <div>
+        @Model.Text
+    </div>
+</div>
+
+<div class="form-group">
+    <h5>Answers</h5>
+    @for (int i = 0; i < Model.JobOffer.Questions.Count; i++)
+    {
+        <div class="form-group">
+            <b>@Model.JobOffer.Questions[i].Text</b>
+            <br>
+            @Model.Answers[i].Text
+        </div>
+    }
+</div>
+
+@if (User.IsInRole("Company"))
+{
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id);
+        <h5>Decide their fate</h5>
+        <div class="form-group">
+            @Html.DropDownList("Status", Html.GetEnumSelectList(typeof(Status)))
+        </div>
+        <div class="row">
+            <input type="submit" name="Save" method="post" value="Save" class="btn btn-primary col s12" />
+        </div>
+    }
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
