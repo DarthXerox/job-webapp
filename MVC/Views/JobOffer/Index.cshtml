@@ -7,6 +7,9 @@
     @Html.ActionLink("Add job offer", "AddJobOffer", "JobOffer", 0, new { @class = "btn btn-primary" })
 </p>
 <h4>All offers</h4>
+<form method="get">
+    Filter by skill: <input type="text" name="skill"> <input type="submit" value="Submit">
+</form>
 <table class="table">
     <thead>
         <tr>

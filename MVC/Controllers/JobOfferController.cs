@@ -23,13 +23,13 @@ namespace MVC.Controllers
             this.companyFacade = companyFacade;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index([FromQuery] int? page = 1, [FromQuery] string? skill = null)
         {
-            var model = await jobOfferFacade.GetAllAsync(PageSize, page);
+            var model = await jobOfferFacade.GetAllAsync(PageSize, page ?? 1, skill);
 
             var pagedModel = new PagedListViewModel<JobOfferDto>(
-                new PaginationViewModel(page, model.totalCount, PageSize), model.offers);
-            
+                new PaginationViewModel(page ?? 1, model.totalCount, PageSize), model.offers);
+
             return View(pagedModel);
         }
 

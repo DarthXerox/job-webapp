@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DAL.Entities;
 using Infrastructure;
@@ -9,9 +10,10 @@ namespace Business.QueryObjects
     {
         public JobOfferQueryObject(UnitOfWork unit) : base(unit) { }
 
-        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber)
+        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber, string? skillTag)
         {
             return await UnitOfWork.JobOfferQuery
+                .FilterBySkillTag(skillTag)
                 .OrderBy(keySelector: jobOffer => jobOffer.Name)
                 .Page(pageSize, pageNumber)
                 .ExecuteAsync();
@@ -56,6 +58,15 @@ namespace Business.QueryObjects
                 .FilterByCity(city)
                 .OrderBy(keySelector: jobOffer => jobOffer.Name, ascendingOrder)
                 .ExecuteAsync();
+        }
+
+        public async Task<int> GetTotalCountAsync(string? skillTag)
+        {
+            if (skillTag == null) return await UnitOfWork.JobOfferRepository.GetTotalCountAsync();
+
+            return (await UnitOfWork.JobOfferQuery
+                .FilterBySkillTag(skillTag)
+                .ExecuteAsync()).Count();
         }
     }
 }

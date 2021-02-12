@@ -30,8 +30,9 @@ namespace Infrastructure.Queries
             return this;
         }
 
-        public JobOfferQuery FilterBySkillTag(string tag)
+        public JobOfferQuery FilterBySkillTag(string? tag)
         {
+            if (tag == null) return this;
             queryable = queryable.Where(jobOffer => jobOffer.RelevantSkills != null && jobOffer.RelevantSkills.Contains(tag));
             return this;
         }

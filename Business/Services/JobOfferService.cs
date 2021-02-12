@@ -17,14 +17,14 @@ namespace Business.Services
             this.jobOfferQueryObject = jobOfferQueryObject;
         }
 
-        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber)
+        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber, string? skillTag = null)
         {
-            return await jobOfferQueryObject.GetAllAsync(pageSize, pageNumber);
+            return await jobOfferQueryObject.GetAllAsync(pageSize, pageNumber, skillTag);
         }
 
-        public async Task<int> GetTotalCountAsync()
+        public async Task<int> GetTotalCountAsync(string? skillTag = null)
         {
-            return await unitOfWork.JobOfferRepository.GetTotalCountAsync();
+            return await jobOfferQueryObject.GetTotalCountAsync(skillTag);
         }
 
         public async Task<IEnumerable<JobOffer>> GetByNameAsync(string name, bool ascendingOrder = true)
