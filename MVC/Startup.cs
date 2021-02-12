@@ -5,11 +5,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Business;
+using DAL;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +41,9 @@ namespace MVC
             //cookie authorization
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o => o.LoginPath = new PathString("/User/Login"));
+
+            services.AddDbContext<JobDbContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
