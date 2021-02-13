@@ -32,19 +32,19 @@
     }
 </div>
 
-@if(User.IsInRole("JobSeeker"))
+@if (User.IsInRole("JobSeeker"))
 {
     <div>
         @Html.ActionLink("Apply", "AddJobApplication", "JobApplication", new { jobOfferId = Model.Id }, new { @class = "btn btn-primary" })
     </div>
 }
-else
+else if (!User.IsInRole("Company"))
 {
     <div>
         <b>To apply for this position, register as a Job Seeker.</b>
     </div>
 }
 
-    <div>
+<div>
     <a asp-action="Index">Back to List</a>
 </div>

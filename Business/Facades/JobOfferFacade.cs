@@ -12,19 +12,21 @@ namespace Business.Facades
 {
     public class JobOfferFacade
     {
+        private readonly UnitOfWork unitOfWork;
         private readonly JobOfferService jobOfferService;
         private readonly IMapper mapper;
 
-        public JobOfferFacade(JobOfferService jobOfferService, IMapper mapper)
+        public JobOfferFacade(UnitOfWork unitOfWork, JobOfferService jobOfferService, IMapper mapper)
         {
+            this.unitOfWork = unitOfWork;
             this.jobOfferService = jobOfferService;
             this.mapper = mapper;
         }
 
-        public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllAsync(int pageSize, int pageNumber, string? skillTag = null)
+        public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllAsync(int pageSize, int pageNumber, IList<string>? skillTags = null)
         {
-            var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber, skillTag));
-            int totalCount = await jobOfferService.GetTotalCountAsync(skillTag);
+            var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber, skillTags));
+            int totalCount = await jobOfferService.GetTotalCountAsync(skillTags);
             return (totalCount, jobOffers);
         }
 
@@ -48,12 +50,12 @@ namespace Business.Facades
 
         public async Task<IEnumerable<JobOfferDto>> GetByCompanyNameAsync(JobOfferDto jobOfferDto, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByNameContainsAsync(jobOfferDto.Company?.Name, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyNameAsync(jobOfferDto.Company?.Name, ascendingOrder));
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
+        public async Task<IEnumerable<JobOfferDto>> GetByCompanyIdAsync(int companyId, bool ascendingOrder = true)
         {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetBySkillTagAsync(skillTag, ascendingOrder));
+            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyIdAsync(companyId, ascendingOrder));
         }
 
         public async Task<IEnumerable<JobOfferDto>> GetByCityAsync(string city, bool ascendingOrder = true)
@@ -66,19 +68,27 @@ namespace Business.Facades
             return mapper.Map<JobOfferDto>(await jobOfferService.GetByIdAsync(id));
         }
 
+        public async Task<JobOfferDto> GetByIdWithQuestionsAsync(int id)
+        {
+            return mapper.Map<JobOfferDto>(await jobOfferService.GetByIdWithQuestionsAsync(id));
+        }
+
         public async Task CreateAsync(JobOfferDto jobOfferDto)
         {
             await jobOfferService.CreateAsync(mapper.Map<JobOffer>(jobOfferDto));
+            await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task Update(JobOfferDto jobOffer)
+        public async Task UpdateAsync(JobOfferDto jobOffer)
         {
             await jobOfferService.UpdateAsync(mapper.Map<JobOfferDto, JobOffer>(jobOffer));
+            await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task Delete(JobOfferDto jobOfferDto)
+        public async Task DeleteAsync(JobOfferDto jobOfferDto)
         {
             await jobOfferService.DeleteAsync(jobOfferDto.Id ?? throw new NullReferenceException("JobOfferDto.Id can't be null!"));
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }

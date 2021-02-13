@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -33,8 +33,8 @@ namespace WebApi.Controllers
             => await jobOfferFacade.GetAllWithoutPagingAsync();
 
         [HttpGet]
-        [Route("ByCompany")]
-        public async Task<IEnumerable<JobOfferDto>> GetAppleOffers(string name)
+        [Route("byCompany")]
+        public async Task<IEnumerable<JobOfferDto>> GetOffersByCompany(string name)
             => await jobOfferFacade.GetByCompanyNameAsync(new JobOfferDto() { Company = new CompanyDto() {Name = name}});
     }
 }

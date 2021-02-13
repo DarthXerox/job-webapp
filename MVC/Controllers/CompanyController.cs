@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.DTOs;
 using Business.Facades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Controller = Microsoft.AspNetCore.Mvc.Controller;
 
 namespace MVC.Controllers
 {
@@ -39,18 +41,25 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Company")]
         public async Task<IActionResult> EditCompany()
         {
-            var user = await userFacade.GetByIdAsync(Int32.Parse(this.User.Identity.Name));
+            var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
             var company = await companyFacade.GetByIdAsync(user.CompanyId.Value);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
             return View(company);
         }
 
         [HttpPost]
+        [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCompany(CompanyDto company)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && company.UserId == int.Parse(User.Identity.Name))
             {
                 await companyFacade.EditInfoAsync(company);
                 return RedirectToAction("Index", "Home");

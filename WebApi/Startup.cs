@@ -3,8 +3,10 @@ using System.Text.Json;
 using Autofac;
 using Business;
 using DAL.Entities;
+using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,12 +26,14 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+           services.AddControllers();
             services.AddSwaggerGen();
             services.AddMvc();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             );
+            services.AddDbContext<JobDbContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -72,12 +76,6 @@ namespace WebApi
 
             app.UseEndpoints(endpoints =>
             {
-                /*endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "api/{controller=JobOffer}/{action=all}"
-                    );
-                endpoints.MapControllerRoute(name: "other",
-                    pattern: "{controller}/{action}");*/
                 endpoints.MapControllers();
             });
         }

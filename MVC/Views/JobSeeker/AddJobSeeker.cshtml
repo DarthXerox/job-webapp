@@ -31,7 +31,7 @@
                 }
                 <input type="submit" name="skill" formaction="AddNewSkill" formmethod="post" value="Add new skill" class="btn btn-secondary" />
             </div>
-            <div>@Html.HiddenFor(x => x.UserId)</div>
+            <div>@Html.HiddenFor(model => model.UserId)</div>
             <div class="form-group">
                 <input type="submit" name="AddJobSeeker" method="post" value="Confirm" class="btn btn-primary" />
             </div>

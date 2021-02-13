@@ -19,19 +19,21 @@ namespace MVC.Controllers
         private readonly JobApplicationFacade jobApplicationFacade;
         private readonly UserFacade userFacade;
         private readonly JobSeekerFacade jobSeekerFacade;
+        private readonly CompanyFacade companyFacade;
 
-        public JobApplicationController(JobOfferFacade jobOfferFacade, JobApplicationFacade jobApplicationFacade, UserFacade userFacade, JobSeekerFacade jobSeekerFacade)
+        public JobApplicationController(JobOfferFacade jobOfferFacade, JobApplicationFacade jobApplicationFacade, UserFacade userFacade, JobSeekerFacade jobSeekerFacade, CompanyFacade companyFacade)
         {
             this.jobOfferFacade = jobOfferFacade;
             this.jobApplicationFacade = jobApplicationFacade;
             this.userFacade = userFacade;
             this.jobSeekerFacade = jobSeekerFacade;
+            this.companyFacade = companyFacade;
         }
 
         [HttpGet]
         public async Task<IActionResult> AddJobApplication(int jobOfferId)
         {
-            var jobOffer = await jobOfferFacade.GetByIdAsync(jobOfferId);
+            var jobOffer = await jobOfferFacade.GetByIdWithQuestionsAsync(jobOfferId);
             var user = await userFacade.GetByIdAsync(Int32.Parse(User.Identity.Name));
             var jobSeeker = await jobSeekerFacade.GetByIdAsync(user.JobSeekerId.Value);
             var model = new AddJobApplicationModel

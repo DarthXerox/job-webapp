@@ -1,3 +1,5 @@
+@using DAL.Entities
+@using Microsoft.AspNetCore.Razor.Language.Intermediate
 @model Business.DTOs.JobOfferDto
 @{ ViewData["Title"] = "Delete Job Offer"; }
 
@@ -7,3 +9,6 @@
         <input type="submit" value="Confirm delete" class="btn btn-primary" />
     </div>
 </form>
+<div>
+    @Html.ActionLink("Cancel", "Index", "JobOffer", new {}, new { @class = "btn btn-secondary" })
+</div>

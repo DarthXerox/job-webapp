@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/pv179dbserver/databases/MVC_db",
+      "type": "mssql.azure",
+      "connectionId": "AzureDB",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
