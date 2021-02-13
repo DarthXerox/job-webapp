@@ -10,10 +10,10 @@ namespace Business.QueryObjects
     {
         public JobOfferQueryObject(UnitOfWork unit) : base(unit) { }
 
-        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber, string? skillTag)
+        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber, IList<string>? skillTags)
         {
             return await UnitOfWork.JobOfferQuery
-                .FilterBySkillTag(skillTag)
+                .FilterBySkillTags(skillTags)
                 .OrderBy(keySelector: jobOffer => jobOffer.Name)
                 .Page(pageSize, pageNumber)
                 .ExecuteAsync();
@@ -61,12 +61,12 @@ namespace Business.QueryObjects
                 .ExecuteAsync();
         }
 
-        public async Task<int> GetTotalCountAsync(string? skillTag)
+        public async Task<int> GetTotalCountAsync(IList<string>? skillTags)
         {
-            if (skillTag == null) return await UnitOfWork.JobOfferRepository.GetTotalCountAsync();
+            if (skillTags == null || !skillTags.Any()) return await UnitOfWork.JobOfferRepository.GetTotalCountAsync();
 
             return (await UnitOfWork.JobOfferQuery
-                .FilterBySkillTag(skillTag)
+                .FilterBySkillTags(skillTags)
                 .ExecuteAsync()).Count();
         }
 

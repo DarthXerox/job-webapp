@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using DAL;
 using DAL.Entities;
@@ -45,11 +47,21 @@ namespace Infrastructure.Queries
             return this;
         }
 
-        public JobOfferQuery FilterBySkillTag(string tag)
+        public JobOfferQuery FilterBySkillTags(IList<string> skillTags)
         {
-            if (tag == null) return this;
+            if (skillTags == null || !skillTags.Any()) return this;
+
+            string query = String.Format("SELECT * FROM dbo.JobOffers WHERE '{0}' IN (SELECT value FROM STRING_SPLIT(RelevantSkills, ';'))", skillTags[0]);
+            if (skillTags.Count > 1)
+            {
+                foreach (var tag in skillTags.Skip(1))
+                {
+                    query += String.Format(" OR '{0}' IN (SELECT value FROM STRING_SPLIT(RelevantSkills, ';'))", tag);
+                }
+            }
+
             queryable = dbContext.Set<JobOffer>()
-                .FromSqlRaw("SELECT * FROM dbo.JobOffers WHERE {0} IN(SELECT value from STRING_SPLIT(RelevantSkills, ';'))", tag)
+                .FromSqlRaw(query)
                 .Include(jobOffer => jobOffer.Company);
             return this;
         }

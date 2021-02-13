@@ -1,4 +1,5 @@
 @using Business.DTOs;
+@using DAL.Entities
 @model MVC.Models.PagedListViewModel<JobOfferDto>
 @{
     ViewData["Title"] = "Job Offers";
@@ -10,12 +11,18 @@
     <p>
         @Html.ActionLink("Add job offer", "AddJobOffer", "JobOffer", 0, new { @class = "btn btn-primary" })
     </p>
-} else if (User.IsInRole("JobSeeker"))
+}
+else
 {
     <h4>All job offers</h4>
     <form method="get">
-        Filter by skill: <input type="text" name="skill"> <input type="submit" value="Submit">
+        Filter by specific skill: <input type="text" name="skill"> <input type="submit" value="Submit">
     </form>
+    if (User.IsInRole("JobSeeker"))
+    {
+        <div>@Html.ActionLink("Filter by my skills", "Index", "JobOffer", new { filterMySkill = true }, new { @class = "btn btn-primary" })</div>
+    }
+<div>@Html.ActionLink("Reset filters", "Index", "JobOffer", new {}, new { @class = "btn btn-secondary" })</div>
 }
 <table class="table">
     <thead>
@@ -27,28 +34,28 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.List)
-    {
-        <tr>
-            <td>
-                @item.Name
-            </td>
-            <td>
-                @item.Company.Name
-            </td>
-            <td>
-                @item.City
-            </td>
-            <td style="float: right;">
-                @Html.ActionLink("Detail", "JobOfferDetail", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
-                @if (User.IsInRole("Company"))
-                {
-                    @Html.ActionLink("Edit", "EditJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
-                }
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model.List)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Company.Name
+                </td>
+                <td>
+                    @item.City
+                </td>
+                <td style="float: right;">
+                    @Html.ActionLink("Detail", "JobOfferDetail", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @if (User.IsInRole("Company"))
+                    {
+                        @Html.ActionLink("Edit", "EditJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <div>

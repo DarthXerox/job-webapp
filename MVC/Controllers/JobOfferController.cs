@@ -17,15 +17,17 @@ namespace MVC.Controllers
         private readonly JobOfferFacade jobOfferFacade;
         private readonly CompanyFacade companyFacade;
         private readonly UserFacade userFacade;
+        private readonly JobSeekerFacade jobSeekerFacade;
 
-        public JobOfferController(JobOfferFacade jobOfferFacade, CompanyFacade companyFacade, UserFacade userFacade)
+        public JobOfferController(JobOfferFacade jobOfferFacade, CompanyFacade companyFacade, UserFacade userFacade, JobSeekerFacade jobSeekerFacade)
         {
             this.jobOfferFacade = jobOfferFacade;
             this.companyFacade = companyFacade;
             this.userFacade = userFacade;
+            this.jobSeekerFacade = jobSeekerFacade;
         }
 
-        public async Task<IActionResult> Index([FromQuery] int? page = 1, [FromQuery] string? skill = null)
+        public async Task<IActionResult> Index([FromQuery] int? page = 1, [FromQuery] string? skill = null, [FromQuery] bool? filterMySkill = false)
         {
             (int totalCount, IEnumerable<JobOfferDto> offers) model;
             if (User.IsInRole("Company"))
@@ -41,9 +43,15 @@ namespace MVC.Controllers
                     model = (offers.Count(), offers);
                 }
             }
+            else if (User.IsInRole("JobSeeker") && filterMySkill.HasValue && filterMySkill.Value)
+            {
+                var user = await userFacade.GetByIdAsync(int.Parse(User.Identity.Name));
+                var skillTags = (await jobSeekerFacade.GetByIdAsync(user.JobSeekerId.Value)).Skills;
+                model = await jobOfferFacade.GetAllAsync(PageSize, page ?? 1, skillTags);
+            }
             else
             {
-                model = await jobOfferFacade.GetAllAsync(PageSize, page ?? 1, skill);
+                model = await jobOfferFacade.GetAllAsync(PageSize, page ?? 1, skill == null ? null : new List<string>{ skill });
             }
 
             var pagedModel = new PagedListViewModel<JobOfferDto>(
