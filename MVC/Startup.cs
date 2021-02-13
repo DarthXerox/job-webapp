@@ -43,7 +43,7 @@ namespace MVC
                 .AddCookie(o => o.LoginPath = new PathString("/User/Login"));
 
             services.AddDbContext<JobDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

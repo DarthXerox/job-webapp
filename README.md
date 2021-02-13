@@ -4,6 +4,8 @@ bröther, can i hav jöb?
 
 ![lögo](https://media.discordapp.net/attachments/763083691924652122/765604353906049114/moth.png?width=230&height=200)
 
+Deployed app: https://jobserverpv179.azurewebsites.net/
+
 # Participants
 
 Seminar **01**, group **#3**
