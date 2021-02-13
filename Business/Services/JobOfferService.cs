@@ -48,11 +48,6 @@ namespace Business.Services
             return await jobOfferQueryObject.GetByCompanyIdAsync(companyId, ascendingOrder);
         }
 
-        public async Task<IEnumerable<JobOffer>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
-        {
-            return await jobOfferQueryObject.GetBySkillTagAsync(skillTag, ascendingOrder);
-        }
-
         public async Task<IEnumerable<JobOffer>> GetByCityAsync(string city, bool ascendingOrder = true)
         {
             return await jobOfferQueryObject.GetByCityAsync(city, ascendingOrder);

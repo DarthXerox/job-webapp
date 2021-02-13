@@ -58,11 +58,6 @@ namespace Business.Facades
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyIdAsync(companyId, ascendingOrder));
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
-        {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetBySkillTagAsync(skillTag, ascendingOrder));
-        }
-
         public async Task<IEnumerable<JobOfferDto>> GetByCityAsync(string city, bool ascendingOrder = true)
         {
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCityAsync(city, ascendingOrder));

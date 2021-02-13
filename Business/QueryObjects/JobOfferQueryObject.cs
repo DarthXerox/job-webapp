@@ -53,14 +53,6 @@ namespace Business.QueryObjects
                 .ExecuteAsync();
         }
 
-        public async Task<IEnumerable<JobOffer>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
-        {
-            return await UnitOfWork.JobOfferQuery
-                .FilterBySkillTag(skillTag)
-                .OrderBy(keySelector: jobOffer => jobOffer.Name, ascendingOrder)
-                .ExecuteAsync();
-        }
-
         public async Task<IEnumerable<JobOffer>> GetByCityAsync(string city, bool ascendingOrder = true)
         {
             return await UnitOfWork.JobOfferQuery
@@ -77,7 +69,7 @@ namespace Business.QueryObjects
                 .FilterBySkillTag(skillTag)
                 .ExecuteAsync()).Count();
         }
-        
+
         public async Task<IEnumerable<JobOffer>> GetByIdWithQuestionsAsync(int id)
         {
             return await UnitOfWork.JobOfferQuery.GetByIdWithQuestions(id).ExecuteAsync(); ;
