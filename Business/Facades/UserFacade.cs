@@ -32,7 +32,7 @@ namespace Business.Facades
 
         public async Task<int> RegisterUserAsync(UserRegisterDto userRegisterDto)
         {
-            int id = userService.RegisterUser(userRegisterDto.Name, userRegisterDto.Password, userRegisterDto.Role);
+            int id = await userService.RegisterUserAsync(userRegisterDto.Name, userRegisterDto.Password, userRegisterDto.Role);
             await unitOfWork.SaveChangesAsync();
             return id;
         }

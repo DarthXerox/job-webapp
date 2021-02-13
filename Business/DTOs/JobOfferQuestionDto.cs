@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
 namespace Business.DTOs
 {
     public class JobOfferQuestionDto : BaseDto
     {
+        [Required]
+        [StringLength(1024)]
         public string? Text { get; set; }
 
         [JsonIgnore]

@@ -7,9 +7,11 @@ namespace Business.DTOs
     public class UserRegisterDto : BaseDto
     {
         [Required]
+        [StringLength(64)]
         public string Name { get; set; }
 
         [Required]
+        [StringLength(64)]
         public string Password { get; set; }
 
         [Required]

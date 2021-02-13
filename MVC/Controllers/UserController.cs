@@ -8,7 +8,6 @@ using DAL.Enums;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace MVC.Controllers
 {
@@ -36,30 +35,21 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(UserRegisterDto user)
         {
-            var userId = await userFacade.RegisterUserAsync(user);
-
-            if (user.Role == Roles.JobSeeker)
+            try
             {
-                return RedirectToAction("AddJobSeeker", "JobSeeker", new { userId });
-            }
-            return RedirectToAction("AddCompany", "Company", new { userId });
-            /*try
-            {
-                //Here should be a check for existing user
-                await userFacade.RegisterUserAsync(user);
+                var userId = await userFacade.RegisterUserAsync(user);
 
-
-
-                return RedirectToAction("Login", "User");
-
-
+                if (user.Role == Roles.JobSeeker)
+                {
+                    return RedirectToAction("AddJobSeeker", "JobSeeker", new { userId });
+                }
+                return RedirectToAction("AddCompany", "Company", new { userId });
             }
             catch (Exception)
             {
-
                 ModelState.AddModelError("Username", "Account with that username already exists!");
                 return View("Register");
-            }*/
+            }
         }
 
         [HttpGet("Login")]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using AutoMapper;
 using Business;
@@ -111,7 +111,7 @@ namespace UnitTests.Business
             Seeder.Seed(unit);
 
             var jobOfferService = new JobOfferService(unit, new JobOfferQueryObject(unit));
-            var jobOfferFacade = new JobOfferFacade(jobOfferService, mapper);
+            var jobOfferFacade = new JobOfferFacade(unit, jobOfferService, mapper);
 
             var o = new JobOfferDto() { Name = "Lol" };
             jobOfferFacade.CreateAsync(o).Wait();
@@ -124,14 +124,14 @@ namespace UnitTests.Business
 
             // Null ID edit/update
             var excp2 = Assert.Throws<AggregateException>(() =>
-                jobOfferFacade.Update(mapper.Map<JobOfferDto>(s)).Wait());
+                jobOfferFacade.UpdateAsync(mapper.Map<JobOfferDto>(s)).Wait());
             Assert.Contains("The property 'Id' on entity type 'JobOffer' is part of a key " +
                             "and so cannot be modified or marked as modified.",
                 excp2.Message);
 
             // Null ID delete
             excp2 = Assert.Throws<AggregateException>(() =>
-                jobOfferFacade.Delete(mapper.Map<JobOfferDto>(s)).Wait());
+                jobOfferFacade.DeleteAsync(mapper.Map<JobOfferDto>(s)).Wait());
             Assert.Contains("JobOfferDto.Id can't be null!",
                 excp2.Message);
 

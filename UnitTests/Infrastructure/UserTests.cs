@@ -28,7 +28,7 @@ namespace UnitTests.Infrastructure
             var userQuery = new UserQuery(context);**/
             var userService = new UserService(unit, new UserQueryObject(unit));
             Seeder.Seed(unit);
-            userService.RegisterUser("custom", "1234", Roles.JobSeeker);
+            userService.RegisterUserAsync("custom", "1234", Roles.JobSeeker);
 
             /**var u = unit.UserRepository.GetById(1);
             Assert.Equal("custom", u.Name);

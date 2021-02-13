@@ -20,7 +20,8 @@
             </div>
             <div class="form-group">
                 <h5>E-mail</h5>
-                @Html.TextBoxFor(model => model.Email, new { placeholder = "E-mail", required = true, type = "email", maxlength = 64 })
+                @Html.TextBoxFor(model => model.Email, new { placeholder = "E-mail", type = "email", required = true, maxlength = 64 })
+                @Html.ValidationMessageFor(model => model.Email)
             </div>
             <h5>Skills</h5>
             <div id="skillsEditor" class="form-group">

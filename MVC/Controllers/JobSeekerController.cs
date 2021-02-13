@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Business.DTOs;
 using Business.Facades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using MVC.Models;
 
 namespace MVC.Controllers
 {
@@ -25,6 +22,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult AddJobSeeker([FromQuery(Name = "userId")] int userId)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Forbid();
+            }
             return View(new JobSeekerDto{ UserId = userId, Skills = new List<string> { "" } });
         }
 
@@ -46,6 +47,10 @@ namespace MVC.Controllers
         public IActionResult AddNewSkill(JobSeekerDto jobSeeker)
         {
             jobSeeker.Skills.Add("");
+            if (jobSeeker.Id != null)
+            {
+                return View("EditJobSeeker", jobSeeker);
+            }
             return View("AddJobSeeker", jobSeeker);
         }
 

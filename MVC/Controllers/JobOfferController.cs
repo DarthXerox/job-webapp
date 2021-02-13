@@ -92,7 +92,7 @@ namespace MVC.Controllers
         [HttpPost]
         [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddNewSkill(JobOfferDto jobOffer)
+        public IActionResult AddNewSkill(JobOfferDto jobOffer)
         {
             jobOffer.RelevantSkills.Add("");
             if (jobOffer.Id != null)
@@ -105,7 +105,7 @@ namespace MVC.Controllers
         [HttpPost]
         [Authorize(Roles = "Company")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddNewQuestion(JobOfferDto jobOffer)
+        public IActionResult AddNewQuestion(JobOfferDto jobOffer)
         {
             jobOffer.Questions.Add(new JobOfferQuestionDto{ Text = "" });
             if (jobOffer.Id != null)

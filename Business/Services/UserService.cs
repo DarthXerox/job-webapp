@@ -47,8 +47,12 @@ namespace Business.Services
         }
 
 
-        public int RegisterUser(string userName, string password, Roles role)
+        public async Task<int> RegisterUserAsync(string userName, string password, Roles role)
         {
+            if ((await userQueryObject.GetByNameAsync(userName)).Any())
+            {
+                throw new InvalidOperationException();
+            }
             var (hash, salt) = CreateHash(password);
             var user = new User
             {
