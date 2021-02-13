@@ -10,7 +10,12 @@ namespace Infrastructure.Queries
     {
         public JobApplicationQuery(JobDbContext dbContext) : base(dbContext)
         {
-            queryable = queryable.Include(application => application.Applicant);
+            queryable = queryable
+                .Include(application => application.Applicant)
+                .Include(application => application.JobOffer)
+                .Include(application => application.JobOffer.Company)
+                .Include(application => application.JobOffer.Questions)
+                .Include(application => application.Answers);
         }
 
         public JobApplicationQuery FilterByJobOfferId(int jobOfferId)
@@ -28,6 +33,18 @@ namespace Infrastructure.Queries
         public JobApplicationQuery FilterByStatus(Status status)
         {
             queryable = queryable.Where(application => application.Status == status);
+            return this;
+        }
+
+        public JobApplicationQuery FilterByCompanyId(int companyId)
+        {
+            queryable = queryable.Where(application => application.JobOffer.CompanyId == companyId);
+            return this;
+        }
+
+        public JobApplicationQuery FilterById(int id)
+        {
+            queryable = queryable.Where(application => application.Id == id);
             return this;
         }
     }

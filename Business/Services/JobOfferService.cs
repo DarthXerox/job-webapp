@@ -18,14 +18,14 @@ namespace Business.Services
             this.jobOfferQueryObject = jobOfferQueryObject;
         }
 
-        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber)
+        public async Task<IEnumerable<JobOffer>> GetAllAsync(int pageSize, int pageNumber, string? skillTag = null)
         {
-            return await jobOfferQueryObject.GetAllAsync(pageSize, pageNumber);
+            return await jobOfferQueryObject.GetAllAsync(pageSize, pageNumber, skillTag);
         }
 
-        public async Task<int> GetTotalCountAsync()
+        public async Task<int> GetTotalCountAsync(string? skillTag = null)
         {
-            return await unitOfWork.JobOfferRepository.GetTotalCountAsync();
+            return await jobOfferQueryObject.GetTotalCountAsync(skillTag);
         }
 
         public async Task<IEnumerable<JobOffer>> GetByNameAsync(string name, bool ascendingOrder = true)
@@ -46,11 +46,6 @@ namespace Business.Services
         public async Task<IEnumerable<JobOffer>> GetByCompanyIdAsync(int companyId, bool ascendingOrder = true)
         {
             return await jobOfferQueryObject.GetByCompanyIdAsync(companyId, ascendingOrder);
-        }
-
-        public async Task<IEnumerable<JobOffer>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
-        {
-            return await jobOfferQueryObject.GetBySkillTagAsync(skillTag, ascendingOrder);
         }
 
         public async Task<IEnumerable<JobOffer>> GetByCityAsync(string city, bool ascendingOrder = true)

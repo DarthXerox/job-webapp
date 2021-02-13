@@ -65,5 +65,15 @@ namespace Business.Facades
             jobApplicationService.Delete(jobApplicationDto.Id ?? throw new NullReferenceException("JobApplicationId can't be null!"));
             await unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<JobApplicationDto>> GetByCompanyIdAsync(int companyId)
+        {
+            return mapper.Map<IEnumerable<JobApplicationDto>>(await jobApplicationService.GetByCompanyIdAsync(companyId));
+        }
+
+        public async Task<JobApplicationDto> GetByIdAsync(int id)
+        {
+            return mapper.Map<JobApplicationDto>(await jobApplicationService.GetByIdAsync(id));
+        }
     }
 }

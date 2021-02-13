@@ -14,7 +14,10 @@ namespace Infrastructure.Queries
 
         public JobOfferQuery GetByIdWithQuestions(int id)
         {
-            queryable = queryable.Where(jobOffer => jobOffer.Id == id).Include(jobOffer => jobOffer.Questions);
+            queryable = queryable
+                .Where(jobOffer => jobOffer.Id == id)
+                .Include(jobOffer => jobOffer.Questions)
+                .Include(jobOffer => jobOffer.Company);
             return this;
         }
 
@@ -44,7 +47,10 @@ namespace Infrastructure.Queries
 
         public JobOfferQuery FilterBySkillTag(string tag)
         {
-            queryable = queryable.Where(jobOffer => jobOffer.RelevantSkills != null && jobOffer.RelevantSkills.Contains(tag));
+            if (tag == null) return this;
+            queryable = dbContext.Set<JobOffer>()
+                .FromSqlRaw("SELECT * FROM dbo.JobOffers WHERE {0} IN(SELECT value from STRING_SPLIT(RelevantSkills, ';'))", tag)
+                .Include(jobOffer => jobOffer.Company);
             return this;
         }
 

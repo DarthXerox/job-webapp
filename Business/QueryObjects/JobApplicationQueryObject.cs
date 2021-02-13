@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Business.DTOs;
 using DAL.Entities;
 using DAL.Enums;
 using Infrastructure;
@@ -8,7 +10,8 @@ namespace Business.QueryObjects
 {
     public class JobApplicationQueryObject : QueryObject
     {
-        public JobApplicationQueryObject(UnitOfWork unit) : base(unit) { }
+        public JobApplicationQueryObject(UnitOfWork unit) : base(unit)
+        {}
 
         public async Task<IEnumerable<JobApplication>> GetByJobOfferIdAsync(int jobOfferId, bool ascendingOrder = true)
         {
@@ -40,6 +43,21 @@ namespace Business.QueryObjects
                 .FilterByApplicantId(applicantId)
                 .FilterByStatus(status)
                 .ExecuteAsync();
+        }
+
+        public async Task<IEnumerable<JobApplication>> GetByCompanyIdAsync(int companyId)
+        {
+            return await UnitOfWork.JobApplicationQuery
+                .FilterByCompanyId(companyId)
+                .OrderBy(keySelector: application => application.Status)
+                .ExecuteAsync();
+        }
+
+        public async Task<JobApplication> GetByIdAsync(int id)
+        {
+            return (await UnitOfWork.JobApplicationQuery
+                .FilterById(id)
+                .ExecuteAsync()).First();
         }
     }
 }

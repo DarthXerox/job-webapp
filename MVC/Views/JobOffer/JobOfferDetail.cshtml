@@ -26,12 +26,25 @@
 </div>
 <div>
     <h5>Questions</h5>
-    @for (int i = 0; i < Model.Questions.Count(); i++)
+    @for (int i = 0; i < Model.Questions.Count; i++)
     {
         <p>@(i + 1). @Model.Questions[i].Text</p>
     }
 </div>
 
-<div>
+@if(User.IsInRole("JobSeeker"))
+{
+    <div>
+        @Html.ActionLink("Apply", "AddJobApplication", "JobApplication", new { jobOfferId = Model.Id }, new { @class = "btn btn-primary" })
+    </div>
+}
+else
+{
+    <div>
+        <b>To apply for this position, register as a Job Seeker.</b>
+    </div>
+}
+
+    <div>
     <a asp-action="Index">Back to List</a>
 </div>

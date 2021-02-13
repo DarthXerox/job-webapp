@@ -23,10 +23,10 @@ namespace Business.Facades
             this.mapper = mapper;
         }
 
-        public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllAsync(int pageSize, int pageNumber)
+        public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllAsync(int pageSize, int pageNumber, string? skillTag = null)
         {
-            var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber));
-            int totalCount = await jobOfferService.GetTotalCountAsync();
+            var jobOffers = mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetAllAsync(pageSize, pageNumber, skillTag));
+            int totalCount = await jobOfferService.GetTotalCountAsync(skillTag);
             return (totalCount, jobOffers);
         }
 
@@ -56,11 +56,6 @@ namespace Business.Facades
         public async Task<IEnumerable<JobOfferDto>> GetByCompanyIdAsync(int companyId, bool ascendingOrder = true)
         {
             return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetByCompanyIdAsync(companyId, ascendingOrder));
-        }
-
-        public async Task<IEnumerable<JobOfferDto>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
-        {
-            return mapper.Map<IEnumerable<JobOffer>, IEnumerable<JobOfferDto>>(await jobOfferService.GetBySkillTagAsync(skillTag, ascendingOrder));
         }
 
         public async Task<IEnumerable<JobOfferDto>> GetByCityAsync(string city, bool ascendingOrder = true)

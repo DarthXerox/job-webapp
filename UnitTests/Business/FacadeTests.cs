@@ -31,8 +31,9 @@ namespace UnitTests.Business
             var unit = new UnitOfWork(GetInMemoryOptions());
             Seeder.Seed(unit);
 
+            var userService = new UserService(unit, new UserQueryObject(unit));
             var compService = new CompanyService(unit, new CompanyQueryObject(unit));
-            var companyFacade = new CompanyFacade(unit, mapper, compService);
+            var companyFacade = new CompanyFacade(unit, mapper, compService, userService);
 
             // Null ID edit/update
             companyFacade.AddAsync(new CompanyDto() { Name = "Lol" }).Wait();
@@ -69,8 +70,9 @@ namespace UnitTests.Business
             var unit = new UnitOfWork(GetInMemoryOptions());
             Seeder.Seed(unit);
 
+            var userService = new UserService(unit, new UserQueryObject(unit));
             var jobSeekerService = new JobSeekerService(unit);
-            var jobSeekerFacade = new JobSeekerFacade(unit, mapper, jobSeekerService);
+            var jobSeekerFacade = new JobSeekerFacade(unit, mapper, jobSeekerService, userService);
 
             var s = new JobSeekerDto() { Name = "Lol" };
             jobSeekerFacade.RegisterAsync(s).Wait();

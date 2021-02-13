@@ -6,11 +6,17 @@
 
 @if (User.IsInRole("Company"))
 {
+    <h4>My job offers</h4>
     <p>
         @Html.ActionLink("Add job offer", "AddJobOffer", "JobOffer", 0, new { @class = "btn btn-primary" })
     </p>
+} else if (User.IsInRole("JobSeeker"))
+{
+    <h4>All job offers</h4>
+    <form method="get">
+        Filter by skill: <input type="text" name="skill"> <input type="submit" value="Submit">
+    </form>
 }
-<h4>Job offers</h4>
 <table class="table">
     <thead>
         <tr>

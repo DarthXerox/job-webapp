@@ -16,8 +16,7 @@ Seminar **01**, group **#3**
 
 ## Unregistered job-seeker
 
-- See job offers 
-- Apply to a job offer (their info is not prepopulated and has to be filled in manually)
+- See job offers
 - Get job offers from public API (an array of jsons)
 
 ## Registered job-seeker

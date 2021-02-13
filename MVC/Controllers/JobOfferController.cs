@@ -25,7 +25,7 @@ namespace MVC.Controllers
             this.userFacade = userFacade;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index([FromQuery] int? page = 1, [FromQuery] string? skill = null)
         {
             (int totalCount, IEnumerable<JobOfferDto> offers) model;
             if (User.IsInRole("Company"))
@@ -40,16 +40,15 @@ namespace MVC.Controllers
                 {
                     model = (offers.Count(), offers);
                 }
-                
             }
             else
             {
-                model = await jobOfferFacade.GetAllAsync(PageSize, page);
+                model = await jobOfferFacade.GetAllAsync(PageSize, page ?? 1, skill);
             }
 
             var pagedModel = new PagedListViewModel<JobOfferDto>(
-                new PaginationViewModel(page, model.totalCount, PageSize), model.offers);
-            
+                new PaginationViewModel(page ?? 1, model.totalCount, PageSize), model.offers);
+
             return View(pagedModel);
         }
 

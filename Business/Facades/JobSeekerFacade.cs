@@ -25,6 +25,11 @@ namespace Business.Facades
             this.userService = userService;
         }
 
+        public async Task<JobSeekerDto> GetByIdAsync(int id)
+        {
+            return mapper.Map<JobSeekerDto>(await jobSeekerService.GetJobSeeker(id));
+        }
+
         public async Task RegisterAsync(JobSeekerDto jobSeekerDto)
         {
             var jobSeeker = mapper.Map<JobSeeker>(jobSeekerDto);

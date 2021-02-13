@@ -1,0 +1,41 @@
+@using Business.DTOs;
+@model IEnumerable<JobApplicationDto>
+@{
+    ViewData["Title"] = "Job Applications";
+}
+
+<h4>Your applications</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Job offer</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @Html.ActionLink(
+                    item.JobOffer.Name + " at " + item.JobOffer.Company.Name,
+                    "JobOfferDetail", "JobOffer",
+                    new { id = item.JobOfferId },
+                    new { @class = "btn btn-primary" }
+                    )
+            </td>
+            <td>
+                @item.Status
+            </td>
+            <td style="float: right;">
+                @Html.ActionLink("Detail", "JobApplicationDetail", "JobApplication", new { id = item.Id }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
