@@ -28,18 +28,5 @@ namespace WebApi.Controllers
         [Route("All")]
         public async Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync()
             => await companyFacade.GetAllAsync();
-
-
-        [HttpPost]
-        [Route("Add")]
-        public HttpResponseMessage AddCompany([FromBody] CompanyDto dto)
-        {
-            if (dto == null || dto.UserId == null || userFacade.GetByIdAsync(dto.UserId ?? -1).Result == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, "value");
-            }
-            await companyFacade.AddAsync(dto);
-            return 0;
-        }
     }
 }

@@ -25,19 +25,5 @@ namespace WebApi.Controllers
         [Route("ById")]
         public async Task<UserShowDto> GetUserByIdAsync([FromQuery(Name = "userId")] int id)
             => await userFacade.GetByIdAsync(id);
-
-
-        [HttpPost("Register")]
-        public async Task<string> RegisterAsync([FromBody] UserRegisterDto user)
-        {
-            if (user == null || (user.Role != Roles.Company && user.Role != Roles.JobSeeker))
-            {
-                return "-1";
-            }
-
-            var userId = await userFacade.RegisterUserAsync(user);
-            return "{ \"CreatedUserId\": " + userId.ToString()
-                                           + "\"Note\" : \"Continue with Add\" ";
-        }
     }
 }

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Autofac;
 using Business;
+using DAL.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,8 +26,7 @@ namespace WebApi
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            //services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-            //services.AddMvcCore().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            services.AddMvc();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             );
@@ -65,6 +66,18 @@ namespace WebApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+            });
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                /*endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "api/{controller=JobOffer}/{action=all}"
+                    );
+                endpoints.MapControllerRoute(name: "other",
+                    pattern: "{controller}/{action}");*/
                 endpoints.MapControllers();
             });
         }
