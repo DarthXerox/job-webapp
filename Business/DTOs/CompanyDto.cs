@@ -17,3 +17,4 @@ namespace Business.DTOs
         public int? UserId { get; set; }
     }
 }
+
