@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class JobOfferListController : ControllerBase
     {
         private readonly JobOfferFacade jobOfferFacade;
@@ -23,18 +23,17 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("paging")]
+        [Route("Paging")]
         public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetJobOffersAsync(int pgsz, int pgnum)
             => await jobOfferFacade.GetAllAsync(pgsz, pgnum);
 
         [HttpGet]
-        [Route("all")]
+        [Route("All")]
         public async Task<(int totalCount, IEnumerable<JobOfferDto> offers)> GetAllJobOffersAsync()
             => await jobOfferFacade.GetAllWithoutPagingAsync();
 
         [HttpGet]
-        [Route("byCompany")]
-        //[Authorize(Roles = "User")]
+        [Route("ByCompany")]
         public async Task<IEnumerable<JobOfferDto>> GetAppleOffers(string name)
             => await jobOfferFacade.GetByCompanyNameAsync(new JobOfferDto() { Company = new CompanyDto() {Name = name}});
     }
