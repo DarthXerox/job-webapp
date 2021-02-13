@@ -4,7 +4,6 @@ namespace Business.DTOs
 {
     public class JobApplicationAnswerDto : BaseDto
     {
-        [Required]
         [StringLength(1024)]
         public string? Text { get; set; }
 
