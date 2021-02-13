@@ -44,6 +44,15 @@ namespace Business.QueryObjects
                 .ExecuteAsync();
         }
 
+        public async Task<IEnumerable<JobOffer>> GetByCompanyIdAsync(int companyId,
+            bool ascendingOrder = true)
+        {
+            return await UnitOfWork.JobOfferQuery
+                .FilterByCompanyId(companyId)
+                .OrderBy(keySelector: jobOffer => jobOffer.Name, ascendingOrder)
+                .ExecuteAsync();
+        }
+
         public async Task<IEnumerable<JobOffer>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
         {
             return await UnitOfWork.JobOfferQuery
@@ -67,6 +76,11 @@ namespace Business.QueryObjects
             return (await UnitOfWork.JobOfferQuery
                 .FilterBySkillTag(skillTag)
                 .ExecuteAsync()).Count();
+        }
+        
+        public async Task<IEnumerable<JobOffer>> GetByIdWithQuestionsAsync(int id)
+        {
+            return await UnitOfWork.JobOfferQuery.GetByIdWithQuestions(id).ExecuteAsync(); ;
         }
     }
 }

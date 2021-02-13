@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Business.QueryObjects;
 using DAL.Entities;
@@ -39,7 +40,12 @@ namespace Business.Services
 
         public async Task<IEnumerable<JobOffer>> GetByCompanyNameAsync(string companyName, bool ascendingOrder = true)
         {
-            return await jobOfferQueryObject.GetByNameContainsAsync(companyName, ascendingOrder);
+            return await jobOfferQueryObject.GetByCompanyNameAsync(companyName, ascendingOrder);
+        }
+
+        public async Task<IEnumerable<JobOffer>> GetByCompanyIdAsync(int companyId, bool ascendingOrder = true)
+        {
+            return await jobOfferQueryObject.GetByCompanyIdAsync(companyId, ascendingOrder);
         }
 
         public async Task<IEnumerable<JobOffer>> GetBySkillTagAsync(string skillTag, bool ascendingOrder = true)
@@ -57,22 +63,24 @@ namespace Business.Services
             return await unitOfWork.JobOfferRepository.GetByIdAsync(id);
         }
 
+        public async Task<JobOffer> GetByIdWithQuestionsAsync(int id)
+        {
+            return (await jobOfferQueryObject.GetByIdWithQuestionsAsync(id)).First();
+        }
+
         public async Task CreateAsync(JobOffer jobOffer)
         {
             unitOfWork.JobOfferRepository.Add(jobOffer);
-            await unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(JobOffer jobOffer)
         {
             unitOfWork.JobOfferRepository.Update(jobOffer);
-            await unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int jobOfferId)
         {
             unitOfWork.JobOfferRepository.Delete(jobOfferId);
-            await unitOfWork.SaveChangesAsync();
         }
     }
 }

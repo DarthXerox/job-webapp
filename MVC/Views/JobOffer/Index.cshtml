@@ -3,17 +3,21 @@
 @{
     ViewData["Title"] = "Job Offers";
 }
-<p>
-    @Html.ActionLink("Add job offer", "AddJobOffer", "JobOffer", 0, new { @class = "btn btn-primary" })
-</p>
+
 <h4>All offers</h4>
+@if (User.IsInRole("Company"))
+{
+    <p>
+        @Html.ActionLink("Add job offer", "AddJobOffer", "JobOffer", 0, new { @class = "btn btn-primary" })
+    </p>
+}
 <form method="get">
     Filter by skill: <input type="text" name="skill"> <input type="submit" value="Submit">
 </form>
+<h4>Job offers</h4>
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Company</th>
             <th>City</th>
@@ -25,9 +29,6 @@
     {
         <tr>
             <td>
-                @item.Id
-            </td>
-            <td>
                 @item.Name
             </td>
             <td>
@@ -38,7 +39,11 @@
             </td>
             <td style="float: right;">
                 @Html.ActionLink("Detail", "JobOfferDetail", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @if (User.IsInRole("Company"))
+                {
+                    @Html.ActionLink("Edit", "EditJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "DeleteJobOffer", "JobOffer", new { id = item.Id }, new { @class = "btn btn-primary" })
+                }
             </td>
         </tr>
     }
