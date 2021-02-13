@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Text.Json;
 using Autofac;
 using Business;
+using DAL.Entities;
 using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,18 +26,12 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddControllersWithViews();
-            
-            //services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-            //services.AddMvcCore().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+           services.AddControllers();
+            services.AddSwaggerGen();
+            services.AddMvc();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             );
-            services.AddSwaggerGen(/*c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-            }*/);
             services.AddDbContext<JobDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
         }
@@ -71,6 +67,12 @@ namespace WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
 
             app.UseEndpoints(endpoints =>
             {
